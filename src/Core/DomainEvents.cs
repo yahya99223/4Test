@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
-namespace DomainModel
+namespace Core
 {
     public static class DomainEvents
     {

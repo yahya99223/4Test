@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DomainModel
+namespace Core
 {
     public interface IServiceResolver
     {

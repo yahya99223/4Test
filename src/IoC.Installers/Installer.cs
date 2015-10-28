@@ -7,8 +7,8 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using ConsoleApp.Handlers;
+using Core;
 using DataAccess;
-using DomainModel;
 using Services;
 using Services.Handlers;
 

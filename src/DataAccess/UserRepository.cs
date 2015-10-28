@@ -5,7 +5,7 @@ using System.Linq;
 using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
-using DomainModel;
+using Core;
 
 namespace DataAccess
 {

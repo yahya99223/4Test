@@ -1,5 +1,5 @@
 ﻿using System;
-using DomainModel;
+using Core;
 
 namespace ConsoleApp.Handlers
 {

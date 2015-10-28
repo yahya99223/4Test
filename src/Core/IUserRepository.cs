@@ -1,4 +1,4 @@
-﻿namespace DomainModel
+﻿namespace Core
 {
     public interface IUserRepository
     {
