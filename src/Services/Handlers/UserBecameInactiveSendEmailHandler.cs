@@ -1,5 +1,6 @@
 ﻿using System;
 using Core;
+using Core.DomainModel.User;
 
 namespace Services.Handlers
 {

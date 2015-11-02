@@ -7,6 +7,7 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using Core;
+using Core.DomainModel;
 
 namespace IoC
 {

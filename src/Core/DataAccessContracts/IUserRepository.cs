@@ -1,4 +1,6 @@
-﻿namespace Core
+﻿using Core.DomainModel.User;
+
+namespace Core.DataAccessContracts
 {
     public interface IUserRepository
     {

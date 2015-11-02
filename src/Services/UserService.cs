@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
+using Core.DataAccessContracts;
+using Core.DomainModel;
+using Core.DomainModel.User;
+using Core.ServicesContracts;
 
 namespace Services
 {
@@ -22,16 +26,16 @@ namespace Services
         {
             var maxId = userRepository.GetMaxId();
             var user = new User(maxId + 1, userName, true);
-            var addedUser = new UserAdded(user);
-            DomainEvents.Register<UserAdded>(x => addingUser(addedUser));
+            var addedUser = new AddedModel<User>(user);
+            DomainEvents.Register<AddedModel<User>>(x => addingUser(addedUser));
             userRepository.Add(user);
             DomainEvents.Raise(addedUser);
         }
 
 
-        private void addingUser(UserAdded userAdded)
+        private void addingUser(AddedModel<User> userAdded)
         {
-            Console.WriteLine("Adding {0}. O_O ", userAdded.User.UserName);
+            Console.WriteLine("Adding {0}. O_O ", userAdded.Model.UserName);
         }
 
 

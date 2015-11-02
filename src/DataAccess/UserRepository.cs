@@ -6,6 +6,8 @@ using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
+using Core.DataAccessContracts;
+using Core.DomainModel.User;
 
 namespace DataAccess
 {

@@ -1,4 +1,4 @@
-﻿namespace Core
+﻿namespace Core.DomainModel.User
 {
     public class UserBecameInactive : IDomainEvent
     {

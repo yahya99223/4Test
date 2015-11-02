@@ -1,4 +1,4 @@
-﻿namespace Core
+﻿namespace Core.ServicesContracts
 {
     public interface IUserService
     {

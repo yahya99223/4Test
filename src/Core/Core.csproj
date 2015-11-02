@@ -42,16 +42,16 @@
   <ItemGroup>
     <Compile Include="IHandles.cs" />
     <Compile Include="IServiceResolver.cs" />
-    <Compile Include="IUserRepository.cs" />
-    <Compile Include="IUserService.cs" />
-    <Compile Include="UserAdded.cs" />
-    <Compile Include="UserBecameActive.cs" />
-    <Compile Include="UserBecameInactive.cs" />
-    <Compile Include="DomainEvents.cs" />
-    <Compile Include="IDomainEvent.cs" />
+    <Compile Include="DataAccessContracts\IUserRepository.cs" />
+    <Compile Include="ServicesContracts\IUserService.cs" />
+    <Compile Include="DomainModel\User\Events\UserBecameActive.cs" />
+    <Compile Include="DomainModel\User\Events\UserBecameInactive.cs" />
+    <Compile Include="DomainModel\DomainEvents.cs" />
+    <Compile Include="DomainModel\IDomainEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="DomainModel\User\User.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
