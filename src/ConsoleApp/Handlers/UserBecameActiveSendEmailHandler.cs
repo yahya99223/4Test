@@ -10,7 +10,6 @@ namespace ConsoleApp.Handlers
         public void Handle(AddedModel<User> args)
         {
             Console.WriteLine("Welcome {0}. ^_^ ", args.Model.UserName);
-            throw new NotImplementedException();
         }
     }
 }
