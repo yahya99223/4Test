@@ -28,7 +28,7 @@ namespace IoC
 
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>());
 
-            container.Register(Component.For(typeof (AddedModel<>)).ImplementedBy(typeof (IHandlesAdded<>)));
+            container.Register(Component.For<IHandles<UserAdded>>().ImplementedBy<UserAddedShowMessageHandler>());
 
             container.Register(Component.For<IHandles<UserBecameActive>>().ImplementedBy<UserBecameActiveSendEmailHandler>());
             container.Register(Component.For<IHandles<UserBecameInactive>>().ImplementedBy<UserBecameInactiveSendEmailHandler>());

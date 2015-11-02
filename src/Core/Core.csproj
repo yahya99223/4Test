@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainModel\User\Events\UserAdded.cs" />
     <Compile Include="IHandles.cs" />
     <Compile Include="IServiceResolver.cs" />
     <Compile Include="DataAccessContracts\IUserRepository.cs" />
