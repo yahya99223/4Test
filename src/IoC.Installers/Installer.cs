@@ -35,6 +35,7 @@ namespace IoC
             container.Register(Component.For<IHandles<UserBecameInactive>>().ImplementedBy<UserBecameInactiveSendEmailHandler>());
 
             container.Register(Component.For<IHandles<UserBecameActive>>().ImplementedBy<UserBecameActiveSendSmsHandler>());
+
             container.Register(Component.For<IHandles<UserBecameInactive>>().ImplementedBy<UserBecameInactiveSendSmsHandler>());
         }
     }
