@@ -9,15 +9,8 @@ namespace Core
 
 
 
-    public interface IHandlesAdded<T> where T : AddedModel<T>
-    {
-        void Handle(AddedModel<T> args);
-    }
-
-
-
-    public interface IHandlesUpdatededModel<T> where T : UpdatededModel<T>
+    /*public interface IHandlesUpdatededModel<T> where T : UpdatededModel<T>
     {
         void Handle(UpdatededModel<T> args);
-    }
+    }*/
 }
