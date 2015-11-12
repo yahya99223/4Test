@@ -40,9 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainModel\Journey\CapturedMedia.cs" />
+    <Compile Include="DomainModel\Journey\Enums.cs" />
+    <Compile Include="DomainModel\Journey\Events\JourneyEvents.cs" />
+    <Compile Include="DomainModel\Journey\Journey.cs" />
+    <Compile Include="DomainModel\Journey\JourneyDefinition\EntryStepDefinition.cs" />
+    <Compile Include="DomainModel\Journey\JourneyDefinition\JourneyDefinition.cs" />
+    <Compile Include="DomainModel\Journey\JourneyDefinition\JourneyEntryDefinition.cs" />
+    <Compile Include="DomainModel\Journey\JourneyDefinition\JourneyReason.cs" />
+    <Compile Include="DomainModel\Journey\JourneyDefinition\JourneyReasonCategory.cs" />
+    <Compile Include="DomainModel\Journey\JourneyEntryRequest.cs" />
     <Compile Include="IHandles.cs" />
     <Compile Include="IServiceResolver.cs" />
     <Compile Include="DataAccessContracts\IUserRepository.cs" />
+    <Compile Include="ServicesContracts\IJourneyService.cs" />
     <Compile Include="ServicesContracts\IUserService.cs" />
     <Compile Include="DomainModel\User\Events\UserBecameActive.cs" />
     <Compile Include="DomainModel\User\Events\UserBecameInactive.cs" />
