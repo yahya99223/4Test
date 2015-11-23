@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoC.Installers", "IoC.Insta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{23C94ED2-791B-4F37-BC06-3B05A001F3A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Default", "Services\Services.Default.csproj", "{CD137D46-5E61-4256-84C1-50A4A542E65E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Default", "Services.Default\Services.Default.csproj", "{CD137D46-5E61-4256-84C1-50A4A542E65E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
