@@ -17,16 +17,17 @@ namespace ConsoleApp
             var serviceResolver = new ServiceResolver();
             serviceResolver.Initialize(AppDomain.CurrentDomain.BaseDirectory);
 
-            /*var userService = serviceResolver.GetService<IUserService>();
+            var userService = serviceResolver.GetService<IUserService>();
             userService.Add("Wahid");
+            
             userService.ChangeStatus(1, false);
             userService.ChangeStatus(1, true);
 
             DomainEvents.ClearCallbacks();
-            Console.ReadLine();*/
+            Console.ReadLine();
 
 
-            var journeyService = serviceResolver.GetService<IJourneyService>();
+            /*var journeyService = serviceResolver.GetService<IJourneyService>();
 
             journeyService.Start(Guid.Empty);
 
@@ -43,7 +44,7 @@ namespace ConsoleApp
 
             journeyService.Proceed(Guid.Empty, request2);
 
-            journeyService.Cancel(Guid.Empty);
+            journeyService.Cancel(Guid.Empty);*/
 
 
             Console.ReadLine();
