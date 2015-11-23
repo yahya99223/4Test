@@ -7,7 +7,7 @@ namespace Services.Default.User
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository userRepository;
+        protected readonly IUserRepository userRepository;
 
 
         public UserService(IUserRepository userRepository)
@@ -16,7 +16,7 @@ namespace Services.Default.User
         }
 
 
-        public void Add(string userName)
+        public virtual void Add(string userName)
         {
             var maxId = userRepository.GetMaxId();
             var user = new Core.DomainModel.User.User(maxId + 1, userName, true);
@@ -33,7 +33,7 @@ namespace Services.Default.User
         }
 
 
-        public void ChangeStatus(int userId, bool isActive)
+        public virtual void ChangeStatus(int userId, bool isActive)
         {
             var user = userRepository.GetById(userId);
             if (user == null)

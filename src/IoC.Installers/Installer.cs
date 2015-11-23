@@ -13,9 +13,7 @@ using Core.DomainModel;
 using Core.DomainModel.User;
 using Core.ServicesContracts;
 using DataAccess;
-using Services;
-using Services.Default.Journey;
-using Services.Default.User;
+using Default=Services.Default;
 
 namespace IoC
 {
@@ -27,19 +25,23 @@ namespace IoC
 
             container.Register(Component.For<IUserRepository>().ImplementedBy<UserRepository>().LifestyleSingleton());
 
-            container.Register(Component.For<IUserService>().ImplementedBy<UserService>());
+            var interfaces = typeof (IUserService).Assembly.GetTypes().Where(t => t.IsInterface && t.IsPublic).ToList();
+            
+            container.Register(Component.For<IUserService>().ImplementedBy<Default.User.UserService>().Named("Default.User.UserService"));
 
-            container.Register(Component.For<IJourneyService>().ImplementedBy<JourneyService>());
+            container.Register(Component.For<IUserService>().ImplementedBy<Default.User.UserService>().Named("Default.User.UserService"));
+
+            container.Register(Component.For<IJourneyService>().ImplementedBy<Default.Journey.JourneyService>());
 
             container.Register(Component.For(typeof (IHandles<AddedModel<User>>)).ImplementedBy(typeof (UserAddedShowMessageHandler)));
 
-            container.Register(Component.For<IHandles<UserBecameActive>>().ImplementedBy<UserBecameActiveSendEmailHandler>());
+            container.Register(Component.For<IHandles<UserBecameActive>>().ImplementedBy<Default.User.UserBecameActiveSendEmailHandler>());
 
-            container.Register(Component.For<IHandles<UserBecameInactive>>().ImplementedBy<UserBecameInactiveSendEmailHandler>());
+            container.Register(Component.For<IHandles<UserBecameInactive>>().ImplementedBy<Default.User.UserBecameInactiveSendEmailHandler>());
 
-            container.Register(Component.For<IHandles<UserBecameActive>>().ImplementedBy<UserBecameActiveSendSmsHandler>());
+            container.Register(Component.For<IHandles<UserBecameActive>>().ImplementedBy<Default.User.UserBecameActiveSendSmsHandler>());
 
-            container.Register(Component.For<IHandles<UserBecameInactive>>().ImplementedBy<UserBecameInactiveSendSmsHandler>());
+            container.Register(Component.For<IHandles<UserBecameInactive>>().ImplementedBy<Default.User.UserBecameInactiveSendSmsHandler>());
         }
     }
 }

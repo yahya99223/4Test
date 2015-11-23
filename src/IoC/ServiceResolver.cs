@@ -19,7 +19,7 @@ namespace IoC
         public void Initialize(string folder)
         {
             container = new WindsorContainer();
-            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "*.dll")));
+            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "*Installers.dll")));
             DomainEvents.Initialize(this);
         }
 

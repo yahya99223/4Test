@@ -7,8 +7,8 @@
     <ProjectGuid>{7AA16BA0-AAB6-42EE-A138-9C4BB9576850}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IoC.Installers</RootNamespace>
-    <AssemblyName>IoC.Installers</AssemblyName>
+    <RootNamespace>IoC.Default.Installer</RootNamespace>
+    <AssemblyName>IoC.Default.Installer</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
