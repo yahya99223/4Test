@@ -71,6 +71,10 @@
       <Project>{1BD2FBAD-317D-4580-B528-9F841AAB7ED5}</Project>
       <Name>IoC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services.Default\Services.Default.csproj">
+      <Project>{CD137D46-5E61-4256-84C1-50A4A542E65E}</Project>
+      <Name>Services.Default</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

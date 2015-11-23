@@ -2,7 +2,7 @@
 using Core;
 using Core.DomainModel.User;
 
-namespace Services.Handlers
+namespace Services.Default.User
 {
     public class UserBecameInactiveSendSmsHandler : IHandles<UserBecameInactive>
     {

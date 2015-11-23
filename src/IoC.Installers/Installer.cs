@@ -14,7 +14,8 @@ using Core.DomainModel.User;
 using Core.ServicesContracts;
 using DataAccess;
 using Services;
-using Services.Handlers;
+using Services.Default.Journey;
+using Services.Default.User;
 
 namespace IoC
 {

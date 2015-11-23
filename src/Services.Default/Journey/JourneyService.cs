@@ -4,16 +4,16 @@ using System.Linq;
 using Core.DomainModel;
 using Core.ServicesContracts;
 
-namespace Services
+namespace Services.Default.Journey
 {
     public class JourneyService : IJourneyService
     {
-        private List<Journey> inMemoryJourneyList;
+        private List<Core.DomainModel.Journey> inMemoryJourneyList;
         private List<JourneyDefinition> inMemoryJourneyDefinitionList;
 
         public JourneyService()
         {
-            inMemoryJourneyList = new List<Journey>();
+            inMemoryJourneyList = new List<Core.DomainModel.Journey>();
             inMemoryJourneyDefinitionList = new List<JourneyDefinition>()
             {
                 new JourneyDefinition(Guid.Empty, "First Path", false, new[]
@@ -30,7 +30,7 @@ namespace Services
         public void Start(Guid journeyDefinitionId)
         {
             var journeydefinition = inMemoryJourneyDefinitionList.First();
-            var journey = new Journey(journeydefinition);
+            var journey = new Core.DomainModel.Journey(journeydefinition);
             journey.Start();
             inMemoryJourneyList.Add(journey);
         }

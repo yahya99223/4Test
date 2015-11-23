@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
 using Core.DataAccessContracts;
 using Core.DomainModel;
-using Core.DomainModel.User;
 using Core.ServicesContracts;
 
-namespace Services
+namespace Services.Default.User
 {
     public class UserService : IUserService
     {
@@ -25,15 +19,15 @@ namespace Services
         public void Add(string userName)
         {
             var maxId = userRepository.GetMaxId();
-            var user = new User(maxId + 1, userName, true);
-            var addedUser = new AddedModel<User>(user);
-            DomainEvents.Register<AddedModel<User>>(x => addingUser(addedUser));
+            var user = new Core.DomainModel.User.User(maxId + 1, userName, true);
+            var addedUser = new AddedModel<Core.DomainModel.User.User>(user);
+            DomainEvents.Register<AddedModel<Core.DomainModel.User.User>>(x => addingUser(addedUser));
             userRepository.Add(user);
             DomainEvents.Raise(addedUser);
         }
 
 
-        private void addingUser(AddedModel<User> userAdded)
+        private void addingUser(AddedModel<Core.DomainModel.User.User> userAdded)
         {
             Console.WriteLine("Adding {0}. O_O ", userAdded.Model.UserName);
         }
