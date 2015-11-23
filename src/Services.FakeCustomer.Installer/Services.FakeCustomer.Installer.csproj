@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1BD2FBAD-317D-4580-B528-9F841AAB7ED5}</ProjectGuid>
+    <ProjectGuid>{2DC32D03-EFD4-4AF0-8FC4-92A653686DCB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IoC</RootNamespace>
-    <AssemblyName>IoC</AssemblyName>
+    <RootNamespace>Services.FakeCustomer.Installer</RootNamespace>
+    <AssemblyName>Services.FakeCustomer.Installer</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\ConsoleApp\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServiceResolver.cs" />
+    <Compile Include="Installer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,9 +59,13 @@
       <Project>{23C94ED2-791B-4F37-BC06-3B05A001F3A2}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{98E36C5F-EAF1-41C3-B879-D049E46FD4B4}</Project>
-      <Name>DataAccess</Name>
+    <ProjectReference Include="..\Services.Default\Services.Default.csproj">
+      <Project>{CD137D46-5E61-4256-84C1-50A4A542E65E}</Project>
+      <Name>Services.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services.FakeCustomer\Services.FakeCustomer.csproj">
+      <Project>{c800144b-27d1-4ac7-b895-12495f8ce777}</Project>
+      <Name>Services.FakeCustomer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

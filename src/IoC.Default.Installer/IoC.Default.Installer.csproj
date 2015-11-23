@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -55,10 +55,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleApp\ConsoleApp.csproj">
-      <Project>{75A933AC-0D7A-4037-B933-F6411A7F384D}</Project>
-      <Name>ConsoleApp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{23C94ED2-791B-4F37-BC06-3B05A001F3A2}</Project>
       <Name>Core</Name>
@@ -67,13 +63,13 @@
       <Project>{98E36C5F-EAF1-41C3-B879-D049E46FD4B4}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IoC\IoC.csproj">
-      <Project>{1BD2FBAD-317D-4580-B528-9F841AAB7ED5}</Project>
-      <Name>IoC</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Services.Default\Services.Default.csproj">
       <Project>{CD137D46-5E61-4256-84C1-50A4A542E65E}</Project>
       <Name>Services.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services.FakeCustomer\Services.FakeCustomer.csproj">
+      <Project>{c800144b-27d1-4ac7-b895-12495f8ce777}</Project>
+      <Name>Services.FakeCustomer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

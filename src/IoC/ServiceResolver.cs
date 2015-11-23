@@ -19,7 +19,9 @@ namespace IoC
         public void Initialize(string folder)
         {
             container = new WindsorContainer();
-            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "*Installers.dll")));
+            container.Register(Component.For<IServiceResolver>().ImplementedBy<ServiceResolver>().LifestyleSingleton());        
+            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "IoC.Default.Installer.dll")));
+            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "IoC.Default.Installer.dll")));
             DomainEvents.Initialize(this);
         }
 
