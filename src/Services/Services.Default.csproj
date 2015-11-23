@@ -7,8 +7,8 @@
     <ProjectGuid>{CD137D46-5E61-4256-84C1-50A4A542E65E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Services</RootNamespace>
-    <AssemblyName>Services</AssemblyName>
+    <RootNamespace>Services.Default</RootNamespace>
+    <AssemblyName>Services.Default</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

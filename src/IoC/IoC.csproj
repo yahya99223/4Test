@@ -63,10 +63,6 @@
       <Project>{98E36C5F-EAF1-41C3-B879-D049E46FD4B4}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Services\Services.csproj">
-      <Project>{CD137D46-5E61-4256-84C1-50A4A542E65E}</Project>
-      <Name>Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
