@@ -20,7 +20,7 @@ namespace IoC
         {
             container = new WindsorContainer();
             container.Register(Component.For<IServiceResolver>().ImplementedBy<ServiceResolver>().LifestyleSingleton());        
-            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "IoC.Default.Installer.dll")));
+            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "Services.FakeCustomer.Installer.dll")));
             container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "IoC.Default.Installer.dll")));
             DomainEvents.Initialize(this);
         }
@@ -28,7 +28,8 @@ namespace IoC
 
         public T GetService<T>()
         {
-            return container.Resolve<T>();
+            //return container.Resolve<T>("Default.User.UserService");
+            return container.Resolve<T>("FakeCustomer.User.UserService");
         }
 
 

@@ -53,6 +53,7 @@
     <Compile Include="IHandles.cs" />
     <Compile Include="IServiceResolver.cs" />
     <Compile Include="DataAccessContracts\IUserRepository.cs" />
+    <Compile Include="Modularity\ReplaceableAttribute.cs" />
     <Compile Include="ServicesContracts\IJourneyService.cs" />
     <Compile Include="ServicesContracts\IUserService.cs" />
     <Compile Include="DomainModel\User\Events\UserBecameActive.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using Core.DataAccessContracts;
 using Core.DomainModel;
+using Core.DomainModel.User;
 using Core.ServicesContracts;
 
 namespace Services.Default.User
@@ -38,9 +39,21 @@ namespace Services.Default.User
             var user = userRepository.GetById(userId);
             if (user == null)
                 throw new NullReferenceException();
+
+            if (isActive)
+            {
+                var userBecameActive = new UserBecameActive(user);
+                DomainEvents.Register<UserBecameActive>(x => activatingUser(userBecameActive));
+            }
+
             user.ChangeStatus(isActive);
 
             userRepository.Save(user);
+        }
+
+        private void activatingUser(UserBecameActive userBecameActive)
+        {
+            Console.WriteLine("Welcome back {0}. this is your Default service ", userBecameActive.User.UserName);
         }
     }
 }
