@@ -21,8 +21,10 @@ namespace ConsoleApp
             t2.Name = "Thread2";
             Thread.CurrentThread.Name = "Main Thread";
 
-            t1.Start();      // Please Uncomment this while using AutoResetEvent.  
-                             //t2.Start();   // Please Uncomment this while using ManualResetEvent.  
+            // Please Uncomment this while using AutoResetEvent.  
+            //t1.Start();
+            // Please Uncomment this while using ManualResetEvent.   
+            t2.Start();   
 
             Console.ReadLine();
             Console.WriteLine("Thread1 Paused for Task1...");
@@ -37,8 +39,8 @@ namespace ConsoleApp
             }
             Console.WriteLine();
             Console.WriteLine("Task Completed on Main Thread....");
-            //manualReset.Set();    // Please Uncomment this while using ManualResetEvent.  
-            autoReset.Set();        // Please Uncomment this while using AutoResetEvent.  
+            manualReset.Set();    // Please Uncomment this while using ManualResetEvent.  
+            //autoReset.Set();        // Please Uncomment this while using AutoResetEvent.  
 
             Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -46,8 +48,8 @@ namespace ConsoleApp
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Thread1 Paused for Task2...");
             Console.WriteLine("Doing some work in Main Thread......");
-            //manualReset.Set();     // Please Uncomment this while using ManualResetEvent.  
-            autoReset.Set();        // Please Uncomment this while using AutoResetEvent.  
+            manualReset.Set();     // Please Uncomment this while using ManualResetEvent.  
+            //autoReset.Set();        // Please Uncomment this while using AutoResetEvent.  
             Console.ForegroundColor = prevColor;
         }
 
