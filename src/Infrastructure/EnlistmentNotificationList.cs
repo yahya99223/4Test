@@ -15,7 +15,7 @@ namespace Infrastructure
 
         public EnlistmentNotificationList(List<T> data = null)
         {
-            this.oldList = new List<T>();
+            oldList = new List<T>();
             list = data ?? new List<T>();
             isFirstOperation = true;
         }
@@ -50,6 +50,7 @@ namespace Infrastructure
         }
 
         #endregion
+
         #region Implementation of ICollection<T>
 
         public void Add(T item)
@@ -95,7 +96,6 @@ namespace Infrastructure
 
         #endregion
 
-
         #region Implementation of IList<T>
 
         public int IndexOf(T item)
@@ -134,7 +134,6 @@ namespace Infrastructure
 
         #endregion
 
-
         #region Implementation of IEnlistmentNotification
 
         public void Prepare(PreparingEnlistment preparingEnlistment)
@@ -169,6 +168,6 @@ namespace Infrastructure
             Console.WriteLine("EnlistmentNotificationList: InDoubt");
         }
 
-        #endregion        
+        #endregion
     }
 }
