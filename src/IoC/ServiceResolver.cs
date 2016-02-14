@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,16 +21,18 @@ namespace IoC
         {
             container = new WindsorContainer();
             container.Register(Component.For<IServiceResolver>().ImplementedBy<ServiceResolver>().LifestyleSingleton());        
-            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "Services.FakeCustomer.Installer.dll")));
-            container.Install(FromAssembly.InDirectory(new AssemblyFilter(folder, "IoC.Default.Installer.dll")));
+            container.Install(FromAssembly.InDirectory(new AssemblyFilter(Path.Combine(folder, "Customized"), "Services.FakeCustomer.Installer.dll")));
+            container.Install(FromAssembly.InDirectory(new AssemblyFilter(Path.Combine(folder, "Default"), "IoC.Default.Installer.dll")));
             DomainEvents.Initialize(this);
         }
 
 
         public T GetService<T>()
         {
-            //return container.Resolve<T>("Default.User.UserService");
-            return container.Resolve<T>("FakeCustomer.User.UserService");
+            var instance = container.Resolve<T>("FakeCustomer");
+            if (instance == null)
+                instance = container.Resolve<T>();
+            return instance;
         }
 
 

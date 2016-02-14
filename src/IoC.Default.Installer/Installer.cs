@@ -18,7 +18,7 @@ namespace IoC.Default.Installer
 
             container.Register(Component.For<IUserRepository>().ImplementedBy<UserRepository>().LifestyleSingleton());            
             
-            container.Register(Component.For<IUserService>().ImplementedBy<Services.Default.User.UserService>().Named("Default.User.UserService"));
+            container.Register(Component.For<IUserService>().ImplementedBy<Services.Default.User.UserService>());
 
             container.Register(Component.For<IJourneyService>().ImplementedBy<Services.Default.Journey.JourneyService>());
 
