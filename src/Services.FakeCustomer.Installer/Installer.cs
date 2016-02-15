@@ -15,7 +15,7 @@ namespace Services.FakeCustomer.Installer
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<IUserService>().ImplementedBy<UserService>().Named("FakeCustomer.User.UserService"));
+            container.Register(Component.For<IUserService>().ImplementedBy<UserService>().Named("FakeCustomer"));
         }
     }
 }

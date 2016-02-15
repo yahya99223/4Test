@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
@@ -29,10 +30,14 @@ namespace IoC
 
         public T GetService<T>()
         {
-            var instance = container.Resolve<T>("FakeCustomer");
-            if (instance == null)
-                instance = container.Resolve<T>();
-            return instance;
+            try
+            {
+                return container.Resolve<T>("FakeCustomer");
+            }
+            catch (ComponentNotFoundException ex)
+            {
+                return container.Resolve<T>();
+            }
         }
 
 
