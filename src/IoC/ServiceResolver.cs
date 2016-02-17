@@ -15,7 +15,7 @@ namespace IoC
 {
     public class ServiceResolver : IServiceResolver
     {
-        private WindsorContainer container;
+        private static WindsorContainer container;
 
 
         public void Initialize(string folder)
@@ -43,7 +43,10 @@ namespace IoC
 
         public IList<T> GetAllService<T>()
         {
-            return container.ResolveAll<T>().ToList();
+            var result =  container.ResolveAll<T>();
+            if (result != null)
+                return result.ToList();
+            return new List<T>();
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace Core.ServicesContracts
+﻿using Core.DomainModel.User;
+
+namespace Core.ServicesContracts
 {
     public interface IUserService
     {
-        void Add(string userName);
-        void ChangeStatus(int userId, bool isActive);
+        User Add(string userName);
+        User ChangeStatus(int userId, bool isActive);
     }
 }

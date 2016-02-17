@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Core;
 using Core.DataAccessContracts;
 using Core.DomainModel;
@@ -20,7 +21,7 @@ namespace Services.Default.User
         }
 
 
-        public virtual void Add(string userName)
+        public virtual Core.DomainModel.User.User Add(string userName)
         {
             var maxId = userRepository.GetMaxId();
             var user = new Core.DomainModel.User.User(maxId + 1, userName, true);
@@ -32,18 +33,23 @@ namespace Services.Default.User
             {
                 Console.WriteLine(validation);
             }
-            userRepository.Add(user);
-            DomainEvents.Raise(addedUser);
+            if (!validationResult.Any())
+            {
+                userRepository.Add(user);
+                DomainEvents.Raise(addedUser);
+                return user;
+            }
+            return null;
         }
 
 
         private void addingUser(AddedModel<Core.DomainModel.User.User> userAdded)
         {
-            Console.WriteLine("Adding {0}. O_O ", userAdded.Model.UserName);
+            Console.WriteLine("Default : Adding {0}. O_O ", userAdded.Model.UserName);
         }
 
 
-        public virtual void ChangeStatus(int userId, bool isActive)
+        public virtual Core.DomainModel.User.User ChangeStatus(int userId, bool isActive)
         {
             var user = userRepository.GetById(userId);
             if (user == null)
@@ -58,11 +64,12 @@ namespace Services.Default.User
             user.ChangeStatus(isActive);
 
             userRepository.Save(user);
+            return user;
         }
 
         private void activatingUser(UserBecameActive userBecameActive)
         {
-            Console.WriteLine("Welcome back {0}. this is your Default service ", userBecameActive.User.UserName);
+            Console.WriteLine("Default : Welcome back {0}. this is your Default service ", userBecameActive.User.UserName);
         }
     }
 }

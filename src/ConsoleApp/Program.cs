@@ -18,11 +18,13 @@ namespace ConsoleApp
             serviceResolver.Initialize(AppDomain.CurrentDomain.BaseDirectory);
 
             var userService = serviceResolver.GetService<IUserService>();
-            userService.Add("Wahid");
-            
-            userService.ChangeStatus(1, false);
-            userService.ChangeStatus(1, true);
-
+            Console.WriteLine("Write your username please");
+            var user = userService.Add(Console.ReadLine());
+            if (user != null)
+            {
+                userService.ChangeStatus(user.Id, false);
+                userService.ChangeStatus(user.Id, true);
+            }
             DomainEvents.ClearCallbacks();
             Console.ReadLine();
 

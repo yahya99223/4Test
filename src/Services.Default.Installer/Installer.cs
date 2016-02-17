@@ -2,6 +2,7 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Core.DataAccessContracts;
+using Core.DomainModel.User;
 using Core.ServicesContracts;
 using DataAccess;
 using Services.Default.User;
@@ -15,6 +16,8 @@ namespace Services.Default.Installer
             container.Register(Component.For<IUserRepository>().ImplementedBy<UserRepository>().LifestyleSingleton());
 
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifestyleTransient());
+
+            container.Register(Component.For<ValidationRule>().ImplementedBy<NameValidationRule>().LifestyleTransient());
         }
     }
 }

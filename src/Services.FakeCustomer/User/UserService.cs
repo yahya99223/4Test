@@ -18,7 +18,7 @@ namespace Services.FakeCustomer.User
         }
 
 
-        public override void ChangeStatus(int userId, bool isActive)
+        public override Core.DomainModel.User.User ChangeStatus(int userId, bool isActive)
         {
             var user = userRepository.GetById(userId);
             if (user == null)
@@ -31,11 +31,12 @@ namespace Services.FakeCustomer.User
             }
             user.ChangeStatus(isActive);
             userRepository.Save(user);
+            return user;
         }
 
         private void activatingUser(UserBecameActive userBecameActive)
         {
-            Console.WriteLine("Welcome back {0}. this is your fake service ", userBecameActive.User.UserName);
+            Console.WriteLine("Fake -> Welcome back {0}. this is your fake service ", userBecameActive.User.UserName);
         }
     }
 }
