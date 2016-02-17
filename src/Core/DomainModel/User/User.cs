@@ -12,6 +12,7 @@
 
         public int Id { get; private set; }
         public string UserName { get; private set; }
+        public string Email { get; set; }
         public bool IsActive { get; private set; }
 
 

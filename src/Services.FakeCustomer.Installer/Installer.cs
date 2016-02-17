@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Core.DomainModel.User;
 using Core.ServicesContracts;
 using Services.FakeCustomer.User;
 
@@ -16,6 +17,10 @@ namespace Services.FakeCustomer.Installer
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>().Named("FakeCustomer"));
+            container.Register(Component.For<ValidationRule>().ImplementedBy<NameValidationRule>().Named("FakeCustomer"));
+            container.Register(Component.For<ValidationRule>().ImplementedBy<EmailValidationRule>().Named("FakeCustomer"));
+
+            //container.Register(Classes.FromAssemblyNamed("Services.FakeCustomer").BasedOn<ValidationRule>().LifestyleTransient());
         }
     }
 }

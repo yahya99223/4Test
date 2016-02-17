@@ -1,4 +1,5 @@
 ﻿using System;
+using Core;
 using Core.DataAccessContracts;
 using Core.DomainModel;
 using Core.DomainModel.User;
@@ -8,9 +9,14 @@ namespace Services.FakeCustomer.User
 {
     public class UserService : Default.User.UserService
     {
-        public UserService(IUserRepository userRepository) : base(userRepository)
+        private readonly IServiceResolver serviceResolver;
+
+
+        public UserService(IUserRepository userRepository,IServiceResolver serviceResolver) : base(userRepository,serviceResolver)
         {
+            this.serviceResolver = serviceResolver;
         }
+
 
         public override void ChangeStatus(int userId, bool isActive)
         {

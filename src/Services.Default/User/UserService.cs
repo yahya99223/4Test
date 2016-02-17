@@ -1,4 +1,5 @@
 ﻿using System;
+using Core;
 using Core.DataAccessContracts;
 using Core.DomainModel;
 using Core.DomainModel.User;
@@ -9,11 +10,13 @@ namespace Services.Default.User
     public class UserService : IUserService
     {
         protected readonly IUserRepository userRepository;
+        private readonly IServiceResolver serviceResolver;
 
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository,IServiceResolver serviceResolver)
         {
             this.userRepository = userRepository;
+            this.serviceResolver = serviceResolver;
         }
 
 
@@ -23,6 +26,12 @@ namespace Services.Default.User
             var user = new Core.DomainModel.User.User(maxId + 1, userName, true);
             var addedUser = new AddedModel<Core.DomainModel.User.User>(user);
             DomainEvents.Register<AddedModel<Core.DomainModel.User.User>>(x => addingUser(addedUser));
+            var validationEngine = new ValidationEngine(serviceResolver);
+            var validationResult = validationEngine.Validate(user);
+            foreach (var validation in validationResult)
+            {
+                Console.WriteLine(validation);
+            }
             userRepository.Add(user);
             DomainEvents.Raise(addedUser);
         }
