@@ -14,6 +14,9 @@ namespace ConsoleApp
     {
         private static void Main(string[] args)
         {
+            Console.WriteLine("Please add your Business Code :");
+            Statics.CurrentBusinessCode = Console.ReadLine();
+
             var serviceResolver = new ServiceResolver();
             serviceResolver.Initialize(AppDomain.CurrentDomain.BaseDirectory);
 

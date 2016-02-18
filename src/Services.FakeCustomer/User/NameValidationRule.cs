@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Core.DomainModel.User;
+using Core.Modularity;
 
 namespace Services.FakeCustomer.User
 {
+    [Replace]
     public class NameValidationRule : ValidationRule
     {
         public override string Name

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.MicroKernel;
@@ -10,6 +11,7 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 using Core;
 using Core.DomainModel;
+using Core.Modularity;
 
 namespace IoC
 {
@@ -32,7 +34,7 @@ namespace IoC
         {
             try
             {
-                return container.Resolve<T>("FakeCustomer");
+                return container.Resolve<T>(typeof (T).Name + Statics.CurrentBusinessCode);
             }
             catch (ComponentNotFoundException ex)
             {
@@ -43,10 +45,25 @@ namespace IoC
 
         public IList<T> GetAllService<T>()
         {
-            var result =  container.ResolveAll<T>();
-            if (result != null)
-                return result.ToList();
-            return new List<T>();
+            var result =  new List<T>();            
+            var temp = container.ResolveAll<T>();
+            if (temp != null)
+            {
+                result = temp.ToList();
+                foreach (T item in temp.ToList())
+                {
+                    var attribute = item.GetType().GetCustomAttributes().FirstOrDefault(x => x.GetType() == typeof (ReplaceAttribute));
+                    if (attribute != null)
+                    {
+                        var replacedItems = result.Where(x => !x.Equals(item) && x.GetType().Name == item.GetType().Name);
+                        foreach (var replaced in replacedItems.ToList())
+                        {
+                            result.Remove(replaced);
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
 }
