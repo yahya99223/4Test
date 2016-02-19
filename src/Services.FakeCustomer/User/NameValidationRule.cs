@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Castle.DynamicProxy;
 using Core.DomainModel.User;
 using Core.Modularity;
 
 namespace Services.FakeCustomer.User
 {
-    [Replace]
+    [ReplaceFor(targetName: "NameValidationRule", businesses: new[] {"Fake", "IDScan"})]
     public class NameValidationRule : ValidationRule
     {
         public override string Name
@@ -24,7 +25,7 @@ namespace Services.FakeCustomer.User
     }
 
 
-
+    [ReplaceFor(targetName: "EmailValidationRule", businesses: new[] { "Fake", "IDScan" })]
     public class EmailValidationRule : ValidationRule
     {
         public override string Name

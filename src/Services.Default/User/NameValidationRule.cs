@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.DomainModel.User;
+using Core.Modularity;
 
 namespace Services.Default.User
 {
-    public class NameValidationRule : ValidationRule
+    [Name("NameValidationRule")]
+    public class NameValidationRule : ValidationRule, IReplaceable
     {
         public override string Name
         {

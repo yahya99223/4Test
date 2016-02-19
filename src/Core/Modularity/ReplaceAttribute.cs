@@ -6,9 +6,39 @@ using System.Threading.Tasks;
 
 namespace Core.Modularity
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class ReplaceAttribute : Attribute
+    public interface IReplaceable
     {
+    }
 
+
+
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    public class NameAttribute : Attribute
+    {
+        public string Name { get; private set; }
+
+
+        public NameAttribute(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("name");
+
+            Name = name;
+        }
+    }
+
+
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    public class ReplaceForAttribute : Attribute
+    {
+        public string TargetName { get; private set; }
+        public string[] Businesses { get; private set; }
+
+
+        public ReplaceForAttribute(string targetName = null, params string[] businesses)
+        {
+            TargetName = targetName;
+            Businesses = businesses.Select(x=>x.ToLower()).ToArray();
+        }
     }
 }

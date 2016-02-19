@@ -45,6 +45,42 @@ namespace IoC
 
         public IList<T> GetAllService<T>()
         {
+            var result = new List<T>();
+            var temp = container.ResolveAll<T>();
+            if (temp != null)
+            {
+                result = temp.ToList();
+                foreach (T item in temp.ToList())
+                {
+                    var attribute = item.GetType().GetCustomAttributes().FirstOrDefault(x => x.GetType() == typeof (ReplaceForAttribute)) as ReplaceForAttribute;
+                    if (attribute != null)
+                    {
+                        var targetName = attribute.TargetName ?? item.GetType().Name;
+                        var replacedItems = result.Where(x =>
+                            !x.Equals(item) &&
+                            x.GetType().GetInterfaces().Contains(typeof(IReplaceable)) &&
+                            x.GetType().Name.ToLower() == targetName.ToLower());
+
+                        if (attribute.Businesses.Any(x => string.Equals(x, Statics.CurrentBusinessCode, StringComparison.CurrentCultureIgnoreCase)))
+                        {
+                            foreach (var replaced in replacedItems.ToList())
+                            {
+                                result.Remove(replaced);
+                            }
+                        }
+                        else
+                        {
+                            result.Remove(item);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+
+        /*public IList<T> GetAllService<T>()
+        {
             var result =  new List<T>();            
             var temp = container.ResolveAll<T>();
             if (temp != null)
@@ -64,6 +100,6 @@ namespace IoC
                 }
             }
             return result;
-        }
+        }*/
     }
 }
