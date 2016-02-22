@@ -38,7 +38,14 @@ namespace IoC
             }
             catch (ComponentNotFoundException ex)
             {
-                return container.Resolve<T>();
+                try
+                {
+                    return container.Resolve<T>(typeof (T).Name + "Default");
+                }
+                catch (ComponentNotFoundException ex2)
+                {
+                    return container.Resolve<T>();
+                }
             }
         }
 

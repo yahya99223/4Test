@@ -15,7 +15,7 @@ namespace Services.Default.Installer
         {
             container.Register(Component.For<IUserRepository>().ImplementedBy<UserRepository>().LifestyleSingleton());
 
-            container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifestyleTransient());
+            container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifestyleTransient().Named("IUserServiceDefault"));
 
             container.Register(Component.For<ValidationRule>().ImplementedBy<NameValidationRule>().LifestyleTransient());
         }

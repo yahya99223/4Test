@@ -17,9 +17,9 @@ namespace Services.FakeCustomer.Installer
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<IUserService>().ImplementedBy<UserService>().Named("IUserService" + Statics.CurrentBusinessCode));
-            container.Register(Component.For<ValidationRule>().ImplementedBy<NameValidationRule>());
-            container.Register(Component.For<ValidationRule>().ImplementedBy<EmailValidationRule>());
+            container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifestyleTransient().Named("IUserServiceFake"));
+            container.Register(Component.For<ValidationRule>().ImplementedBy<NameValidationRule>().LifestyleTransient());
+            container.Register(Component.For<ValidationRule>().ImplementedBy<EmailValidationRule>().LifestyleTransient());
             //container.Register(Classes.FromAssembly(typeof(NameValidationRule).Assembly).BasedOn<ValidationRule>().LifestyleTransient());
         }
     }
