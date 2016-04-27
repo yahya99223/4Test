@@ -8,6 +8,8 @@ namespace Core
 {
     public static class StaticInfo
     {
+        public static int OwinContexts { get; set; }
+        public static int WebRequests { get; set; }
         public static int UnitOfWorks { get; set; }
         public static int Users { get; set; }
     }

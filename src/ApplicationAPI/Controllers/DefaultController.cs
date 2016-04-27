@@ -20,6 +20,7 @@ namespace ApplicationAPI.Controllers
             this.unitOfWork = unitOfWork;
             this.userService = userService;
         }
+
         [Route("api/test")]
         public IHttpActionResult Get()
         {
