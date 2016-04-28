@@ -25,7 +25,7 @@ namespace ApplicationAPI
 
             webApiConfigRegister(config);
             GlobalConfiguration.Configure(webApiConfigRegister);
-
+            app.Use<DependOnUnitOfWorkMiddleware>();
             app.UseWebApi(config);
         }
 
