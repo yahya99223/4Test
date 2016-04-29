@@ -15,8 +15,10 @@ namespace Core.DataAccess
         public void Commit()
         {
             if (isDisposed)
+            {
+                StaticInfo.Exception = "UnitOfWork disposed already";
                 throw new Exception("UnitOfWork disposed already");
-
+            }
             StaticInfo.CommitedUnitOfWorks += 1;
         }
 

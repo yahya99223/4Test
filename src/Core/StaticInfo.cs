@@ -8,6 +8,7 @@ namespace Core
 {
     public static class StaticInfo
     {
+        public static string Exception { get; set; }
         public static int BeginWebRequests { get; set; }
         public static int EndWebRequests { get; set; }
         public static int StartedUnitOfWorks { get; set; }

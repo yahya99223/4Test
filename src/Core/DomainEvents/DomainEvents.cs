@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 
 namespace Core
@@ -48,10 +49,12 @@ namespace Core
 
                 Parallel.ForEach(asyncHandlers, (h) =>
                 {
-                    using (serviceResolver.BeginScope())
-                    {
-                        h.Handle(args);
-                    }
+                    Task.Run(() => {
+                      //  using (serviceResolver.BeginScope())
+                        {
+                            h.Handle(args);
+                        }
+                    });
                 });
 
                 foreach (var handler in syncHandlers)
