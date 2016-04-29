@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Castle.MicroKernel.Lifestyle;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
@@ -31,6 +32,8 @@ namespace IoC
                 installFolder = rootFolder;
 
             Container.Install(FromAssembly.InDirectory(new AssemblyFilter(installFolder, "*Installer.dll")));
+
+            DomainEvents.Initialize(this);
         }
 
 
@@ -53,6 +56,11 @@ namespace IoC
         public IList<T> ResolveAll<T>()
         {
             return Container.ResolveAll<T>().ToList();
+        }
+
+        public IDisposable BeginScope()
+        {
+            return Container.BeginScope();
         }
     }
 }

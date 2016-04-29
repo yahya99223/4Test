@@ -40,10 +40,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWork.cs" />
+    <Compile Include="DomainEvents\DomainEvents.cs" />
+    <Compile Include="DomainEvents\IDomainEvent.cs" />
+    <Compile Include="DomainEvents\IHandles.cs" />
+    <Compile Include="Handlers\UserCreatedSleepAsyncHandler.cs" />
+    <Compile Include="Handlers\UserCreatedSleepSyncHandler.cs" />
     <Compile Include="IServiceResolver.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="StaticInfo.cs" />
   </ItemGroup>
   <ItemGroup />

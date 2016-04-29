@@ -10,29 +10,4 @@ namespace Core.DataAccess
     {
         void Commit();
     }
-
-
-    public class UnitOfWork : IUnitOfWork
-    {
-        private bool isDisposed;
-
-        public UnitOfWork()
-        {
-            StaticInfo.UnitOfWorks += 1;
-            this.isDisposed = false;
-        }
-
-        public void Commit()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            if (isDisposed)
-                throw new Exception("UnitOfWork disposed already");
-
-            isDisposed = true;
-        }
-    }
 }

@@ -10,5 +10,6 @@ namespace Core
         T Resolve<T>();
         object Resolve(Type type);
         IList<T> ResolveAll<T>();
+        IDisposable BeginScope();
     }
 }
