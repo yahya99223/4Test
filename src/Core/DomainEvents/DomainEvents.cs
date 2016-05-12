@@ -47,15 +47,17 @@ namespace Core
                 var asyncHandlers = handlers.Where(h => h.IsAsync).ToList();
                 var syncHandlers = handlers.Where(h => !h.IsAsync).ToList();
 
-                Parallel.ForEach(asyncHandlers, (h) =>
+                //Parallel.ForEach(asyncHandlers, (h) =>
+                foreach (var h in asyncHandlers)                
                 {
                     Task.Run(() => {
-                      //  using (serviceResolver.BeginScope())
+                        using (serviceResolver.BeginScope()) 
                         {
                             h.Handle(args);
                         }
                     });
-                });
+                }
+                //);
 
                 foreach (var handler in syncHandlers)
                 {
