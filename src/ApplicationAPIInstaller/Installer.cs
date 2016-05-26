@@ -7,7 +7,6 @@ using Core;
 using Core.DataAccess;
 using Core.Model;
 using Core.Services;
-using Microsoft.Owin.Security.OAuth;
 
 namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstaller
 {
@@ -17,7 +16,7 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
         {
             container.Register(Component.For<System.Web.Http.Dependencies.IDependencyResolver>().ImplementedBy<WindsorHttpDependencyResolver>());
             container.Register(Classes.FromAssemblyNamed("ApplicationAPI").BasedOn<IHttpController>().LifestyleScoped());
-            container.Register(Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifeStyle.HybridPerWebRequestPerThread());
+            container.Register(Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifeStyle.Scoped());
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifeStyle.Transient);
 
 
