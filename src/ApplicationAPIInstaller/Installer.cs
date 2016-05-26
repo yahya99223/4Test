@@ -22,6 +22,8 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
 
 
             container.Register(Component.For<IHandles<UserCreated>>().ImplementedBy<UserCreatedSleepAsyncHandler>().LifeStyle.Transient);
+            container.Register(Component.For<IHandles<UserCreated>>().ImplementedBy<UserCreatedSleep2AsyncHandler>().LifeStyle.Transient);
+
             container.Register(Component.For<IHandles<UserCreated>>().ImplementedBy<UserCreatedSleepSyncHandler>().LifeStyle.Transient);
         }
     }

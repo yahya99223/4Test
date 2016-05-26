@@ -29,4 +29,26 @@ namespace Core
             unitOfWork.Commit();
         }
     }
+
+
+    public class UserCreatedSleep2AsyncHandler : IHandles<UserCreated>
+    {
+        private readonly IUnitOfWork unitOfWork;
+
+        public UserCreatedSleep2AsyncHandler(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+        public bool IsAsync
+        {
+            get { return true; }
+        }
+
+        public void Handle(UserCreated args)
+        {
+            Thread.Sleep(13000);
+            unitOfWork.Commit();
+        }
+    }
 }

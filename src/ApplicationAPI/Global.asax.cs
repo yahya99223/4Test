@@ -28,19 +28,20 @@ namespace ApplicationAPI
         {
             StaticInfo.BeginWebRequests += 1;
 
-            //var serviceResolver = ServiceResolverFactory.GetServiceResolver();
+            var serviceResolver = ServiceResolverFactory.GetServiceResolver();
 
             HttpContext context = HttpContext.Current;
-            //context.Items.Add("PerWebRequest", serviceResolver.BeginScope());
+            context.Items.Add("PerWebRequest", serviceResolver.BeginScope());
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
             StaticInfo.EndWebRequests += 1;
 
-            /*HttpContext context = HttpContext.Current;
-            //var scope = context.Items["PerWebRequest"] as IDisposable;
-            //scope.Dispose();
+            HttpContext context = HttpContext.Current;
+            var scope = context.Items["PerWebRequest"] as IDisposable;
+            scope.Dispose();
+            
             var message = new StringBuilder();
             message.AppendLine(string.Format("BeginWebRequests :{0}", StaticInfo.BeginWebRequests));
             message.AppendLine(string.Format("EndWebRequests :{0}", StaticInfo.EndWebRequests));
@@ -53,7 +54,7 @@ namespace ApplicationAPI
             message.AppendLine(string.Format("Exception :{0}", StaticInfo.Exception));
             //message.AppendLine(string.Format("Users :{0}", StaticInfo.Users));
 
-            context.Response.Write(message);*/
+            context.Response.Output.Write(message);
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
