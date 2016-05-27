@@ -36,9 +36,10 @@ namespace WebApplication.Controllers
             var val = rnd.Next(2000000, 200000000);
             for (int i = 0; i < val; i++)
             {
-                Thread.Sleep(100);
-                var x = i / val * 213 ^ 12312;
+                var x = i/val; //* 213 ^ 12312;
             }
+            Thread.Sleep(rnd.Next(90, 250));
+            model.Id = Guid.NewGuid();
             if (!list.TryAdd(model.Id, model))
             {
                 throw new Exception("Failed in Add");
