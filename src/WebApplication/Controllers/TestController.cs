@@ -47,11 +47,12 @@ namespace WebApplication.Controllers
                 intervalTime = shouldBeLong ? 1200 : 200;
                 shouldBeLong = !shouldBeLong;
             }
-            while (startDate.AddMilliseconds(intervalTime) > DateTime.UtcNow)
+            /*while (startDate.AddMilliseconds(intervalTime) > DateTime.UtcNow)
             {
                 /*loopCount = loopCount + 1;
-                stringBuilder.Append("a");*/
-            }
+                stringBuilder.Append("a");
+            }*/
+            Thread.Sleep(intervalTime);
             var result = new ApiModel
             {
                 Id = Guid.NewGuid(),
