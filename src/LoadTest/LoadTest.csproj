@@ -61,10 +61,10 @@
     <None Include="GetTest.webtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GetLoadWebTest.loadtest">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="AddWebTest.webtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GetLoadUnitTest.loadtest">
+    <None Include="GetLoadTest.loadtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
