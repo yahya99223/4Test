@@ -419,21 +419,16 @@
         <DefaultCounter CategoryName="Memory" CounterName="Available MBytes" InstanceName="" GraphName="" />
       </DefaultCountersForAutomaticGraphs>
     </CounterSet>
-    <CounterSet Name="WebAction Performance" CounterSetType="Fixed" LocId="">
+    <CounterSet Name="Memory Usage" CounterSetType="Fixed" LocId="">
       <CounterCategories>
-        <CounterCategory Name="Web Action Performance">
+        <CounterCategory Name="IDS Memory Usage">
           <Counters>
-            <Counter Name="Web Action Error: Average Operation Time" />
-            <Counter Name="Web Action Error: Average Operation Time Base" />
-            <Counter Name="Web Action Error: Operation Count" />
-            <Counter Name="Web Action Error: Operations Per Second" />
-            <Counter Name="Web Action: Average Operation Time" />
-            <Counter Name="Web Action: Average Operation Time Base" />
-            <Counter Name="Web Action: Operation Count" />
-            <Counter Name="Web Action: Operations Per Second" />
-            <Counter Name="Web Action Error: Memory Usage" />
-            <Counter Name="Web Action: Memory Usage" />
+            <Counter Name="KB Memory Usage" />
+            <Counter Name="MB Memory Usage" />
           </Counters>
+          <Instances>
+            <Instance Name="*" />
+          </Instances>
         </CounterCategory>
       </CounterCategories>
       <DefaultCountersForAutomaticGraphs>
@@ -447,7 +442,7 @@
       <CounterSetMappings>
         <CounterSetMapping ComputerName="WAHID-PC">
           <CounterSetReferences>
-            <CounterSetReference CounterSetName="WebAction Performance" />
+            <CounterSetReference CounterSetName="Memory Usage" />
           </CounterSetReferences>
         </CounterSetMapping>
         <CounterSetMapping ComputerName="[CONTROLLER MACHINE]">

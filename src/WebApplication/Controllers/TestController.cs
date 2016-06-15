@@ -80,7 +80,7 @@ namespace WebApplication.Controllers
             Random r = new Random();
             //for (int x = 0; x < 1024; x++)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 1024; j++)
                     {

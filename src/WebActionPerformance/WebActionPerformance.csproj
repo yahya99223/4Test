@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KbWorkingSet.cs" />
     <Compile Include="PerformanceCounterLocator.cs" />
     <Compile Include="PerformanceMonitorOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
