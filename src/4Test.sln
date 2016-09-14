@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{8CBEB91C-3696-4561-8CBC-20C83BB88987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTire", "ServiceTire\ServiceTire.csproj", "{05658FE5-3DDD-4BF1-BC15-47642AA335B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{2BFC5280-2ABF-43C3-816E-EDDA5E08D90C}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8CBEB91C-3696-4561-8CBC-20C83BB88987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CBEB91C-3696-4561-8CBC-20C83BB88987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CBEB91C-3696-4561-8CBC-20C83BB88987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CBEB91C-3696-4561-8CBC-20C83BB88987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05658FE5-3DDD-4BF1-BC15-47642AA335B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05658FE5-3DDD-4BF1-BC15-47642AA335B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05658FE5-3DDD-4BF1-BC15-47642AA335B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05658FE5-3DDD-4BF1-BC15-47642AA335B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BFC5280-2ABF-43C3-816E-EDDA5E08D90C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BFC5280-2ABF-43C3-816E-EDDA5E08D90C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BFC5280-2ABF-43C3-816E-EDDA5E08D90C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BFC5280-2ABF-43C3-816E-EDDA5E08D90C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
