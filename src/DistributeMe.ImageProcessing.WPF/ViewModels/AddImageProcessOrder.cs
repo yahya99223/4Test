@@ -37,6 +37,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
             if (result == true)
             {
                 ImagePath = dlg.FileName;
+
             }
         }
     }
