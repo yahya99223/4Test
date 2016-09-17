@@ -68,6 +68,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Messages\ProcessImageCommand.cs" />
+    <Compile Include="RabbitMqManager.cs" />
     <Compile Include="ViewModels\AddImageProcessOrder.cs" />
     <Compile Include="Views\AddProcessOrder.xaml.cs">
       <DependentUpon>AddProcessOrder.xaml</DependentUpon>
@@ -107,7 +109,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DistributeMe.ImageProcessing.Messaging\DistributeMe.ImageProcessing.Messaging.csproj">
+      <Project>{F330F2DF-A98A-4273-A62F-F0F9852BED25}</Project>
+      <Name>DistributeMe.ImageProcessing.Messaging</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AddProcessOrder.xaml">
       <SubType>Designer</SubType>

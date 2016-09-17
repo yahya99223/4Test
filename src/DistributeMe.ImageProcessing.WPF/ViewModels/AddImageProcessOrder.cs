@@ -1,5 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.IO;
+using System.Windows.Input;
 using DistributeMe.ImageProcessing.WPF.Helpers;
+using DistributeMe.ImageProcessing.WPF.Messages;
 using Microsoft.Win32;
 
 namespace DistributeMe.ImageProcessing.WPF.ViewModels
@@ -37,7 +40,15 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
             if (result == true)
             {
                 ImagePath = dlg.FileName;
-
+                var processImageCommand = new ProcessImageCommand()
+                {
+                    RequestId = Guid.NewGuid(),
+                    Data = File.ReadAllBytes(imagePath),
+                };
+                using (var bus = new RabbitMqManager())
+                {
+                    bus.SendProcessImageCommand(processImageCommand);
+                }
             }
         }
     }
