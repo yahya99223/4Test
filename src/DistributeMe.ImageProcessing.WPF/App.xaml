@@ -1,0 +1,11 @@
+﻿<Application x:Class="DistributeMe.ImageProcessing.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DistributeMe.ImageProcessing.WPF"
+             xmlns:viewModel="clr-namespace:DistributeMe.ImageProcessing.WPF.ViewModels"
+             xmlns:wpf="clr-namespace:DistributeMe.ImageProcessing.WPF.Helpers"
+             StartupUri="Views/AddProcessOrder.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
