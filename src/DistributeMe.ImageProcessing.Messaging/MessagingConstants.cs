@@ -12,8 +12,8 @@ namespace DistributeMe.ImageProcessing.Messaging
         public const string ContentType = "application/json";
 
         public const string ProcessImageExchange = "distributeme.imageprocessing.processimage.exchange";
-        //public const string ProcessedFaceExchange = "distributeme.imageprocessing.processedface.exchange";
-        //public const string ProcessedOcrExchange = "distributeme.imageprocessing.processedocr.exchange";
+        public const string ProcessedFaceExchange = "distributeme.imageprocessing.processedface.exchange";
+        public const string ProcessedOcrExchange = "distributeme.imageprocessing.processedocr.exchange";
 
         public const string ProcessFaceQueue = "distributeme.imageprocessing.processface.queue";
         public const string ProcessOcrQueue = "distributeme.imageprocessing.processocr.queue";

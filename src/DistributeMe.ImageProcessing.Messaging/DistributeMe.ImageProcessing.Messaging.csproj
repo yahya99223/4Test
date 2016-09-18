@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IFaceRecognitionImageProcessedEvent.cs" />
+    <Compile Include="IOcrImageProcessedEvent.cs" />
     <Compile Include="IProcessImageCommand.cs" />
     <Compile Include="MessagingConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

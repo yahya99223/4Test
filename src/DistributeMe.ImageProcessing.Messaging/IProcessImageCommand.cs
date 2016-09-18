@@ -8,7 +8,7 @@ namespace DistributeMe.ImageProcessing.Messaging
 {
     public interface IProcessImageCommand
     {
-        Guid RequestId { get; set; }
-        byte[] Data { get; set; }
+        Guid RequestId { get;  }
+        byte[] Data { get; }
     }
 }

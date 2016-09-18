@@ -9,7 +9,13 @@ namespace DistributeMe.ImageProcessing.WPF.Messages
 {
     public class ProcessImageCommand: IProcessImageCommand
     {
-        public Guid RequestId { get; set; }
-        public byte[] Data { get; set; }
+        public ProcessImageCommand(Guid requestId, byte[] data)
+        {
+            RequestId = requestId;
+            Data = data;
+        }
+
+        public Guid RequestId { get; }
+        public byte[] Data { get; }
     }
 }

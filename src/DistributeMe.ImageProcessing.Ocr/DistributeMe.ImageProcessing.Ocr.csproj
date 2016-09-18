@@ -52,12 +52,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageProcessedCommandConsumer.cs" />
+    <Compile Include="Messages\OcrImageProcessedEvent.cs" />
+    <Compile Include="Messages\ProcessImageCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RabbitMqManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DistributeMe.ImageProcessing.Messaging\DistributeMe.ImageProcessing.Messaging.csproj">
+      <Project>{F330F2DF-A98A-4273-A62F-F0F9852BED25}</Project>
+      <Name>DistributeMe.ImageProcessing.Messaging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
