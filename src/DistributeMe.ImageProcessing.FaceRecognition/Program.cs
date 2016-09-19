@@ -4,18 +4,15 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using DistributeMe.ImageProcessing.Messaging;
+using MassTransit;
 
 namespace DistributeMe.ImageProcessing.FaceRecognition
 {
-    /*class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }*/
-
     public static class Program
     {
+        private static IBusControl bus;
+
         #region Nested classes to support running as service
 
         public const string ServiceName = "ImageProcessingFaceRecognitionService";
@@ -60,13 +57,22 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
 
         private static void Start(string[] args)
         {
+
+            bus = BusConfigurator.ConfigureBus((cfg, host) =>
+            {
+                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessFaceQueue, e =>
+                {
+                    e.Consumer<ProcessFaceConsumer>();
+                });
+            });
+            bus.Start();
             Console.WriteLine("Listening for Process Image Command to do FaceRecognition..");
-            Console.ReadKey();
+            Console.ReadKey(true);
         }
 
         private static void Stop()
         {
-            // onstop code here
+            bus.Stop();
         }
     }
 

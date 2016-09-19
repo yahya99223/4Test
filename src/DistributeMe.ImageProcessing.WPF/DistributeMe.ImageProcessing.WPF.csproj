@@ -81,6 +81,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\AsyncRelayCommand.cs" />
     <Compile Include="Messages\FaceRecognitionImageProcessedEvent.cs" />
     <Compile Include="Messages\OcrImageProcessedEvent.cs" />
     <Compile Include="Messages\ProcessImageCommand.cs" />
