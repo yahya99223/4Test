@@ -8,15 +8,12 @@ namespace DistributeMe.ImageProcessing.Messaging
 {
     public static class MessagingConstants
     {
-        public const string MqUri = "rabbitmq://localhost/";
-        public const string UserName = "guest";
-        public const string Password = "guest";
+        public const string MqUri = "rabbitmq://localhost/DistributeMe/";
+        public const string UserName = "wahid";
+        public const string Password = "poi098";
         
 
-        public const string ProcessFaceQueue = "imageprocessing.processface.queue";
-        public const string ProcessOcrQueue = "imageprocessing.processocr.queue";
-
-        public const string ProcessedFaceNotificationQueue = "imageprocessing.notification.processedface.queue";
-        public const string ProcessedOcrNotificationQueue = "imageprocessing.notification.processedocr.queue";
+        public const string ProcessFaceQueue = "imageprocessing.face.service";
+        public const string ProcessOcrQueue = "imageprocessing.ocr.service";
     }
 }

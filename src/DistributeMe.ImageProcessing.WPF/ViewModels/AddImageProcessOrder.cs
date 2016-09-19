@@ -49,6 +49,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
                     RequestId = Guid.NewGuid()
                 };
                 ProcessRequests.Insert(0, request);
+
                 var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(dlg.FileName));
 
                 var bus = BusConfigurator.ConfigureBus();
