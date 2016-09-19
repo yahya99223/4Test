@@ -12,17 +12,11 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
     public class AddImageProcessOrder : ObservableObject,IDisposable
     {
         private ObservableCollection<ProcessRequest> processRequests;
-        private RabbitMqManager rabbitMqManager;
 
         public AddImageProcessOrder()
         {
             OpenImageFileCommand = new RelayCommand(openImageFileCommand_Executed);
             processRequests = new ObservableCollection<ProcessRequest>();
-
-            rabbitMqManager = new RabbitMqManager();
-        
-            rabbitMqManager.ListenForFaceProcessImageEvent(processRequests);
-            rabbitMqManager.ListenForOcrProcessImageEvent(processRequests);
         }
 
         public ObservableCollection<ProcessRequest> ProcessRequests
@@ -54,16 +48,12 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
                 };
                 ProcessRequests.Insert(0, request);
                 var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(dlg.FileName));
-                using (var bus = new RabbitMqManager())
-                {
-                    bus.SendProcessImageCommand(processImageCommand);
-                }
             }
         }
 
         public void Dispose()
         {
-            rabbitMqManager.Dispose();
+
         }
     }
 }

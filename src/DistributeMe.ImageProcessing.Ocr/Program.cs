@@ -60,12 +60,8 @@ namespace DistributeMe.ImageProcessing.Ocr
 
         private static void Start(string[] args)
         {
-            using (var rabbitMqManager = new RabbitMqManager())
-            {
-                rabbitMqManager.ListenForProcessImageCommand();
                 Console.WriteLine("Listening for Process Image Command  to do OCR..");
                 Console.ReadKey();
-            }
         }
 
         private static void Stop()

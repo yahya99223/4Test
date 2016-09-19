@@ -60,12 +60,8 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
 
         private static void Start(string[] args)
         {
-            using (var rabbitMqManager = new RabbitMqManager())
-            {
-                rabbitMqManager.ListenForProcessImageCommand();
-                Console.WriteLine("Listening for Process Image Command to do FaceRecognition..");
-                Console.ReadKey();
-            }
+            Console.WriteLine("Listening for Process Image Command to do FaceRecognition..");
+            Console.ReadKey();
         }
 
         private static void Stop()

@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeMe.ImageProcessin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeMe.ImageProcessing.FaceRecognition", "DistributeMe.ImageProcessing.FaceRecognition\DistributeMe.ImageProcessing.FaceRecognition.csproj", "{B6CAF46E-8F46-4F55-A256-EA87E6579ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeMe.ImageProcessing.Notification", "DistributeMe.ImageProcessing.Notification\DistributeMe.ImageProcessing.Notification.csproj", "{C268D11D-2392-4169-A7C3-3766FE0A8555}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeMe.ImageProcessing.Ocr", "DistributeMe.ImageProcessing.Ocr\DistributeMe.ImageProcessing.Ocr.csproj", "{9F115F53-1842-4958-8A56-5E40A6E84865}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{B6CAF46E-8F46-4F55-A256-EA87E6579ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6CAF46E-8F46-4F55-A256-EA87E6579ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6CAF46E-8F46-4F55-A256-EA87E6579ECF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C268D11D-2392-4169-A7C3-3766FE0A8555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C268D11D-2392-4169-A7C3-3766FE0A8555}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C268D11D-2392-4169-A7C3-3766FE0A8555}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C268D11D-2392-4169-A7C3-3766FE0A8555}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F115F53-1842-4958-8A56-5E40A6E84865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F115F53-1842-4958-8A56-5E40A6E84865}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F115F53-1842-4958-8A56-5E40A6E84865}.Release|Any CPU.ActiveCfg = Release|Any CPU
