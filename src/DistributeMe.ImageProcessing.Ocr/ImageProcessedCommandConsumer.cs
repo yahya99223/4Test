@@ -34,9 +34,10 @@ namespace DistributeMe.ImageProcessing.Ocr
         {
             var startDate = DateTime.UtcNow;
             Console.WriteLine($"OCR engine processing the Image in request:{commandObj.RequestId}");
-            Thread.Sleep(1900);
+            Thread.Sleep(4500);
+            Console.WriteLine("DONE.");
 
-            var ocrImageProcessedEvent = new OcrImageProcessedEvent(commandObj.RequestId, "OCR extracted text", startDate, DateTime.UtcNow);
+            var ocrImageProcessedEvent = new OcrImageProcessedEvent(commandObj.RequestId, "extracted text", startDate, DateTime.UtcNow);
             rabbitMqManager.SendOcrImageProcessedEvent(ocrImageProcessedEvent);
         }
     }

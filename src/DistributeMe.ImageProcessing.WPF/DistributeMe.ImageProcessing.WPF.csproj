@@ -68,9 +68,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Consumers\FaceRecognitionImageProcessedConsumer.cs" />
+    <Compile Include="Consumers\OcrImageProcessedConsumer.cs" />
+    <Compile Include="Messages\FaceRecognitionImageProcessedEvent.cs" />
+    <Compile Include="Messages\OcrImageProcessedEvent.cs" />
     <Compile Include="Messages\ProcessImageCommand.cs" />
     <Compile Include="RabbitMqManager.cs" />
     <Compile Include="ViewModels\AddImageProcessOrder.cs" />
+    <Compile Include="ViewModels\ProcessRequest.cs" />
     <Compile Include="Views\AddProcessOrder.xaml.cs">
       <DependentUpon>AddProcessOrder.xaml</DependentUpon>
     </Compile>

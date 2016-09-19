@@ -34,7 +34,8 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
         {
             var startDate = DateTime.UtcNow;
             Console.WriteLine($"FaceRecognition engine processing the Image in request:{commandObj.RequestId}");
-            Thread.Sleep(1200);
+            Thread.Sleep(500);
+            Console.WriteLine("DONE.");
 
             var ocrImageProcessedEvent = new FaceRecognitionImageProcessedEvent(commandObj.RequestId, 2, startDate, DateTime.UtcNow);
             rabbitMqManager.SendFaceImageProcessedEvent(ocrImageProcessedEvent);

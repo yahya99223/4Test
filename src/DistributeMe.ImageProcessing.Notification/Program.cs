@@ -7,13 +7,6 @@ using System.Threading.Tasks;
 
 namespace DistributeMe.ImageProcessing.Notification
 {
-    /*class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }*/
-
     public static class Program
     {
         #region Nested classes to support running as service
@@ -60,7 +53,14 @@ namespace DistributeMe.ImageProcessing.Notification
 
         private static void Start(string[] args)
         {
-            // onstart code here
+            Console.Title = "Notification service";
+            using (var rabbitMqManager = new RabbitMqManager())
+            {
+                rabbitMqManager.ListenForFaceProcessImageEvent();
+                rabbitMqManager.ListenForOcrProcessImageEvent();
+                Console.WriteLine("Listening for Notifications..");
+                Console.ReadKey();
+            }
         }
 
         private static void Stop()

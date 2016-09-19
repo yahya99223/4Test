@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using DistributeMe.ImageProcessing.WPF.Helpers;
@@ -7,22 +9,29 @@ using Microsoft.Win32;
 
 namespace DistributeMe.ImageProcessing.WPF.ViewModels
 {
-    public class AddImageProcessOrder : ObservableObject
+    public class AddImageProcessOrder : ObservableObject,IDisposable
     {
-        private string imagePath;
+        private ObservableCollection<ProcessRequest> processRequests;
+        private RabbitMqManager rabbitMqManager;
 
         public AddImageProcessOrder()
         {
             OpenImageFileCommand = new RelayCommand(openImageFileCommand_Executed);
+            processRequests = new ObservableCollection<ProcessRequest>();
+
+            rabbitMqManager = new RabbitMqManager();
+        
+            rabbitMqManager.ListenForFaceProcessImageEvent(processRequests);
+            rabbitMqManager.ListenForOcrProcessImageEvent(processRequests);
         }
 
-        public string ImagePath
+        public ObservableCollection<ProcessRequest> ProcessRequests
         {
-            get { return imagePath; }
+            get { return processRequests; }
             set
             {
-                imagePath = value;
-                RaisePropertyChanged("ImagePath");
+                processRequests = value;
+                RaisePropertyChanged("ProcessRequests");
             }
         }
 
@@ -39,13 +48,22 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
             var result = dlg.ShowDialog();
             if (result == true)
             {
-                ImagePath = dlg.FileName;
-                var processImageCommand = new ProcessImageCommand(Guid.NewGuid(), File.ReadAllBytes(imagePath));
+                var request = new ProcessRequest
+                {
+                    RequestId = Guid.NewGuid()
+                };
+                ProcessRequests.Insert(0, request);
+                var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(dlg.FileName));
                 using (var bus = new RabbitMqManager())
                 {
                     bus.SendProcessImageCommand(processImageCommand);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            rabbitMqManager.Dispose();
         }
     }
 }

@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImageProcessedCommandConsumer.cs" />
-    <Compile Include="Messages\OcrImageProcessedEvent.cs" />
+    <Compile Include="Messages\FaceRecognitionImageProcessedEvent.cs" />
     <Compile Include="Messages\ProcessImageCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
