@@ -30,13 +30,15 @@ namespace DistributeMe.ImageProcessing.WPF
             //Dispose on unhandled exception
             this.DispatcherUnhandledException += (sender, args) =>
             {
-                if (disposableViewModel != null) disposableViewModel.Dispose();
+                if (disposableViewModel != null)
+                    disposableViewModel.Dispose();
             };
 
             //Dispose on exit
             this.Exit += (sender, args) =>
             {
-                if (disposableViewModel != null) disposableViewModel.Dispose();
+                if (disposableViewModel != null)
+                    disposableViewModel.Dispose();
             };
         }
     }

@@ -14,6 +14,7 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
 
         public void Consume(IFaceRecognitionImageProcessedEvent registeredEvent, ObservableCollection<ProcessRequest> processRequests)
         {
+
             var request = processRequests.FirstOrDefault(r => r.RequestId == registeredEvent.RequestId);
             if (request == null)
                 return;
@@ -22,9 +23,10 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             {
                 lock (locker)
                 {
-                    request.Notifications.Insert(0, $"Face Recognition: {registeredEvent.FacesCount}");
+                    request.Notifications.Insert(0, $"Faces Count: {registeredEvent.FacesCount}");
                 }
             });
+
         }
     }
 }
