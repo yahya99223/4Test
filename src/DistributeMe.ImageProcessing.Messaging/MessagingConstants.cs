@@ -8,7 +8,7 @@ namespace DistributeMe.ImageProcessing.Messaging
 {
     public static class MessagingConstants
     {
-        public const string MqUri = "rabbitmq://localhost/DistributeMe/";
+        public const string MqUri = "rabbitmq://localhost/distributeme/";
         public const string UserName = "wahid";
         public const string Password = "poi098";
         
