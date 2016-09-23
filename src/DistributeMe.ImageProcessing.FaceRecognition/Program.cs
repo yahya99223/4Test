@@ -57,7 +57,7 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
 
         private static void Start(string[] args)
         {
-
+            Console.Title = ServiceName;
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.ProcessFaceQueue, e =>
@@ -66,6 +66,7 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
                 });
             });
             bus.Start();
+
             Console.WriteLine("Listening for Process Image Command to do FaceRecognition..");
             Console.ReadKey(true);
         }

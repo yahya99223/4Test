@@ -8,13 +8,6 @@ using MassTransit;
 
 namespace DistributeMe.ImageProcessing.Ocr
 {
-    /*class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }*/
-
     public static class Program
     {
         private static IBusControl bus;
@@ -63,25 +56,24 @@ namespace DistributeMe.ImageProcessing.Ocr
 
         private static void Start(string[] args)
         {
+            Console.Title = ServiceName;
+             
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
-                cfg.ReceiveEndpoint(host,MessagingConstants.ProcessOcrQueue, e =>
-                    {
-                        e.Consumer<ProcessOcrConsumer>();
-                    });
+                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
+                {
+                    e.Consumer<ProcessOcrConsumer>();
+                });
             });
             bus.Start();
 
             Console.WriteLine("Listening for Process Image Command  to do OCR..");
-
             Console.ReadKey();
         }
 
         private static void Stop()
         {
             bus.Stop();
-
-            // onstop code here
         }
     }
 }

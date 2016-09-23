@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DistributeMe.ImageProcessing.FaceRecognition.Messages;
 using DistributeMe.ImageProcessing.Messaging;
 using MassTransit;
 
@@ -14,9 +15,14 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
 
             await Console.Out.WriteLineAsync($"Processing Request: {command.RequestId}");
 
-            Thread.Sleep(500);
-            //await Task.Run(() => Thread.Sleep(500));
+            var processStartDate = DateTime.UtcNow;
+            Thread.Sleep(2500);
+            //await Task.Run(() => Thread.Sleep(2500));
 
+            await Console.Out.WriteLineAsync($"DONE");
+
+            var notificationEvent = new FaceRecognitionImageProcessedEvent(command.RequestId, 2, processStartDate, DateTime.UtcNow);
+            await context.Publish<IFaceRecognitionImageProcessedEvent>(notificationEvent);
 
         }
     }

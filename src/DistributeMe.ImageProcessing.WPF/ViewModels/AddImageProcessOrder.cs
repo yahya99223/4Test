@@ -2,23 +2,50 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DistributeMe.ImageProcessing.Messaging;
+using DistributeMe.ImageProcessing.WPF.Consumers;
 using DistributeMe.ImageProcessing.WPF.Helpers;
 using DistributeMe.ImageProcessing.WPF.Messages;
+using MassTransit;
 using Microsoft.Win32;
 
 namespace DistributeMe.ImageProcessing.WPF.ViewModels
 {
-    public class AddImageProcessOrder : ObservableObject,IDisposable
+    public class AddImageProcessOrder : ObservableObject, IDisposable
     {
         private ObservableCollection<ProcessRequest> processRequests;
+        private IBusControl bus;
+        private static readonly object locker = new object();
 
         public AddImageProcessOrder()
         {
             OpenImageFileCommand = new AsyncRelayCommand(openImageFileCommand_Executed);
             processRequests = new ObservableCollection<ProcessRequest>();
+            bus = BusConfigurator.ConfigureBus((cfg, host) =>
+            {
+                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
+                {
+                    e.Consumer(() => new ProcessFaceConsumer(processRequests));
+                    //e.Consumer(() => new ProcessOcrConsumer(processRequests));
+                    /*e.Handler<IOcrImageProcessedEvent>(context => Task.Run(() =>
+                    {
+                        var request = processRequests.FirstOrDefault(r => r.RequestId == context.Message.RequestId);
+                        if (request == null)
+                            return;
+                        lock (locker)
+                        {
+                            App.Current.Dispatcher.Invoke(() =>
+                            {
+                                request.Notifications.Insert(0, context.Message.ExtractedText);
+                            });
+                        }
+                    }));*/
+                });
+            });
+            bus.Start();
         }
 
         public ObservableCollection<ProcessRequest> ProcessRequests
@@ -52,21 +79,19 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
                 var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(dlg.FileName));
 
-                var bus = BusConfigurator.ConfigureBus();
-
-                var faceEngineEndPointUri = new Uri(MessagingConstants.MqUri+MessagingConstants.ProcessFaceQueue);
+                var faceEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessFaceQueue);
                 var faceEngineEndPoint = await bus.GetSendEndpoint(faceEngineEndPointUri);
                 await faceEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);
-
-                var ocrEngineEndPointUri = new Uri(MessagingConstants.MqUri+MessagingConstants.ProcessOcrQueue);
+/*
+                var ocrEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessOcrQueue);
                 var ocrEngineEndPoint = await bus.GetSendEndpoint(ocrEngineEndPointUri);
-                await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);
+                await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);*/
             }
         }
 
         public void Dispose()
         {
-
+            bus.Stop();
         }
     }
 }
