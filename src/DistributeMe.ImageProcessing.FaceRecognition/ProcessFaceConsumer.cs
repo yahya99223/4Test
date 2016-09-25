@@ -22,7 +22,10 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
             await Console.Out.WriteLineAsync($"DONE");
 
             var notificationEvent = new FaceRecognitionImageProcessedEvent(command.RequestId, 2, processStartDate, DateTime.UtcNow);
-            await context.Publish<IFaceRecognitionImageProcessedEvent>(notificationEvent);
+            await context.Publish<IFaceRecognitionImageProcessedEvent>(notificationEvent, publishContext =>
+            {
+                publishContext.DestinationAddress = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessNotificationQueue);
+            });
 
         }
     }
