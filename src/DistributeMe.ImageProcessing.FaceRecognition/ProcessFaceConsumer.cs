@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace DistributeMe.ImageProcessing.FaceRecognition
 {
-    internal class ProcessFaceConsumer:IConsumer<IProcessImageCommand>
+    internal class ProcessFaceConsumer : IConsumer<IProcessImageCommand>
     {
         public async Task Consume(ConsumeContext<IProcessImageCommand> context)
         {

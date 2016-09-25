@@ -14,6 +14,7 @@ namespace DistributeMe.ImageProcessing.Ocr
             var command = context.Message;
 
             await Console.Out.WriteLineAsync($"Processing Request: {command.RequestId}");
+
             var processStartDate = DateTime.UtcNow;
             Thread.Sleep(1500);
             //await Task.Run(() => Thread.Sleep(1500));

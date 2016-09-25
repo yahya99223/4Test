@@ -11,9 +11,10 @@ namespace DistributeMe.ImageProcessing.Messaging
         public const string MqUri = "rabbitmq://localhost/distributeme/";
         public const string UserName = "wahid";
         public const string Password = "poi098";
-        
+
 
         public const string ProcessFaceQueue = "imageprocessing.face.service";
         public const string ProcessOcrQueue = "imageprocessing.ocr.service";
+        public const string ProcessNotificationQueue = "imageprocessing.notification.service";
     }
 }

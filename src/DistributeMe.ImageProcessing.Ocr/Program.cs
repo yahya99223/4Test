@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
 using DistributeMe.ImageProcessing.Messaging;
 using MassTransit;
 
@@ -14,7 +11,7 @@ namespace DistributeMe.ImageProcessing.Ocr
 
         #region Nested classes to support running as service
 
-        public const string ServiceName = "ImageProcessingOcrService";
+        public const string ServiceName = "ImageOcrRecognitionService";
 
         public class Service : ServiceBase
         {
@@ -57,7 +54,7 @@ namespace DistributeMe.ImageProcessing.Ocr
         private static void Start(string[] args)
         {
             Console.Title = ServiceName;
-             
+
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
@@ -67,8 +64,8 @@ namespace DistributeMe.ImageProcessing.Ocr
             });
             bus.Start();
 
-            Console.WriteLine("Listening for Process Image Command  to do OCR..");
-            Console.ReadKey();
+            Console.WriteLine("Listening for Process Image Command to do OCR..");
+            Console.ReadKey(true);
         }
 
         private static void Stop()
@@ -76,4 +73,6 @@ namespace DistributeMe.ImageProcessing.Ocr
             bus.Stop();
         }
     }
+
+
 }

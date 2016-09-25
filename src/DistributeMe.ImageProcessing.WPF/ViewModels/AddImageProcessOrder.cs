@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DistributeMe.ImageProcessing.Messaging;
@@ -24,27 +22,16 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
         {
             OpenImageFileCommand = new AsyncRelayCommand(openImageFileCommand_Executed);
             processRequests = new ObservableCollection<ProcessRequest>();
+
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
-                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
+                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessNotificationQueue, e =>
                 {
+                    e.Consumer(() => new ProcessOcrConsumer(processRequests));
                     e.Consumer(() => new ProcessFaceConsumer(processRequests));
-                    //e.Consumer(() => new ProcessOcrConsumer(processRequests));
-                    /*e.Handler<IOcrImageProcessedEvent>(context => Task.Run(() =>
-                    {
-                        var request = processRequests.FirstOrDefault(r => r.RequestId == context.Message.RequestId);
-                        if (request == null)
-                            return;
-                        lock (locker)
-                        {
-                            App.Current.Dispatcher.Invoke(() =>
-                            {
-                                request.Notifications.Insert(0, context.Message.ExtractedText);
-                            });
-                        }
-                    }));*/
                 });
             });
+            
             bus.Start();
         }
 
@@ -78,11 +65,12 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
                 ProcessRequests.Insert(0, request);
 
                 var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(dlg.FileName));
+                await bus.Publish<IProcessImageCommand>(processImageCommand);
 
-                var faceEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessFaceQueue);
+                /*var faceEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessFaceQueue);
                 var faceEngineEndPoint = await bus.GetSendEndpoint(faceEngineEndPointUri);
                 await faceEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);
-/*
+
                 var ocrEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessOcrQueue);
                 var ocrEngineEndPoint = await bus.GetSendEndpoint(ocrEngineEndPointUri);
                 await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);*/

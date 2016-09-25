@@ -14,10 +14,10 @@ namespace DistributeMe.ImageProcessing.Messaging
         {
             return Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                var host = cfg.Host(new Uri(MessagingConstants.MqUri), hst =>
+                var host = cfg.Host(new Uri(MessagingConstants.MqUri), h =>
                 {
-                    hst.Username(MessagingConstants.UserName);
-                    hst.Password(MessagingConstants.Password);
+                    h.Username(MessagingConstants.UserName);
+                    h.Password(MessagingConstants.Password);
                 });
 
                 registrationAction?.Invoke(cfg, host);
