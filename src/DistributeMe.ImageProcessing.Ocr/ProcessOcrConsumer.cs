@@ -17,7 +17,6 @@ namespace DistributeMe.ImageProcessing.Ocr
 
             var processStartDate = DateTime.UtcNow;
             Thread.Sleep(1500);
-            //await Task.Run(() => Thread.Sleep(1500));
 
             await Console.Out.WriteLineAsync($"DONE");
 

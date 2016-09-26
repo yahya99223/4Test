@@ -51,8 +51,8 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
         {
             var dlg = new OpenFileDialog
             {
-                DefaultExt = ".png",
-                Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg"
+                DefaultExt = "JPG Files (*.jpg)|*.jpg",
+                Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png"
             };
 
             var result = dlg.ShowDialog();
