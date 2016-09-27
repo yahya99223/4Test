@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusConfigurator.cs" />
+    <Compile Include="MessageFilter.cs" />
     <Compile Include="MessagesContracts\IFaceRecognitionImageProcessedEvent.cs" />
     <Compile Include="MessagesContracts\IOcrImageProcessedEvent.cs" />
     <Compile Include="MessagesContracts\IProcessImageCommand.cs" />

@@ -16,13 +16,12 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
             await Console.Out.WriteLineAsync($"Processing Request: {command.RequestId}");
 
             var processStartDate = DateTime.UtcNow;
-            Thread.Sleep(2500);
+            Thread.Sleep(1000);
 
             await Console.Out.WriteLineAsync($"DONE");
 
             var notificationEvent = new FaceRecognitionImageProcessedEvent(command.RequestId, 2, processStartDate, DateTime.UtcNow);
             await context.Publish<IFaceRecognitionImageProcessedEvent>(notificationEvent);
-
         }
     }
 }

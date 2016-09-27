@@ -7,6 +7,7 @@ namespace DistributeMe.ImageProcessing.Ocr
 {
     public static class Program
     {
+        public static DateTime startDate;
         private static IBusControl bus;
 
         #region Nested classes to support running as service
@@ -54,11 +55,19 @@ namespace DistributeMe.ImageProcessing.Ocr
         private static void Start(string[] args)
         {
             Console.Title = ServiceName;
-
+            startDate = DateTime.UtcNow;
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
-                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
+                cfg.UseMessageFilter();
+                cfg.UseCircuitBreaker(cb =>
                 {
+                    cb.ActiveThreshold = 3;
+                    cb.TrackingPeriod = TimeSpan.FromSeconds(65);
+                    cb.TripThreshold = 70;
+                    cb.ResetInterval(TimeSpan.FromMinutes(3));
+                });
+                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
+                {                    
                     e.Consumer<ProcessOcrConsumer>();
                 });
             });

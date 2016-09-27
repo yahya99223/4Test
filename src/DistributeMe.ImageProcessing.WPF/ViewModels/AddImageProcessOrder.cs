@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DistributeMe.ImageProcessing.Messaging;
@@ -31,7 +32,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
                     e.Consumer(() => new ProcessFaceConsumer(processRequests));
                 });
             });
-            
+
             bus.Start();
         }
 
@@ -49,7 +50,20 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
         private async Task openImageFileCommand_Executed(object obj)
         {
-            var dlg = new OpenFileDialog
+            for (int i = 0; i < 16; i++)
+            {
+                var request = new ProcessRequest
+                {
+                    RequestId = Guid.NewGuid()
+                };
+                ProcessRequests.Insert(0, request);
+
+                var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(@"D:\UserData\Pictures\Untitled.png"));
+                await bus.Publish<IProcessImageCommand>(processImageCommand);
+                Thread.Sleep(100);
+            }
+
+            /*var dlg = new OpenFileDialog
             {
                 DefaultExt = "JPG Files (*.jpg)|*.jpg",
                 Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png"
@@ -73,8 +87,8 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
                 var ocrEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessOcrQueue);
                 var ocrEngineEndPoint = await bus.GetSendEndpoint(ocrEngineEndPointUri);
-                await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);*/
-            }
+                await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);#1#
+            }*/
         }
 
         public void Dispose()

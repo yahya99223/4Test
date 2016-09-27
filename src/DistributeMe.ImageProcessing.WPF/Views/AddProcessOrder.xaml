@@ -13,18 +13,18 @@
         <viewModel:AddImageProcessOrder />
     </Window.DataContext>
 
-    <Grid Margin="5,5,5,5" VerticalAlignment="Top">
+    <Grid Margin="5">
 
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="130" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Command="{Binding OpenImageFileCommand}" Height="40" Width="120" HorizontalAlignment="Left">Select Image</Button>
-        <ListBox Grid.Row="1" ItemsSource="{Binding ProcessRequests}">
+        <ListBox Grid.Row="1" ItemsSource="{Binding ProcessRequests}" Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid >

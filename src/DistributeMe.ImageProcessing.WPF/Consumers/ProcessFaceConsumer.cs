@@ -25,7 +25,7 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
             if (request == null)
                 return;
-            lock (locker)
+            //lock (locker)
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {

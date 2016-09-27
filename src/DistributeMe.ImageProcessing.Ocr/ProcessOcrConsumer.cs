@@ -16,7 +16,9 @@ namespace DistributeMe.ImageProcessing.Ocr
             await Console.Out.WriteLineAsync($"Processing Request: {command.RequestId}");
 
             var processStartDate = DateTime.UtcNow;
-            Thread.Sleep(1500);
+            Thread.Sleep(1000);
+            /*if (DateTime.UtcNow < Program.startDate.AddSeconds(60))
+                throw new ArgumentException("Fake Exception");*/
 
             await Console.Out.WriteLineAsync($"DONE");
 
