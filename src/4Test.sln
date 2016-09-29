@@ -1,9 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NodejsWebApp", "NodejsWebApp\NodejsWebApp.njsproj", "{3498D292-B7FA-493A-A77F-11C2194CEBCC}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NodejsConsoleApp", "NodejsConsoleApp\NodejsConsoleApp.njsproj", "{0B6490CA-C976-42BB-93AE-07ABEFA84CEC}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3498D292-B7FA-493A-A77F-11C2194CEBCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3498D292-B7FA-493A-A77F-11C2194CEBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3498D292-B7FA-493A-A77F-11C2194CEBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3498D292-B7FA-493A-A77F-11C2194CEBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B6490CA-C976-42BB-93AE-07ABEFA84CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B6490CA-C976-42BB-93AE-07ABEFA84CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B6490CA-C976-42BB-93AE-07ABEFA84CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B6490CA-C976-42BB-93AE-07ABEFA84CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
