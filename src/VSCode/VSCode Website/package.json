@@ -1,0 +1,12 @@
+{
+  "name": "nodejs-console-app",
+  "version": "0.0.1",
+  "description": "Nodejs Console Application",
+  "main": "app.js",
+  "author": {
+    "name": "w.bitar"
+  },
+  "dependencies": {
+    "require": "^2.4.20"
+  }
+}
