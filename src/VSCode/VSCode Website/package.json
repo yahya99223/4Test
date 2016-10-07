@@ -2,11 +2,12 @@
   "name": "nodejs-console-app",
   "version": "0.0.1",
   "description": "Nodejs Console Application",
-  "main": "app.js",
+  "main": "src/app.js",
   "author": {
     "name": "w.bitar"
   },
   "dependencies": {
-    "require": "^2.4.20"
+    "express": "^4.14.0",
+    "underscore": "^1.8.3"
   }
 }
