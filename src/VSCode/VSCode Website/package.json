@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "express": "^4.14.0",
+    "mongodb": "^2.2.10",
     "underscore": "^1.8.3"
   }
 }

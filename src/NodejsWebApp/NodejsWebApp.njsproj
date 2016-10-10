@@ -31,18 +31,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="server.js" />
+    <Compile Include="src\captureStudio\api\controllers\journeyController.js" />
+    <Compile Include="src\controllers\index.js" />
+    <Compile Include="src\infrastructure\guid.js" />
+    <Compile Include="src\infrastructure\index.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="src\captureStudio\" />
+    <Folder Include="src\captureStudio\apiModel\" />
+    <Folder Include="src\captureStudio\api\" />
+    <Folder Include="src\captureStudio\api\controllers\" />
+    <Folder Include="src\captureStudio\dataAccessContracts\" />
+    <Folder Include="src\captureStudio\dataAccess\" />
+    <Folder Include="src\captureStudio\domainModel\" />
+    <Folder Include="src\captureStudio\servicesContracts\" />
+    <Folder Include="src\captureStudio\services\" />
+    <Folder Include="src\controllers\" />
+    <Folder Include="src\infrastructure\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\express\" />
+    <Folder Include="typings\globals\mongodb\" />
     <Folder Include="typings\globals\node\" />
     <Folder Include="typings\globals\underscore\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="typings\globals\express\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\mongodb\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\underscore\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />

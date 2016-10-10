@@ -1,13 +1,14 @@
 {
-  "name": "nodejs-web-app",
-  "version": "0.0.0",
-  "description": "NodejsWebApp",
+  "name": "nodejs-console-app",
+  "version": "0.0.1",
+  "description": "Nodejs Console Application",
   "main": "server.js",
   "author": {
     "name": "w.bitar"
   },
   "dependencies": {
     "express": "^4.14.0",
+    "mongodb": "^2.2.10",
     "underscore": "^1.8.3"
   }
 }
