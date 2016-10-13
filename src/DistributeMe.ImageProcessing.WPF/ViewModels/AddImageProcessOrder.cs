@@ -50,7 +50,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
         private async Task openImageFileCommand_Executed(object obj)
         {
-            for (int i = 0; i < 16; i++)
+            /*for (int i = 0; i < 16; i++)
             {
                 var request = new ProcessRequest
                 {
@@ -61,7 +61,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
                 var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(@"D:\UserData\Pictures\Untitled.png"));
                 await bus.Publish<IProcessImageCommand>(processImageCommand);
                 Thread.Sleep(100);
-            }
+            }*/
 
             /*var dlg = new OpenFileDialog
             {
@@ -70,7 +70,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
             };
 
             var result = dlg.ShowDialog();
-            if (result == true)
+            if (result == true)*/
             {
                 var request = new ProcessRequest
                 {
@@ -78,7 +78,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
                 };
                 ProcessRequests.Insert(0, request);
 
-                var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(dlg.FileName));
+                var processImageCommand = new ProcessImageCommand(request.RequestId, new byte[] {} /*File.ReadAllBytes(dlg.FileName)*/);
                 await bus.Publish<IProcessImageCommand>(processImageCommand);
 
                 /*var faceEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessFaceQueue);
@@ -87,8 +87,8 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
                 var ocrEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessOcrQueue);
                 var ocrEngineEndPoint = await bus.GetSendEndpoint(ocrEngineEndPointUri);
-                await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);#1#
-            }*/
+                await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);*/
+            }
         }
 
         public void Dispose()
