@@ -9,6 +9,13 @@ namespace DistributeMe.ImageProcessing.Ocr
 {
     internal class ProcessOcrConsumer : IConsumer<IProcessImageCommand>
     {
+        private Random random;
+
+        public ProcessOcrConsumer()
+        {
+            random = new Random();
+        }
+
         public async Task Consume(ConsumeContext<IProcessImageCommand> context)
         {
             var command = context.Message;
@@ -16,11 +23,13 @@ namespace DistributeMe.ImageProcessing.Ocr
             await Console.Out.WriteLineAsync($"Processing Request: {command.RequestId}");
 
             var processStartDate = DateTime.UtcNow;
-            Thread.Sleep(1000);
+            Thread.Sleep(random.Next(1000, 5000));
             /*if (DateTime.UtcNow < Program.startDate.AddSeconds(60))
                 throw new ArgumentException("Fake Exception");*/
 
             await Console.Out.WriteLineAsync($"DONE");
+            await Console.Out.WriteLineAsync($"====");
+            await Console.Out.WriteLineAsync($"");
 
             var notificationEvent = new OcrImageProcessedEvent(command.RequestId, "extracted text", processStartDate, DateTime.UtcNow);
             await context.Publish<IOcrImageProcessedEvent>(notificationEvent);

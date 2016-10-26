@@ -58,7 +58,7 @@ namespace DistributeMe.ImageProcessing.Ocr
             startDate = DateTime.UtcNow;
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
-                cfg.UseMessageFilter();
+                //cfg.UseMessageFilter();
                 cfg.UseCircuitBreaker(cb =>
                 {
                     cb.ActiveThreshold = 3;
