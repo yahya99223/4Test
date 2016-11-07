@@ -58,6 +58,10 @@
     <Compile Include="Migrations\201611071259467_AddedInitialModel.Designer.cs">
       <DependentUpon>201611071259467_AddedInitialModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611071306329_SeedDefaultCompanty.cs" />
+    <Compile Include="Migrations\201611071306329_SeedDefaultCompanty.Designer.cs">
+      <DependentUpon>201611071306329_SeedDefaultCompanty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Person.cs" />
@@ -74,6 +78,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611071259467_AddedInitialModel.resx">
       <DependentUpon>201611071259467_AddedInitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611071306329_SeedDefaultCompanty.resx">
+      <DependentUpon>201611071306329_SeedDefaultCompanty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
