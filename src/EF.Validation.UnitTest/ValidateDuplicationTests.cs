@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
+using System.Linq;
 using EF.Validation.Model;
 using NUnit.Framework;
 
@@ -71,6 +72,15 @@ namespace EF.Validation.UnitTest
 
 
         [Test, Order(3)]
+        public void Update_Person_Should_Pass()
+        {
+            var person = dbContext.People.First(p => p.Id == secondUserId);
+            person.Name = "user2_updated";
+            dbContext.SaveChanges();
+        }
+
+
+        [Test, Order(4)]
         public void Add_Person_With_Duplicated_Name_Should_Throw_Exception()
         {
             Assert.Throws<DbEntityValidationException>(() =>
@@ -80,7 +90,7 @@ namespace EF.Validation.UnitTest
                                                                Id = Guid.NewGuid(),
                                                                ManagerId = firstUserId,
                                                                CompanyId = defaultCompanyId,
-                                                               Name = "user2",
+                                                               Name = "user2_updated",
                                                                Email = "user3@domain.com"
                                                            };
 
@@ -91,7 +101,7 @@ namespace EF.Validation.UnitTest
         }
 
 
-        [Test, Order(4)]
+        [Test, Order(5)]
         public void Add_Person_With_Duplicated_Email_Should_Throw_Exception()
         {
             Assert.Throws<DbEntityValidationException>(() =>
@@ -106,6 +116,19 @@ namespace EF.Validation.UnitTest
                                                            };
 
                                                            dbContext.People.Add(person);
+                                                           dbContext.SaveChanges();
+                                                       }
+            );
+        }
+
+
+        [Test, Order(6)]
+        public void Update_Person_With_Duplicated_Name_With_Another_Person_Should_Throw_Exception()
+        {
+            Assert.Throws<DbEntityValidationException>(() =>
+                                                       {
+                                                           var person = dbContext.People.First(p => p.Id == secondUserId);
+                                                           person.Name = "user1";
                                                            dbContext.SaveChanges();
                                                        }
             );
