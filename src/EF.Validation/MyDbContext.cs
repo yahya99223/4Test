@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Reflection;
 using System.Text;
+using EF.Validation.Model;
 
 
 namespace EF.Validation
@@ -15,8 +16,22 @@ namespace EF.Validation
     public class MyDbContext : DbContext
     {
         public MyDbContext()
-            : base("name=MyDatabase")
+            : base("name=MyValidationTestDb")
         {
+        }
+
+
+        public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Company>()
+                        .HasMany(c => c.People)
+                        .WithRequired(p => p.Company)
+                        .HasForeignKey(p => p.CompanyId)
+                        .WillCascadeOnDelete(true);
         }
 
 
