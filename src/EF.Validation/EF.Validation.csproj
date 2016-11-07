@@ -54,9 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbContextExtensions.cs" />
-    <Compile Include="Migrations\201611070906204_AddedInitialModel.cs" />
-    <Compile Include="Migrations\201611070906204_AddedInitialModel.Designer.cs">
-      <DependentUpon>201611070906204_AddedInitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\201611071259467_AddedInitialModel.cs" />
+    <Compile Include="Migrations\201611071259467_AddedInitialModel.Designer.cs">
+      <DependentUpon>201611071259467_AddedInitialModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Company.cs" />
@@ -69,8 +69,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611070906204_AddedInitialModel.resx">
-      <DependentUpon>201611070906204_AddedInitialModel.cs</DependentUpon>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611071259467_AddedInitialModel.resx">
+      <DependentUpon>201611071259467_AddedInitialModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

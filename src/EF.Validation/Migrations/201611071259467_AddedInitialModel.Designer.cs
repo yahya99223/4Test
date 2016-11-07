@@ -13,7 +13,7 @@ namespace EF.Validation.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201611070906204_AddedInitialModel"; }
+            get { return "201611071259467_AddedInitialModel"; }
         }
         
         string IMigrationMetadata.Source

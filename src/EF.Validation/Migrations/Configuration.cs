@@ -21,7 +21,7 @@ namespace EF.Validation.Migrations
 
         protected override void Seed(EF.Validation.MyDbContext context)
         {
-            var defaultCompanyId = Guid.Parse("{BD61EA16-DD98-4196-B0D1-727C3BDA2DF9}");
+           /* var defaultCompanyId = Guid.Parse("{BD61EA16-DD98-4196-B0D1-727C3BDA2DF9}");
             var company = new Company()
             {
                 Id = defaultCompanyId,
@@ -39,7 +39,7 @@ namespace EF.Validation.Migrations
             };
 
             context.Companies.AddOrUpdate(company);
-            context.SaveChanges();
+            context.SaveChanges();*/
         }
     }
 }

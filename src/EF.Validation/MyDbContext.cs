@@ -32,14 +32,17 @@ namespace EF.Validation
                         .WithRequired(p => p.Company)
                         .HasForeignKey(p => p.CompanyId)
                         .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Person>()
+                        .HasOptional(x => x.Manager)
+                        .WithMany()
+                        .HasForeignKey(x => x.ManagerId)
+                        .WillCascadeOnDelete(false);
         }
 
 
         protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items)
         {
-            /*if (System.Diagnostics.Debugger.IsAttached == false)
-                System.Diagnostics.Debugger.Launch();*/
-
             // create our customized result to add a possible DbValidationError to it
             var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
 
@@ -69,14 +72,13 @@ namespace EF.Validation
             // Using reflection to retrive all properties that implement IndexAttribute
             // We'll have with each property the IndexAttribute(s) that it has
             var propertiesDictionary = (from p in entity.GetType().GetProperties()
-                let attrs = p.GetCustomAttributes
-                    (typeof(IndexAttribute), false).Cast<IndexAttribute>()
-                where attrs.Any(a => a.IsUnique)
-                select new
-                {
-                    Property = p,
-                    Attributes = attrs
-                }).ToList();
+                                        let attrs = p.GetCustomAttributes(typeof(IndexAttribute), false).Cast<IndexAttribute>()
+                                        where attrs.Any(a => a.IsUnique)
+                                        select new
+                                        {
+                                            Property = p,
+                                            Attributes = attrs.Where(a => a.IsUnique)
+                                        }).ToList();
 
             // Get Distinct list of all unique indexes that we have
             var indexNames = propertiesDictionary.SelectMany
