@@ -3,7 +3,7 @@ namespace EF.Validation.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class SeedDefaultCompanty : DbMigration
+    public partial class SeedDefaultCompany : DbMigration
     {
         public override void Up()
         {

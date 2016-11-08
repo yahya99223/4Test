@@ -7,13 +7,13 @@ namespace EF.Validation.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedInitialModel : IMigrationMetadata
+    public sealed partial class InitializeModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedInitialModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitializeModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201611071259467_AddedInitialModel"; }
+            get { return "201611080936481_InitializeModel"; }
         }
         
         string IMigrationMetadata.Source

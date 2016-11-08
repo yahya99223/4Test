@@ -7,13 +7,13 @@ namespace EF.Validation.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class SeedDefaultCompanty : IMigrationMetadata
+    public sealed partial class SeedDefaultCompany : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(SeedDefaultCompanty));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(SeedDefaultCompany));
         
         string IMigrationMetadata.Id
         {
-            get { return "201611071306329_SeedDefaultCompanty"; }
+            get { return "201611080939344_SeedDefaultCompany"; }
         }
         
         string IMigrationMetadata.Source

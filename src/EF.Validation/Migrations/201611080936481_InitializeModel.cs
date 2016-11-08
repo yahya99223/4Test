@@ -3,7 +3,7 @@ namespace EF.Validation.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddedInitialModel : DbMigration
+    public partial class InitializeModel : DbMigration
     {
         public override void Up()
         {
@@ -29,25 +29,41 @@ namespace EF.Validation.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.People", t => t.ManagerId)
                 .ForeignKey("dbo.Companies", t => t.CompanyId, cascadeDelete: true)
-                .Index(t => t.CompanyId, name: "IX_Person_CompanyId")
-                .Index(t => new { t.CompanyId, t.ManagerId, t.Email }, unique: true, name: "UQ_Person_Email")
-                .Index(t => new { t.CompanyId, t.ManagerId, t.Name }, unique: true, name: "UQ_Person_Name")
-                .Index(t => t.ManagerId, name: "IX_Person_ManagerId")
+                .Index(t => new { t.CompanyId, t.Email }, unique: true, name: "UQ_Person_Email")
+                .Index(t => new { t.CompanyId, t.Name }, unique: true, name: "UQ_Person_Name")
+                .Index(t => t.ManagerId)
                 .Index(t => t.Name, name: "IX_Person_Name")
                 .Index(t => t.Email, name: "IX_Person_Email");
+            
+            CreateTable(
+                "dbo.Offices",
+                c => new
+                    {
+                        CountryId = c.Guid(nullable: false),
+                        CityId = c.Guid(nullable: false),
+                        PersonId = c.Guid(),
+                        Name = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => new { t.CountryId, t.CityId })
+                .ForeignKey("dbo.People", t => t.PersonId)
+                .Index(t => t.PersonId)
+                .Index(t => t.Name, unique: true, name: "UQ_Address_Name");
             
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.People", "CompanyId", "dbo.Companies");
+            DropForeignKey("dbo.Offices", "PersonId", "dbo.People");
             DropForeignKey("dbo.People", "ManagerId", "dbo.People");
+            DropIndex("dbo.Offices", "UQ_Address_Name");
+            DropIndex("dbo.Offices", new[] { "PersonId" });
             DropIndex("dbo.People", "IX_Person_Email");
             DropIndex("dbo.People", "IX_Person_Name");
-            DropIndex("dbo.People", "IX_Person_ManagerId");
+            DropIndex("dbo.People", new[] { "ManagerId" });
             DropIndex("dbo.People", "UQ_Person_Name");
             DropIndex("dbo.People", "UQ_Person_Email");
-            DropIndex("dbo.People", "IX_Person_CompanyId");
+            DropTable("dbo.Offices");
             DropTable("dbo.People");
             DropTable("dbo.Companies");
         }

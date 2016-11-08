@@ -25,6 +25,20 @@ namespace EF.Validation
         public virtual DbSet<Person> People { get; set; }
 
 
+        public static void ResetDb()
+        {
+            // rebuild the database
+            Console.WriteLine("Rebuilding the test database");
+            var initializer = new DropCreateAndMigrateDatabaseInitializer<MyDbContext, EF.Validation.Migrations.Configuration>();
+            Database.SetInitializer<MyDbContext>(initializer);
+
+            using (var ctx = new MyDbContext())
+            {
+                ctx.Database.Initialize(force: true);
+            }
+        }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>()
@@ -37,6 +51,12 @@ namespace EF.Validation
                         .HasOptional(x => x.Manager)
                         .WithMany()
                         .HasForeignKey(x => x.ManagerId)
+                        .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Person>()
+                        .HasMany(x => x.Offices)
+                        .WithOptional()
+                        .HasForeignKey(a => a.PersonId)
                         .WillCascadeOnDelete(false);
         }
 
@@ -118,14 +138,17 @@ namespace EF.Validation
                 // then we just need to add new condition to tell search for all records but not this one
                 if (entityEntry.State == EntityState.Modified)
                 {
+                    whereClause += " AND (";
+
                     var key = this.GetEntityKey(entity);
                     for (var j = i; j < key.EntityKeyValues.Count() + i; j++)
                     {
-                        if (whereClause.Length > 0)
-                            whereClause += " AND ";
+                        if (j != i)
+                            whereClause += " OR ";
                         whereClause += "it." + key.EntityKeyValues[j - i].Key + " <> @" + j;
                         whereParams.Add(key.EntityKeyValues[j - i].Value);
                     }
+                    whereClause += " )";
                 }
 
                 //If we find any record, we should add DbValidationError with suitable error message

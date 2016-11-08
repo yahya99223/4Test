@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,19 +8,20 @@ namespace EF.Validation.Model
 {
     public class Person
     {
+        public Person()
+        {
+            Offices = new HashSet<Office>();
+        }
+
+
         [Key]
         public Guid Id { get; set; }
 
 
-        [Index("IX_Person_CompanyId")]
         [Index("UQ_Person_Name", IsUnique = true, Order = 1)]
         [Index("UQ_Person_Email", IsUnique = true, Order = 1)]
         public Guid CompanyId { get; set; }
 
-
-        [Index("IX_Person_ManagerId")]
-        [Index("UQ_Person_Name", IsUnique = true, Order = 2)]
-        [Index("UQ_Person_Email", IsUnique = true, Order = 2)]
         public Guid? ManagerId { get; set; }
 
 
@@ -37,5 +39,6 @@ namespace EF.Validation.Model
 
         public Company Company { get; set; }
         public Person Manager { get; set; }
+        public ICollection<Office> Offices { get; set; }
     }
 }

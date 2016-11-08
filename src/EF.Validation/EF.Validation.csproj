@@ -54,15 +54,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbContextExtensions.cs" />
-    <Compile Include="Migrations\201611071259467_AddedInitialModel.cs" />
-    <Compile Include="Migrations\201611071259467_AddedInitialModel.Designer.cs">
-      <DependentUpon>201611071259467_AddedInitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\201611080936481_InitializeModel.cs" />
+    <Compile Include="Migrations\201611080936481_InitializeModel.Designer.cs">
+      <DependentUpon>201611080936481_InitializeModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201611071306329_SeedDefaultCompanty.cs" />
-    <Compile Include="Migrations\201611071306329_SeedDefaultCompanty.Designer.cs">
-      <DependentUpon>201611071306329_SeedDefaultCompanty.cs</DependentUpon>
+    <Compile Include="Migrations\201611080939344_SeedDefaultCompany.cs" />
+    <Compile Include="Migrations\201611080939344_SeedDefaultCompany.Designer.cs">
+      <DependentUpon>201611080939344_SeedDefaultCompany.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="DropCreateAndMigrateDatabaseInitializer.cs" />
+    <Compile Include="Model\Office.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="MyDbContext.cs" />
@@ -76,11 +78,11 @@
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611071259467_AddedInitialModel.resx">
-      <DependentUpon>201611071259467_AddedInitialModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611080936481_InitializeModel.resx">
+      <DependentUpon>201611080936481_InitializeModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611071306329_SeedDefaultCompanty.resx">
-      <DependentUpon>201611071306329_SeedDefaultCompanty.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611080939344_SeedDefaultCompany.resx">
+      <DependentUpon>201611080939344_SeedDefaultCompany.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
