@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html ng-app="githubViewer">
+<head>
+    <title>AngularJS PluralSight Followup</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="MainController">
+    <div>
+        <div>
+            {{error}}
+        </div>
+        <div>
+            Name : {{user.name}}
+        </div>
+
+        <div>
+            Location : {{user.location}}
+        </div>
+
+        <div>
+            <img ng-src="{{user.avatar_url}}" />
+        </div>
+    </div>
+</body>
+</html>
