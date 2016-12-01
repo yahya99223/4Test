@@ -1,7 +1,7 @@
 ﻿
 (function() {
 
-        var mainController = function($scope, $http, $interval, $location, $anchorScroll, $log) {
+        var mainController = function($scope, githubService, $interval, $location, $anchorScroll, $log) {
             $scope.welcomeMessage = "Github User Viewer";
             $scope.userName = "angular";
             $scope.repositorySortOrder = "-stargazers_count";
@@ -11,17 +11,9 @@
                 $scope.error = "Error in connection";
             };
 
-            var onGetRepositoriesComplete = function(response) {
-                $scope.repositories = response.data;
-                $location.hash("userDetails");
-                $anchorScroll();
-            };
 
-            var onGetUserComplete = function(response) {
-                $scope.user = response.data;
-                $http.get($scope.user.repos_url)
-                    .then(onGetRepositoriesComplete, onError);
-            };
+
+
 
             var decrementCountdown = function() {
                 $scope.countdown -= 1;
@@ -35,9 +27,21 @@
                 countdownInterval = $interval(decrementCountdown, 1000, $scope.countdown);
             };
 
+            var onGetRepositoriesComplete = function(repositoriesData) {
+                $scope.repositories = repositoriesData;
+                $location.hash("userDetails");
+                $anchorScroll();
+            };
+
+            var onGetUserComplete = function (userData) {
+                $scope.user = userData;
+                githubService.getRepositories(userData)
+                    .then(onGetRepositoriesComplete, onError);
+            };
+
             $scope.search = function(userName) {
                 $log.info("Searching fo " + userName);
-                $http.get("https://api.github.com/users/" + userName)
+                githubService.getUser(userName)
                     .then(onGetUserComplete, onError);
 
                 if (countdownInterval) {
@@ -52,6 +56,6 @@
         var app = angular.module("githubViewer", []);
         app
             .controller("MainController",
-                ["$scope", "$http", "$interval", "$location", "$anchorScroll", "$log", mainController]);
+                ["$scope", "githubService", "$interval", "$location", "$anchorScroll", "$log", mainController]);
     }
     ());;
