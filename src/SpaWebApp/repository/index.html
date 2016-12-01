@@ -1,0 +1,23 @@
+﻿<h2>{{repository.full_name}}</h2>
+<p>{{repository.description}}</p>
+{{error}}
+<div ng-hide="!contributors || contributors.length == 0">
+
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Contributions Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="contributor in contributors">
+            <td>
+                <a href="#/user/{{contributor.login}}"><img ng-src="{{contributor.avatar_url}}" title="{{contributor.login}}" /></a>
+            </td>
+            <td>{{contributor.contributions}}</td>
+        </tr>
+        </tbody>
+    </table>
+   
+</div><a href="#/main">Back to search page</a>

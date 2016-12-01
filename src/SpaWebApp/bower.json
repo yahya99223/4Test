@@ -2,6 +2,10 @@
   "name": "mypackage",
   "private": true,
   "dependencies": {
+    "angular": "~1.5.x",
+    "angular-route": "~1.2.x"
+  },
+  "resolutions": {
     "angular": "~1.5.x"
   }
 }

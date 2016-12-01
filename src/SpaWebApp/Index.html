@@ -4,24 +4,18 @@
 <head>
     <title>AngularJS PluralSight Followup</title>
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
     <script src="app.js"></script>
-    <script src="githubService.js"></script>
-    <link href="site.css" rel="stylesheet" />
+    <script src="main/mainController.js"></script>
+    <script src="user/userController.js"></script>
+    <script src="repository/repositoryController.js"></script>
+    <script src="services/githubService.js"></script>
+    <link href="site.css" rel="stylesheet"/>
 </head>
 
-<body ng-controller="MainController">
-    <div>
-        <h1>{{welcomeMessage}}</h1>
-        <div>{{error}}</div>
-        search for {{userName}} <span ng-hide="countdown==null">will start in {{countdown}}</span>
-        <form name="searchUser" ng-submit="search(userName)">
-            
-            <input type="search" required placeholder="Username to find" ng-model="userName"/>
-            <input type="submit" value="Search"/>
-        </form>
-        <div ng-show="user" ng-include="'userDetails.html'" id="userDetails">
-        </div>
-    </div>
+<body>
+<h1>Github Viewer</h1>
+<div ng-view></div>
 </body>
 
 </html>
