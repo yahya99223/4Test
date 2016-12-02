@@ -10,12 +10,12 @@
             })
             .when("/user/:userName",
             {
-                templateUrl: "user/index.html",
+                templateUrl: "user/user.html",
                 controller: "userController"
             })
             .when("/user/:userName/Repository/:repositoryName",
             {
-                templateUrl: "repository/index.html",
+                templateUrl: "repository/repository.html",
                 controller: "repositoryController"
             })
             .otherwise({ redirectTo: "/main" });

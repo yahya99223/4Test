@@ -77,7 +77,7 @@
     <Content Include="bower_components\angular\index.js" />
     <Content Include="main\main.html" />
     <Content Include="main\mainController.js" />
-    <Content Include="repository\index.html" />
+    <Content Include="repository\repository.html" />
     <Content Include="repository\repositoryController.js" />
     <Content Include="services\githubService.js" />
     <Content Include="packages.config" />
@@ -95,7 +95,7 @@
     <Content Include="app.js" />
     <Content Include="Index.html" />
     <Content Include="site.css" />
-    <Content Include="user\index.html" />
+    <Content Include="user\user.html" />
     <Content Include="user\userController.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
