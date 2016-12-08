@@ -19,6 +19,7 @@ namespace WebApi
                              "api/{controller}"
                          );
 
+            app.Use(typeof(TestMiddleware));
             app.UseWebApi(configuration);
         }
     }
