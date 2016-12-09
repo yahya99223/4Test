@@ -8,7 +8,6 @@ namespace Core
         void Initialize(string rootFolder);
         void Stop();
         T Resolve<T>();
-        object Resolve(Type type);
         IList<T> ResolveAll<T>();
         IDisposable BeginScope();
     }

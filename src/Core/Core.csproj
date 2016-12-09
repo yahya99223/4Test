@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,11 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\EnlistmentNotificationList.cs" />
     <Compile Include="DataAccess\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\ObjectExtensions.cs" />
     <Compile Include="DataAccess\UnitOfWork.cs" />
     <Compile Include="DomainEvents\DomainEvents.cs" />
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IHandles.cs" />
+    <Compile Include="Handlers\UserCreatedSleep2AsyncHandler.cs" />
     <Compile Include="Handlers\UserCreatedSleepAsyncHandler.cs" />
     <Compile Include="Handlers\UserCreatedSleepSyncHandler.cs" />
     <Compile Include="IServiceResolver.cs" />

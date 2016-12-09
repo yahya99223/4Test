@@ -1,5 +1,5 @@
 ﻿using Core;
-using IDScan.VisionCortex.Shared.ResolverEngine.Windsor;
+using IoC;
 using Microsoft.Owin;
 
 namespace ApplicationAPI

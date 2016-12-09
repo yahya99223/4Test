@@ -25,7 +25,7 @@ namespace IoC
 
             Container = new WindsorContainer();
 
-            Container.Kernel.AddHandlerSelector(new LifestyleSelector());
+            //Container.Kernel.AddHandlerSelector(new LifestyleSelector());
 
 
             Container.Register(Component.For<IWindsorContainer>().Instance(Container).LifestyleSingleton());

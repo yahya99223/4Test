@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Model;
+
 
 namespace Core.DataAccess
 {
     public interface IUnitOfWork : IDisposable
     {
         void Commit();
+        void AddUser(User user);
     }
 }

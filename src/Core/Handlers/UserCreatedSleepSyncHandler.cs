@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Core.DataAccess;
+﻿using Core.DataAccess;
 using Core.Model;
 
 namespace Core
@@ -20,7 +19,6 @@ namespace Core
 
         public void Handle(UserCreated args)
         {
-            //Thread.Sleep(1000);
             unitOfWork.Commit();
         }
     }

@@ -11,7 +11,6 @@ namespace ApplicationAPI
 {
     public class DependOnUnitOfWorkMiddleware : BaseMiddleware
     {
-        private IUnitOfWork unitOfWork;
 
         public DependOnUnitOfWorkMiddleware(OwinMiddleware next) : base(next)
         {
@@ -19,7 +18,7 @@ namespace ApplicationAPI
 
         public override Task Invoke(IOwinContext context)
         {
-            unitOfWork = ServiceResolver.Resolve<IUnitOfWork>();
+            var unitOfWork = ServiceResolver.Resolve<IUnitOfWork>();
             return Next.Invoke(context);
         }
     }

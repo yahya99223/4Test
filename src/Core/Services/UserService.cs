@@ -14,7 +14,7 @@ namespace Core.Services
 
         public void Add(User user)
         {
-            StaticInfo.Users += 1;
+            unitOfWork.AddUser(user);
         }
     }
 }

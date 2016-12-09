@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.UI.WebControls;
-using Core;
+﻿using System.Web.Http;
 using Core.DataAccess;
-using Core.Model;
 using Core.Services;
 
 namespace ApplicationAPI.Controllers
@@ -27,9 +18,10 @@ namespace ApplicationAPI.Controllers
         [Route("api/test")]
         public string Get()
         {
-            userService.Add(Core.Model.User.Create("Sameer"));
-            //return "";
-            var message = new StringBuilder();
+            var user = Core.Model.User.Create("Sameer");
+            userService.Add(user);
+            return "";
+            /*var message = new StringBuilder();
             message.AppendLine(string.Format("BeginWebRequests :{0}", StaticInfo.BeginWebRequests));
             message.AppendLine(string.Format("EndWebRequests :{0}", StaticInfo.EndWebRequests));
             message.AppendLine("   ");
@@ -40,7 +32,7 @@ namespace ApplicationAPI.Controllers
             message.AppendLine("   ");
             message.AppendLine(string.Format("Exception :{0}", StaticInfo.Exception));
             //message.AppendLine(string.Format("Users :{0}", StaticInfo.Users));
-            return message.ToString();
+            return message.ToString();*/
         }
     }
 }

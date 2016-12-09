@@ -2,13 +2,14 @@
 using Core.DataAccess;
 using Core.Model;
 
+
 namespace Core
 {
-    public class UserCreatedSleepAsyncHandler : IHandles<UserCreated>
+    public class UserCreatedSleep2AsyncHandler : IHandles<UserCreated>
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public UserCreatedSleepAsyncHandler(IUnitOfWork unitOfWork)
+        public UserCreatedSleep2AsyncHandler(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
@@ -18,7 +19,7 @@ namespace Core
 
         public void Handle(UserCreated args)
         {
-            Thread.Sleep(300);
+            Thread.Sleep(500);
             unitOfWork.Commit();
         }
     }

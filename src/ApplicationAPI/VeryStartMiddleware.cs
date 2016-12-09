@@ -3,7 +3,7 @@ using Microsoft.Owin;
 
 namespace ApplicationAPI
 {
-    public class VeryStartMiddleware : OwinMiddleware
+    public class VeryStartMiddleware : BaseMiddleware
     {
         public VeryStartMiddleware(OwinMiddleware next) : base(next)
         {
@@ -11,7 +11,6 @@ namespace ApplicationAPI
 
         public override Task Invoke(IOwinContext context)
         {
-
             return Next.Invoke(context);
         }
     }

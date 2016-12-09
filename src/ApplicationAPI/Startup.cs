@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Threading;
 using System.Web.Http;
-using IDScan.VisionCortex.Shared.ResolverEngine.Windsor;
+using IoC;
 using Microsoft.Owin;
 using Microsoft.Owin.BuilderProperties;
 using Newtonsoft.Json.Serialization;
@@ -18,16 +18,18 @@ namespace ApplicationAPI
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
+            GlobalConfiguration.Configure(config =>
+                                          {
+                                              InitializeServiceResolver(config);
+                                              webApiConfigRegister(config);
+                                          });
 
-            InitializeServiceResolver(config);
             OnAppDisposing(app);
 
-            webApiConfigRegister(config);
-            GlobalConfiguration.Configure(webApiConfigRegister);
+            app.Use<VeryStartMiddleware>();
             app.Use<DependOnUnitOfWorkMiddleware>();
             app.Use<AnotherDependOnUnitOfWorkMiddleware>();
-            app.UseWebApi(config);
+            app.UseWebApi(GlobalConfiguration.Configuration);
         }
 
 
@@ -38,10 +40,8 @@ namespace ApplicationAPI
 
             var httpDependencyResolver = serviceResolver.Resolve<System.Web.Http.Dependencies.IDependencyResolver>();
             config.DependencyResolver = httpDependencyResolver;
-
-            /*var signalRDependencyResolver = serviceResolver.Resolve<Microsoft.AspNet.SignalR.IDependencyResolver>();
-            GlobalHost.DependencyResolver = signalRDependencyResolver;*/
         }
+
 
         private static void webApiConfigRegister(HttpConfiguration config)
         {
@@ -49,21 +49,19 @@ namespace ApplicationAPI
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new {controller = "Default", id = RouteParameter.Optional}
-                );
+                      name: "DefaultApi",
+                      routeTemplate: "api/{controller}/{id}",
+                      defaults: new {controller = "Default", id = RouteParameter.Optional}
+                  );
 
-            // config.EnableSwagger("docs/{apiVersion}", c => c.SingleApiVersion("v1", "First Version"));
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
 
-            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-            //config.Filters.Add(new AuthorizeAttribute());
         }
+
 
         private static void OnAppDisposing(IAppBuilder app)
         {

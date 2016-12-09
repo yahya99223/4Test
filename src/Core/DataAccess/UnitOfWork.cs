@@ -1,34 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Transactions;
+using Core.Model;
+
 
 namespace Core.DataAccess
 {
     public class UnitOfWork : IUnitOfWork
     {
         private bool isDisposed;
+        private static IList<User> users = new EnlistmentNotificationList<User>();
+        private TransactionScope transaction;
+
 
         public UnitOfWork()
         {
             StaticInfo.StartedUnitOfWorks += 1;
             this.isDisposed = false;
+            transaction = new TransactionScope();
         }
+
 
         public void Commit()
         {
             if (isDisposed)
             {
-                StaticInfo.Exception = "UnitOfWork disposed already";
-                throw new Exception("UnitOfWork disposed already");
+                StaticInfo.Exception = "UnitOfWork-Commit: already disposed";
+                //throw new Exception("UnitOfWork disposed already");
             }
-            StaticInfo.CommitedUnitOfWorks += 1;
+            else
+            {
+                StaticInfo.CommitedUnitOfWorks += 1;
+            }
         }
+
+
+        public void AddUser(User user)
+        {
+            users.Add(user);
+            StaticInfo.Users += 1;
+        }
+
 
         public void Dispose()
         {
-            StaticInfo.DisposedUnitOfWorks += 1;
             if (isDisposed)
-                throw new Exception("UnitOfWork disposed already");
-
-            isDisposed = true;
+            {
+                StaticInfo.Exception = "UnitOfWork-Dispose: already disposed";
+            }
+            else
+            {
+                StaticInfo.DisposedUnitOfWorks += 1;
+                //throw new Exception("UnitOfWork disposed already");
+                isDisposed = true;
+            }
         }
     }
 }
