@@ -48,11 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LifestyleSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceResolver.cs" />
     <Compile Include="ServiceResolverFactory.cs" />
-    <Compile Include="WindsorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

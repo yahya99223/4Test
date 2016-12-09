@@ -16,7 +16,7 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
         {
             container.Register(Component.For<System.Web.Http.Dependencies.IDependencyResolver>().ImplementedBy<WindsorHttpDependencyResolver>());
             container.Register(Classes.FromAssemblyNamed("ApplicationAPI").BasedOn<IHttpController>().LifestyleScoped());
-            container.Register(Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifestylePerWebRequest());            
+            container.Register(Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifestyleScoped());            
 
 
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifeStyle.Transient);

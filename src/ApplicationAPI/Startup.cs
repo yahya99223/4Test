@@ -72,7 +72,7 @@ namespace ApplicationAPI
                 token.Register(() =>
                 {
                     //No need to pass folder because we should've been already created the instance
-                    ServiceResolverFactory.GetServiceResolver().Stop();
+                    ServiceResolverFactory.GetServiceResolver().Dispose();
                 });
             }
         }

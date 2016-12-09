@@ -15,26 +15,18 @@ namespace IoC
         public static WindsorContainer Container;
 
 
-        public void Initialize(string rootFolder)
+        public ServiceResolver(string rootFolder)
         {
-            //LogFactory.InitializeWith<Log4NetLogger>();
-
-            //ToDo Add the message for not founded root folder
             if (string.IsNullOrEmpty(rootFolder) || !Directory.Exists(rootFolder))
                 throw new DirectoryNotFoundException();
 
             Container = new WindsorContainer();
 
-            //Container.Kernel.AddHandlerSelector(new LifestyleSelector());
-
-
+            Container.Register(Component.For<IServiceResolver>().Instance(this).LifestyleSingleton());
             Container.Register(Component.For<IWindsorContainer>().Instance(Container).LifestyleSingleton());
 
-            var installFolder = Path.Combine(rootFolder, "Install");
-            if (!Directory.Exists(installFolder))
-                installFolder = rootFolder;
 
-            Container.Install(FromAssembly.InDirectory(new AssemblyFilter(installFolder, "*Installer.dll")));
+            Container.Install(FromAssembly.InDirectory(new AssemblyFilter(rootFolder, "*Installer.dll")));
 
             DomainEvents.Initialize(this);
         }
@@ -61,9 +53,20 @@ namespace IoC
             return Container.ResolveAll<T>().ToList();
         }
 
-        public IDisposable BeginScope()
+
+        public IDisposable SetMiddlewareScope()
         {
-            return Container.BeginScope();
+            MiddlewareScope = Container.BeginScope();
+            return MiddlewareScope;
+        }
+
+
+        public IDisposable MiddlewareScope { get; private set; }
+
+
+        public void Dispose()
+        {
+            Container.Dispose();
         }
     }
 }

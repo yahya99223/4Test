@@ -51,7 +51,7 @@ namespace Core
                 foreach (var h in asyncHandlers)                
                 {
                     Task.Run(() => {
-                        using (serviceResolver.BeginScope()) 
+                        using (serviceResolver.SetMiddlewareScope()) 
                         {
                             h.Handle(args);
                         }

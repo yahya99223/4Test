@@ -17,8 +17,7 @@ namespace IoC
             if (string.IsNullOrEmpty(folder))
                 folder = AppDomain.CurrentDomain.BaseDirectory;
 
-            serviceResolver = new ServiceResolver();
-            serviceResolver.Initialize(folder);
+            serviceResolver = new ServiceResolver(folder);
             return serviceResolver;
         }
     }

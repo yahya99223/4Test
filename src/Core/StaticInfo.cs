@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DataAccess;
+
 
 namespace Core
 {
@@ -14,6 +16,6 @@ namespace Core
         public static int StartedUnitOfWorks { get; set; }
         public static int DisposedUnitOfWorks { get; set; }
         public static int CommitedUnitOfWorks { get; set; }
-        public static int Users { get; set; }
+        public static int Users { get { return UnitOfWork.Users.Count; } }
     }
 }

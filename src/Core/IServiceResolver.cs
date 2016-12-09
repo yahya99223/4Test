@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace Core
 {
-    public interface IServiceResolver
+    public interface IServiceResolver : IDisposable
     {
-        void Initialize(string rootFolder);
-        void Stop();
         T Resolve<T>();
         IList<T> ResolveAll<T>();
-        IDisposable BeginScope();
+        IDisposable SetMiddlewareScope();
+        IDisposable MiddlewareScope { get; }
     }
+
+    
 }

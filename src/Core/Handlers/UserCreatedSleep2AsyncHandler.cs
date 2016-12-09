@@ -19,7 +19,7 @@ namespace Core
 
         public void Handle(UserCreated args)
         {
-            Thread.Sleep(500);
+            Thread.Sleep(5000);
             unitOfWork.Commit();
         }
     }

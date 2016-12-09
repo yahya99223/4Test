@@ -83,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Installer.cs" />
-    <Compile Include="WindsorExtensions.cs" />
     <Compile Include="WindsorHttpDependencyResolver.cs" />
     <Compile Include="WindsorDependencyScope.cs" />
   </ItemGroup>

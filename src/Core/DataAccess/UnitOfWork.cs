@@ -9,15 +9,17 @@ namespace Core.DataAccess
     public class UnitOfWork : IUnitOfWork
     {
         private bool isDisposed;
-        private static IList<User> users = new EnlistmentNotificationList<User>();
-        private TransactionScope transaction;
+        public static IList<User> Users = new EnlistmentNotificationList<User>();
+        //private TransactionScope transaction;
+        private static object lck = new object();
+        private bool rolledBack;
 
 
         public UnitOfWork()
         {
             StaticInfo.StartedUnitOfWorks += 1;
             this.isDisposed = false;
-            transaction = new TransactionScope();
+            //transaction = new TransactionScope();
         }
 
 
@@ -26,6 +28,9 @@ namespace Core.DataAccess
             if (isDisposed)
             {
                 StaticInfo.Exception = "UnitOfWork-Commit: already disposed";
+                rolledBack = true;
+                if (Users.Count > 0)
+                    Users.RemoveAt(0);
                 //throw new Exception("UnitOfWork disposed already");
             }
             else
@@ -37,8 +42,7 @@ namespace Core.DataAccess
 
         public void AddUser(User user)
         {
-            users.Add(user);
-            StaticInfo.Users += 1;
+            Users.Add(user);
         }
 
 
@@ -50,9 +54,18 @@ namespace Core.DataAccess
             }
             else
             {
-                StaticInfo.DisposedUnitOfWorks += 1;
-                //throw new Exception("UnitOfWork disposed already");
-                isDisposed = true;
+                lock (lck)
+                {
+
+                    if (!rolledBack)
+                        //transaction.Complete();
+
+                    //transaction.Dispose();
+
+                    StaticInfo.DisposedUnitOfWorks += 1;
+                    //throw new Exception("UnitOfWork disposed already");
+                    isDisposed = true;
+                }
             }
         }
     }

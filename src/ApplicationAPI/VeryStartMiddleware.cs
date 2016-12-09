@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Owin;
 
+
 namespace ApplicationAPI
 {
     public class VeryStartMiddleware : BaseMiddleware
@@ -9,9 +10,13 @@ namespace ApplicationAPI
         {
         }
 
-        public override Task Invoke(IOwinContext context)
+
+        public override async Task Invoke(IOwinContext context)
         {
-            return Next.Invoke(context);
+            using (var scope = ServiceResolver.SetMiddlewareScope())
+            {
+                await Next.Invoke(context);
+            }
         }
     }
 }

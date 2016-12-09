@@ -12,14 +12,16 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
         private readonly IWindsorContainer container;
         private readonly IDisposable scope;
 
-        public WindsorDependencyScope(IWindsorContainer container)
+
+        public WindsorDependencyScope(IWindsorContainer container, IDisposable scope = null)
         {
             if (container == null)
                 throw new ArgumentNullException("container");
 
             this.container = container;
-            this.scope = container.BeginScope();
+            this.scope = scope ?? container.BeginScope();
         }
+
 
         public object GetService(Type t)
         {
