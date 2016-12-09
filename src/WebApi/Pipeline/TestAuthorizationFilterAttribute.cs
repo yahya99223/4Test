@@ -21,7 +21,9 @@ namespace WebApi
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             Helpers.Write("AuthorizationFilter", actionContext.RequestContext.Principal);
-            return base.IsAuthorized(actionContext);
+
+            return true;
+            //return base.IsAuthorized(actionContext);
         }
     }
 }
