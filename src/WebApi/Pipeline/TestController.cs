@@ -7,6 +7,8 @@ using System.Web.Http;
 
 namespace WebApi
 {
+    [TestAuthenticationFilter]
+    [TestAuthorizationFilter]
     public class TestController : ApiController
     {
         public IHttpActionResult Get()

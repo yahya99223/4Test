@@ -114,6 +114,8 @@
   <ItemGroup>
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Pipeline\HttpModule.cs" />
+    <Compile Include="Pipeline\TestAuthenticationFilter.cs" />
+    <Compile Include="Pipeline\TestAuthorizationFilterAttribute.cs" />
     <Compile Include="Pipeline\TestController.cs" />
     <Compile Include="Pipeline\TestMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
