@@ -14,7 +14,7 @@ namespace WebApi
         public IHttpActionResult Get()
         {
             Helpers.Write("Controller", Request.GetRequestContext().Principal);
-            return Ok();
+            return Ok(RequestContext.Principal?.Identity?.Name);
         }
     }
 }
