@@ -26,9 +26,11 @@ namespace ConsoleApp
 
         private static void SetupClaimIdentity()
         {
+            Console.WriteLine("Who are you ?");
+
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, "WahidBitar"),
+                new Claim(ClaimTypes.Name, Console.ReadLine()),
                 new Claim(ClaimTypes.Email, "W.bitar@idscan.com"),
                 new Claim(ClaimTypes.Role, "Developer"),
                 new Claim("http://customClaims/Origin", "Syria"),
