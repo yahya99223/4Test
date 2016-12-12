@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Services;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Permissions;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApp
@@ -11,8 +15,37 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            CheckWindowsAuthentication();
+            //CheckWindowsAuthentication();
+
+            SetupClaimIdentity();
+            UseClaimsPrincipal();
             Console.ReadLine();
+
+        }
+
+
+        private static void SetupClaimIdentity()
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, "Wahid"),
+                new Claim(ClaimTypes.Email, "W.bitar@idscan.com"),
+                new Claim(ClaimTypes.Role, "Developer"),
+                new Claim("http://customClaims/Origin", "Syria"),
+            };
+
+            var id = new ClaimsIdentity(claims,"ConsoleApp");
+
+            var principal = new ClaimsPrincipal(id);
+            Thread.CurrentPrincipal = principal;
+        }
+
+
+        [ClaimsPrincipalPermission(SecurityAction.Demand, Operation = "DoWork", Resource = "Principal")]
+        public static void UseClaimsPrincipal()
+        {
+            var cp = ClaimsPrincipal.Current;
+            Console.WriteLine($"is Authenticated: {cp.Identity.IsAuthenticated}");
 
         }
 
