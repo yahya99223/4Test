@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 
+
 namespace Core
 {
     public static class DomainEvents
@@ -19,7 +20,7 @@ namespace Core
 
         [ThreadStatic] //so that each thread has its own callbacks
         private static List<Delegate> actions;
-        
+
 
         //Registers a callback for the given domain event
         public static void Register<T>(Action<T> callback) where T : IDomainEvent
@@ -44,25 +45,15 @@ namespace Core
             if (serviceResolver != null)
             {
                 var handlers = serviceResolver.ResolveAll<IHandles<T>>() ?? new List<IHandles<T>>();
-                var asyncHandlers = handlers.Where(h => h.IsAsync).ToList();
-                var syncHandlers = handlers.Where(h => !h.IsAsync).ToList();
-
-                //Parallel.ForEach(asyncHandlers, (h) =>
-                foreach (var h in asyncHandlers)                
+                var asyncTasks = new List<Task>();
+                foreach (var handler in handlers)
                 {
-                    Task.Run(() => {
-                        using (serviceResolver.SetMiddlewareScope()) 
-                        {
-                            h.Handle(args);
-                        }
-                    });
-                }
-                //);
+                    var t = handler.HandleAsync(args);
+                    asyncTasks.Add(t);
 
-                foreach (var handler in syncHandlers)
-                {
                     handler.Handle(args);
                 }
+                Task.WaitAll(asyncTasks.ToArray());
             }
 
             if (actions != null)

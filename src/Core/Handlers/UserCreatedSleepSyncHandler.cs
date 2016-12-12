@@ -1,4 +1,5 @@
-﻿using Core.DataAccess;
+﻿using System.Threading.Tasks;
+using Core.DataAccess;
 using Core.Model;
 
 namespace Core
@@ -12,14 +13,14 @@ namespace Core
             this.unitOfWork = unitOfWork;
         }
 
-        public bool IsAsync
-        {
-            get { return false; }
-        }
-
         public void Handle(UserCreated args)
         {
             unitOfWork.Commit();
+        }
+
+
+        public async Task HandleAsync(UserCreated args)
+        {
         }
     }
 }

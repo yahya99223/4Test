@@ -1,8 +1,11 @@
-﻿namespace Core
+﻿using System.Threading.Tasks;
+
+
+namespace Core
 {
-    public interface IHandles<T> where T : IDomainEvent
+    public interface IHandles<in T> where T : IDomainEvent
     {
-        bool IsAsync { get; }
         void Handle(T args); 
+        Task HandleAsync(T args); 
     }
 }
