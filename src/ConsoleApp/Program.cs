@@ -28,7 +28,7 @@ namespace ConsoleApp
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, "Wahid"),
+                new Claim(ClaimTypes.Name, "WahidBitar"),
                 new Claim(ClaimTypes.Email, "W.bitar@idscan.com"),
                 new Claim(ClaimTypes.Role, "Developer"),
                 new Claim("http://customClaims/Origin", "Syria"),
@@ -41,7 +41,7 @@ namespace ConsoleApp
         }
 
 
-        [ClaimsPrincipalPermission(SecurityAction.Demand, Operation = "DoWork", Resource = "Principal")]
+        [ClaimsPrincipalPermission(SecurityAction.Demand, Operation = "DoWork", Resource = "SystemSettings")]
         public static void UseClaimsPrincipal()
         {
             var cp = ClaimsPrincipal.Current;

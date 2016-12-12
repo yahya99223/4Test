@@ -12,7 +12,14 @@ namespace ConsoleApp
     {
         public override bool CheckAccess(AuthorizationContext context)
         {
-            return base.CheckAccess(context);
+            var action = context.Action.FirstOrDefault();
+            var resource = context.Resource.FirstOrDefault();
+
+            if (action != null && action.Value == "DoWork" && resource != null && resource.Value == "SystemSettings")
+            {
+                return context.Principal.HasClaim(ClaimTypes.Name, "WahidBitar");
+            }
+            return false;
         }
     }
 }
