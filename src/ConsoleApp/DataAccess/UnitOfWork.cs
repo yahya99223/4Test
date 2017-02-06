@@ -24,15 +24,13 @@ namespace ConsoleApp.DataAccess
             get { return new DoctorRepository(); }
         }
 
-
-        #region Implementation of IDisposable
+        
 
         public void Dispose()
         {
             transaction.Dispose();
         }
-
-        #endregion
+        
 
 
         public void Commit()
