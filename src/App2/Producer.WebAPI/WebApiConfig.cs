@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 
-namespace Consumer.WebAPI
+namespace Producer.WebAPI
 {
     public static class WebApiConfig
     {
