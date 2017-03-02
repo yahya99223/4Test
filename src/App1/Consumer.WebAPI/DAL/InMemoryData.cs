@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Shared.Messaging.Messages;
+using Consumer.WebAPI.Model;
 
 
 namespace Consumer.WebAPI.DAL
@@ -11,10 +11,10 @@ namespace Consumer.WebAPI.DAL
     {
         static InMemoryData()
         {
-            Letters = new List<ILetter>();
+            Letters = new List<Letter>();
         }
 
 
-        public static IList<ILetter> Letters { get; set; }
+        public static IList<Letter> Letters { get; set; }
     }
 }

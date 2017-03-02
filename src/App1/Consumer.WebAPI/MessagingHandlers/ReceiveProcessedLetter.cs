@@ -16,9 +16,11 @@ namespace Consumer.WebAPI.MessagingHandlers
         {
             await Task.Run(() =>
             {
-                var letter = InMemoryData.Letters.FirstOrDefault(l => l.Id == context.Message.Letter.Id);
-                InMemoryData.Letters.Remove(letter);
-                InMemoryData.Letters.Add(context.Message.Letter);
+                var letter = InMemoryData.Letters.FirstOrDefault(l => l.Id == context.Message.Id);
+                if (letter != null)
+                {
+                    letter.SetBody(context.Message.UpdatedBody, context.Message.ProcessStartDate, context.Message.ProcessEndDate);
+                }
             });
         }
     }

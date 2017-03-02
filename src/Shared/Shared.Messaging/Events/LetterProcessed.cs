@@ -1,16 +1,13 @@
-using Shared.Messaging.Messages;
+using System;
 
 
 namespace Shared.Messaging.Events
 {
     public class LetterProcessed
     {
-        public LetterProcessed(ILetter letter)
-        {
-            Letter = letter;
-        }
-
-
-        public ILetter Letter { get; private set; }
+        public Guid Id { get; set; }
+        public DateTime ProcessStartDate { get; set; }
+        public string UpdatedBody { get; set; }
+        public DateTime ProcessEndDate { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Consumer.WebAPI
         {
             Bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
-                cfg.ReceiveEndpoint(host, MessagingConstants.MessageProcessQueue, e =>
+                cfg.ReceiveEndpoint(host, MessagingConstants.MessageManagingQueue, e =>
                 {
                     e.Consumer(() => new ReceiveProcessedLetter());
                 });

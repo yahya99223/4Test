@@ -2,7 +2,7 @@
 {
     public static class MessagingConstants
     {
-        public const string MqUri = "rabbitmq://localhost/DistributeMe/";
+        public const string MqUri = "rabbitmq://localhost/DistributedMicroservice/";
         public const string UserName = "wahid";
         public const string Password = "poi098";
 

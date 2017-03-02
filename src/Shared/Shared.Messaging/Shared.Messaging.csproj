@@ -65,8 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusConfigurator.cs" />
-    <Compile Include="Messages\ILetter.cs" />
-    <Compile Include="Messages\Letter.cs" />
     <Compile Include="Events\LetterProcessed.cs" />
     <Compile Include="MessagingConstants.cs" />
     <Compile Include="Events\NewLetterReceived.cs" />

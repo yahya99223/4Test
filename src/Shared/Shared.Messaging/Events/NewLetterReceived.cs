@@ -1,16 +1,14 @@
-﻿using Shared.Messaging.Messages;
+﻿using System;
 
 
 namespace Shared.Messaging.Events
 {
     public class NewLetterReceived
     {
-        public NewLetterReceived(ILetter letter)
-        {
-            Letter = letter;
-        }
-
-
-        public ILetter Letter { get; private set; }
+        public Guid Id { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
     }
 }
