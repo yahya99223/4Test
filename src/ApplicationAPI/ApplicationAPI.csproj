@@ -111,16 +111,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnotherDependOnUnitOfWorkMiddleware.cs" />
-    <Compile Include="BaseMiddleware.cs" />
+    <Compile Include="Middlewares\AnotherDependOnUnitOfWorkMiddleware.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="DependOnUnitOfWorkMiddleware.cs" />
+    <Compile Include="Middlewares\DependOnUnitOfWorkMiddleware.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="VeryStartMiddleware.cs" />
+    <Compile Include="Middlewares\VeryStartMiddleware.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
