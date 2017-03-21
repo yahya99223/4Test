@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http.Dependencies;
 using Castle.Windsor;
-using Core;
 
 
 namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstaller
@@ -11,17 +10,14 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
     public class WindsorHttpDependencyResolver : IDependencyResolver
     {
         private readonly IWindsorContainer container;
-        private readonly IServiceResolver serviceResolver;
 
-
-        public WindsorHttpDependencyResolver(IWindsorContainer container,IServiceResolver serviceResolver)
+        public WindsorHttpDependencyResolver(IWindsorContainer container)
         {
             if (container == null)
             {
                 throw new ArgumentNullException("container");
             }
             this.container = container;
-            this.serviceResolver = serviceResolver;
         }
 
         public object GetService(Type t)
@@ -37,7 +33,7 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
 
         public IDependencyScope BeginScope()
         {
-            return new WindsorDependencyScope(this.container, serviceResolver.MiddlewareScope);
+            return new WindsorDependencyScope(this.container);
         }
 
         public void Dispose()

@@ -45,21 +45,19 @@ namespace Core
             if (serviceResolver != null)
             {
                 var handlers = serviceResolver.ResolveAll<IHandles<T>>() ?? new List<IHandles<T>>();
-                var asyncTasks = new List<Task>();
                 foreach (var handler in handlers)
                 {
-                    var t = handler.HandleAsync(args);
-                    asyncTasks.Add(t);
-
                     handler.Handle(args);
                 }
-                Task.WaitAll(asyncTasks.ToArray());
             }
-
             if (actions != null)
+            {
                 foreach (var action in actions)
+                {
                     if (action is Action<T>)
                         ((Action<T>) action)(args);
+                }
+            }
         }
     }
 }

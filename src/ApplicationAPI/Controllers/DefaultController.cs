@@ -11,26 +11,41 @@ namespace ApplicationAPI.Controllers
 {
     public class DefaultController : ApiController
     {
-        private readonly IUnitOfWork unitOfWork;
         private readonly IUserService userService;
 
 
-        public DefaultController(IUnitOfWork unitOfWork, IUserService userService)
+        public DefaultController(IUserService userService)
         {
-            this.unitOfWork = unitOfWork;
             this.userService = userService;
         }
 
 
         [Route("api/test")]
-        public async Task<IHttpActionResult> Get()
+        public IHttpActionResult Add()
         {
-            await Task.Run(() =>
-                           {
-                               var user = Core.Model.User.Create("Sameer");
-                               userService.Add(user);
-                           });
-            //return "";
+
+            var user = Core.Model.User.Create("Sameer");
+            userService.Add(user);
+
+            var result = new
+            {
+                StaticInfo.BeginWebRequests,
+                EndWebRequests = StaticInfo.EndWebRequests + 1,
+                StaticInfo.StartedUnitOfWorks,
+                StaticInfo.DisposedUnitOfWorks,
+                StaticInfo.Users,
+                StaticInfo.Exception,
+            };
+            return Ok(result);
+        }
+
+        [Route("api/test/async")]
+        public async Task<IHttpActionResult> AddAsync()
+        {
+
+            var user = Core.Model.User.Create("Sameer");
+            await userService.AddAsync(user);
+
             var result = new
             {
                 StaticInfo.BeginWebRequests,

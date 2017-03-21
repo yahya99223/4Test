@@ -8,9 +8,6 @@ namespace Core
     {
         T Resolve<T>();
         IList<T> ResolveAll<T>();
-        IDisposable SetMiddlewareScope();
-        IDisposable MiddlewareScope { get; }
+        IDisposable StartScope();
     }
-
-    
 }

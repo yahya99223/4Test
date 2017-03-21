@@ -1,4 +1,5 @@
-﻿using Core.DataAccess;
+﻿using System.Threading.Tasks;
+using Core.DataAccess;
 using Core.Model;
 
 namespace Core.Services
@@ -15,6 +16,13 @@ namespace Core.Services
         public void Add(User user)
         {
             unitOfWork.AddUser(user);
+        }
+
+        public async Task AddAsync(User user)
+        {
+            await Task.Run(() => {
+                unitOfWork.AddUser(user);
+            });
         }
     }
 }

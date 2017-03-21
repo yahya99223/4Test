@@ -17,10 +17,5 @@ namespace Core
         {
             unitOfWork.Commit();
         }
-
-
-        public async Task HandleAsync(UserCreated args)
-        {
-        }
     }
 }

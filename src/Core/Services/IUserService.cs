@@ -10,5 +10,6 @@ namespace Core.Services
     public interface IUserService
     {
         void Add(User user);
+        Task AddAsync(User user);
     }
 }

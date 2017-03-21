@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Runtime.Remoting.Messaging;
+using System.Threading.Tasks;
+using IoC;
 using Microsoft.Owin;
 
 
@@ -13,10 +16,11 @@ namespace ApplicationAPI
 
         public override async Task Invoke(IOwinContext context)
         {
-            using (var scope = ServiceResolver.SetMiddlewareScope())
-            {
-                await Next.Invoke(context);
-            }
+            CallContext.LogicalSetData("CallContextId", Guid.NewGuid());
+            var serviceResolver = ServiceResolverFactory.GetServiceResolver();
+            var scope = serviceResolver.StartScope();
+            await Next.Invoke(context);
+            scope.Dispose();
         }
     }
 }

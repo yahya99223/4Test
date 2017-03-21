@@ -31,21 +31,14 @@ namespace IoC
             DomainEvents.Initialize(this);
         }
 
-
-        public void Stop()
+        public void Dispose()
         {
             Container.Dispose();
         }
 
-
         public T Resolve<T>()
         {
             return Container.Resolve<T>();
-        }
-
-        public object Resolve(Type type)
-        {
-            return Container.Resolve(type);
         }
 
         public IList<T> ResolveAll<T>()
@@ -53,20 +46,9 @@ namespace IoC
             return Container.ResolveAll<T>().ToList();
         }
 
-
-        public IDisposable SetMiddlewareScope()
+        public IDisposable StartScope()
         {
-            MiddlewareScope = Container.BeginScope();
-            return MiddlewareScope;
-        }
-
-
-        public IDisposable MiddlewareScope { get; private set; }
-
-
-        public void Dispose()
-        {
-            Container.Dispose();
+            return Container.BeginScope();
         }
     }
 }

@@ -47,7 +47,7 @@
     <Compile Include="DomainEvents\DomainEvents.cs" />
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IHandles.cs" />
-    <Compile Include="Handlers\UserCreatedSleep2AsyncHandler.cs" />
+    <Compile Include="Handlers\UserCreatedSleepAsync2Handler.cs" />
     <Compile Include="Handlers\UserCreatedSleepAsyncHandler.cs" />
     <Compile Include="Handlers\UserCreatedSleepSyncHandler.cs" />
     <Compile Include="IServiceResolver.cs" />
