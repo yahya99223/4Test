@@ -13,8 +13,8 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<System.Web.Http.Dependencies.IDependencyResolver>().ImplementedBy<WindsorHttpDependencyResolver>());
-            container.Register(Classes.FromAssemblyNamed("ApplicationAPI").BasedOn<IHttpController>().LifestyleScoped());
+            /*container.Register(Component.For<System.Web.Http.Dependencies.IDependencyResolver>().ImplementedBy<WindsorHttpDependencyResolver>());
+            container.Register(Classes.FromAssemblyNamed("ApplicationAPI").BasedOn<IHttpController>().LifestyleScoped());*/
 
             container.Register(Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifestyleScoped(typeof(PerCallContextScopeAccessor)));
 

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Core;
-using Core.DataAccess;
 using Core.Services;
-
 
 namespace ApplicationAPI.Controllers
 {
@@ -19,11 +15,10 @@ namespace ApplicationAPI.Controllers
             this.userService = userService;
         }
 
-
+        [HttpGet]
         [Route("api/test")]
         public IHttpActionResult Add()
         {
-
             var user = Core.Model.User.Create("Sameer");
             userService.Add(user);
 
@@ -34,15 +29,15 @@ namespace ApplicationAPI.Controllers
                 StaticInfo.StartedUnitOfWorks,
                 StaticInfo.DisposedUnitOfWorks,
                 StaticInfo.Users,
-                StaticInfo.Exception,
+                StaticInfo.Exception
             };
             return Ok(result);
         }
 
+        [HttpGet]
         [Route("api/test/async")]
         public async Task<IHttpActionResult> AddAsync()
         {
-
             var user = Core.Model.User.Create("Sameer");
             await userService.AddAsync(user);
 
@@ -53,7 +48,7 @@ namespace ApplicationAPI.Controllers
                 StaticInfo.StartedUnitOfWorks,
                 StaticInfo.DisposedUnitOfWorks,
                 StaticInfo.Users,
-                StaticInfo.Exception,
+                StaticInfo.Exception
             };
 
             return Ok(result);
