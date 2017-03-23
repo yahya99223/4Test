@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Runtime.Remoting.Messaging;
+using System.Threading.Tasks;
 using Core.DataAccess;
+using Core.Helpers;
 using Core.Model;
 
 namespace Core.Services
@@ -20,7 +23,9 @@ namespace Core.Services
 
         public async Task AddAsync(User user)
         {
-            await Task.Run(() => {
+            var callContextId = (Guid)CallContext.LogicalGetData("CallContextId");
+
+            await Tasker.Run(callContextId, () => {
                 unitOfWork.AddUser(user);
             });
         }

@@ -50,6 +50,8 @@
     <Compile Include="Handlers\UserCreatedSleepAsync2Handler.cs" />
     <Compile Include="Handlers\UserCreatedSleepAsyncHandler.cs" />
     <Compile Include="Handlers\UserCreatedSleepSyncHandler.cs" />
+    <Compile Include="Helpers\LogicalCallContext.cs" />
+    <Compile Include="Helpers\Tasker.cs" />
     <Compile Include="IServiceResolver.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserCreated.cs" />

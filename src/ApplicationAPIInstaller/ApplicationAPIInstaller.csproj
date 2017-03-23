@@ -85,8 +85,8 @@
     <Compile Include="Installer.cs" />
     <Compile Include="PerCallContextScopeAccessor.cs" />
     <Compile Include="ThreadSafeDefaultLifetimeScope.cs" />
-    <Compile Include="WindsorHttpDependencyResolver.cs" />
     <Compile Include="WindsorDependencyScope.cs" />
+    <Compile Include="WindsorHttpDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

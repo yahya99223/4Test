@@ -1,6 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Runtime.Remoting.Messaging;
+using System.Threading;
 using System.Threading.Tasks;
 using Core.DataAccess;
+using Core.Helpers;
 using Core.Model;
 
 namespace Core
@@ -18,10 +21,15 @@ namespace Core
         public void Handle(UserCreated args)
         {
             Task.Run(async () =>
-            {
-                await Task.Delay(9000);
-                unitOfWork.Commit();
-            });
+                {
+                    var callContextId = (Guid) CallContext.LogicalGetData("CallContextId");
+                    await Tasker.Run(callContextId, async () =>
+                    {
+                        await Task.Delay(9000);
+                        unitOfWork.Commit();
+                    });
+                }
+            );
         }
     }
 }

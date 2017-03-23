@@ -6,6 +6,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
+using Core.Helpers;
 using Core.Services;
 using IoC;
 
@@ -20,7 +21,8 @@ namespace ConsoleApp
             var executeFolder = AppDomain.CurrentDomain.BaseDirectory;
             serviceResolver = ServiceResolverFactory.GetServiceResolver(executeFolder);
 
-             doTheWork();
+            var t = listenToRequests();
+            t.Wait();
 
             showStatistics();
             Console.WriteLine(Environment.NewLine);
@@ -29,7 +31,7 @@ namespace ConsoleApp
             Console.ReadLine();
         }
 
-        private static void doTheWork()
+        private static async Task listenToRequests()
         {
             var actions = new List<string>
             {
@@ -43,21 +45,12 @@ namespace ConsoleApp
                 {
                     StaticInfo.BeginWebRequests += 1;
 
-                    CallContext.LogicalSetData("CallContextId", Guid.NewGuid());
+                    var requestId = Guid.NewGuid();
+                    CallContext.LogicalSetData("CallContextId", requestId);
                     var scope = serviceResolver.StartScope();
 
-                    switch (requestType)
-                    {
-                        case "sync":
-                            doSyncWork();
-                            break;
-
-                        case "async":
-                            Task.Run(async () => { await doAsyncWork(); }).Wait();
-                            break;
-                    }
-
-                    scope.Dispose();
+                    Tasker.RegisterScope(requestId, scope);//, doTheWork(type, requestId));
+                    await Tasker.Run(requestId, doTheWork(requestType, requestId).Wait);
 
                     StaticInfo.EndWebRequests += 1;
                 }
@@ -65,6 +58,23 @@ namespace ConsoleApp
                 if (requestType == "print")
                     showStatistics();
             } while (requestType != "stop");
+        }
+
+        private static async Task doTheWork(string type, Guid requestId)
+        {
+            switch (type)
+            {
+                case "sync":
+                    await Tasker.Run(requestId, doSyncWork);
+                    break;
+
+                case "async":
+                    await Tasker.Run(requestId, async () =>
+                    {
+                        await doAsyncWork();
+                    });
+                    break;
+            }
         }
 
         private static void doSyncWork()

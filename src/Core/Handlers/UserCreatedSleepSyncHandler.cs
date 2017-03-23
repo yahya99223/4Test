@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Core.DataAccess;
 using Core.Model;
 
@@ -15,6 +16,7 @@ namespace Core
 
         public void Handle(UserCreated args)
         {
+            Thread.Sleep(300);
             unitOfWork.Commit();
         }
     }
