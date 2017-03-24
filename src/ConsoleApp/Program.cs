@@ -21,8 +21,7 @@ namespace ConsoleApp
             var executeFolder = AppDomain.CurrentDomain.BaseDirectory;
             serviceResolver = ServiceResolverFactory.GetServiceResolver(executeFolder);
 
-            var t = listenToRequests();
-            t.Wait();
+            listenToRequests();
 
             showStatistics();
             Console.WriteLine(Environment.NewLine);
@@ -31,7 +30,7 @@ namespace ConsoleApp
             Console.ReadLine();
         }
 
-        private static async Task listenToRequests()
+        private static void listenToRequests()
         {
             var actions = new List<string>
             {
@@ -49,8 +48,9 @@ namespace ConsoleApp
                     CallContext.LogicalSetData("CallContextId", requestId);
                     var scope = serviceResolver.StartScope();
 
-                    Tasker.RegisterScope(requestId, scope);//, doTheWork(type, requestId));
-                    await Tasker.Run(requestId, doTheWork(requestType, requestId).Wait);
+                    Tasker.RegisterScope(requestId, scope);
+                    var type = requestType;
+                    Tasker.Run(Task.Run(async () => await doTheWork(type)));
 
                     StaticInfo.EndWebRequests += 1;
                 }
@@ -60,16 +60,16 @@ namespace ConsoleApp
             } while (requestType != "stop");
         }
 
-        private static async Task doTheWork(string type, Guid requestId)
+        private static async Task doTheWork(string type)
         {
             switch (type)
             {
                 case "sync":
-                    await Tasker.Run(requestId, doSyncWork);
+                    await Tasker.Run(doSyncWork);
                     break;
 
                 case "async":
-                    await Tasker.Run(requestId, async () =>
+                    await Tasker.Run(async () =>
                     {
                         await doAsyncWork();
                     });

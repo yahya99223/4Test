@@ -23,9 +23,7 @@ namespace Core.Services
 
         public async Task AddAsync(User user)
         {
-            var callContextId = (Guid)CallContext.LogicalGetData("CallContextId");
-
-            await Tasker.Run(callContextId, () => {
+            await Tasker.Run(() => {
                 unitOfWork.AddUser(user);
             });
         }

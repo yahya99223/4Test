@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,15 +29,34 @@ namespace Core.Helpers
             }
         }
 
-        public static async Task Run( Guid requestKey, Action action)
+        public static void Run(Task task)
+        {
+            lock (locker)
+            {
+                var callContextId = (Guid) CallContext.LogicalGetData("CallContextId");
+                var context = callContexts.FirstOrDefault(c => c.RequestId == callContextId);
+                if (context != null && task != null)
+                {
+                    context.AddTask(task);
+
+                    if (task.Status == TaskStatus.Created)
+                        task.Start();
+                }
+                else
+                    throw new Exception("Out of context");
+            }
+        }
+
+        public static Task Run(Action action)
         {
             LogicalCallContext context;
             lock (locker)
             {
-                context = callContexts.FirstOrDefault(c => c.RequestId == requestKey);
+                var callContextId = (Guid) CallContext.LogicalGetData("CallContextId");
+                context = callContexts.FirstOrDefault(c => c.RequestId == callContextId);
             }
             if (context != null)
-                await context.AddActionAsTask(action);
+                return context.AddActionAsTask(action);
             else
                 throw new Exception("Out of context");
         }
