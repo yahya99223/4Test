@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Core.DataAccess;
 using Core.Helpers;
@@ -16,7 +17,7 @@ namespace Core
         }
 
 
-        public void Handle(UserCreated args)
+        /*public void Handle(UserCreated args)
         {
             Console.WriteLine("Enter - Async1 Handler");
             Tasker.Run(() =>
@@ -29,6 +30,22 @@ namespace Core
                 unitOfWork.Commit();
             Console.WriteLine("Commited UnitOfWork Async1 Handler");
             });
+            Console.WriteLine("Exit - Async1 Handler");
+        }*/
+
+        public void Handle(UserCreated args)
+        {
+            Console.WriteLine("Enter - Async1 Handler");
+            Task.Factory.StartNew(() =>
+            {
+                Console.WriteLine("Sleeping - Async1 Handler");
+                Thread.Sleep(5000);
+                Console.WriteLine("Awake - Async1 Handler");
+
+                Console.WriteLine("Commiting UnitOfWork Async1 Handler");
+                unitOfWork.Commit();
+                Console.WriteLine("Commited UnitOfWork Async1 Handler");
+            },TaskCreationOptions.AttachedToParent);
             Console.WriteLine("Exit - Async1 Handler");
         }
     }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Core;
 using Core.Helpers;
@@ -47,10 +48,19 @@ namespace ConsoleApp
                     var requestId = Guid.NewGuid();
                     CallContext.LogicalSetData("CallContextId", requestId);
                     var scope = serviceResolver.StartScope();
-
-                    Tasker.RegisterScope(requestId, scope);
                     var type = requestType;
-                    Tasker.Run(doTheWork(type));
+                    Task.Factory.StartNew(() =>
+                        {
+                             doTheWork(type);
+                        }
+                        , CancellationToken.None
+                        , TaskCreationOptions.None
+                        , TaskScheduler.Current
+                    ).ContinueWith(oldTask =>
+                    {
+                        scope.Dispose();
+                    });
+                    //Tasker.RegisterScope(requestId, scope);
                     //Tasker.Run(Task.Run(async () => await doTheWork(type)));
 
                     StaticInfo.EndWebRequests += 1;
@@ -61,7 +71,7 @@ namespace ConsoleApp
             } while (requestType != "stop");
         }
 
-        private static async Task doTheWork(string type)
+        private static void doTheWork(string type)
         {
             switch (type)
             {
@@ -70,10 +80,10 @@ namespace ConsoleApp
                     break;
 
                 case "async":
-                    await Tasker.Run(async () =>
+                    /*await Tasker.Run(async () =>
                     {
                         await doAsyncWork();
-                    });
+                    });*/
                     break;
             }
         }
