@@ -48,6 +48,7 @@ namespace Core.DataAccess
 
         public void Dispose()
         {
+            Console.WriteLine("Disposing UOW");
             if (isDisposed)
             {
                 StaticInfo.Exception = "UnitOfWork-Dispose: already disposed";

@@ -50,7 +50,8 @@ namespace ConsoleApp
 
                     Tasker.RegisterScope(requestId, scope);
                     var type = requestType;
-                    Tasker.Run(Task.Run(async () => await doTheWork(type)));
+                    Tasker.Run(doTheWork(type));
+                    //Tasker.Run(Task.Run(async () => await doTheWork(type)));
 
                     StaticInfo.EndWebRequests += 1;
                 }
@@ -65,7 +66,7 @@ namespace ConsoleApp
             switch (type)
             {
                 case "sync":
-                    await Tasker.Run(doSyncWork);
+                    doSyncWork();
                     break;
 
                 case "async":
@@ -107,6 +108,9 @@ namespace ConsoleApp
 
             Console.WriteLine("-----");
             Console.WriteLine(string.Format("Users :{0}", StaticInfo.Users));
+
+            Console.WriteLine("-----");
+            Console.WriteLine(string.Format("Exception :{0}", StaticInfo.Exception));
 
             Console.WriteLine("===============================================================");
         }

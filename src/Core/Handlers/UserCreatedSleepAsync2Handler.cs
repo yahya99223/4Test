@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Core.DataAccess;
 using Core.Helpers;
 using Core.Model;
@@ -17,11 +18,18 @@ namespace Core
 
         public void Handle(UserCreated args)
         {
-            Tasker.Run(async () =>
+            Console.WriteLine("Enter - Async2 Handler");
+            Tasker.Run(() =>
             {
-                await Task.Delay(9000);
+                Console.WriteLine("Sleeping - Async2 Handler");
+                Tasker.Run(Task.Delay(9000));
+                Console.WriteLine("Awake - Async2 Handler");
+
+                Console.WriteLine("Commiting UnitOfWork Async2 Handler");
                 unitOfWork.Commit();
+                Console.WriteLine("Commited UnitOfWork Async2 Handler");
             });
+            Console.WriteLine("Exit - Async2 Handler");
         }
     }
 }

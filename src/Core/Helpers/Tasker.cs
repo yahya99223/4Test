@@ -13,18 +13,11 @@ namespace Core.Helpers
         private static readonly IList<LogicalCallContext> callContexts = new List<LogicalCallContext>();
         private static readonly object locker = new object();
 
-        public static void RegisterScope(Guid requestKey, IDisposable scope, Task task = null)
+        public static void RegisterScope(Guid requestKey, IDisposable scope)
         {
             lock (locker)
             {
-                var context = new LogicalCallContext(requestKey, scope);
-                if (task != null)
-                {
-                    context.AddTask(task);
-
-                    if (task.Status == TaskStatus.Created)
-                        task.Start();
-                }
+                var context = new LogicalCallContext(requestKey, scope);                
                 callContexts.Add(context);
             }
         }
@@ -40,7 +33,11 @@ namespace Core.Helpers
                     context.AddTask(task);
 
                     if (task.Status == TaskStatus.Created)
+                    {
+                        Console.WriteLine("Plain Task {0} - Starting", task.Id);
                         task.Start();
+                        Console.WriteLine("Plain Task {0} - Started", task.Id);
+                    }
                 }
                 else
                     throw new Exception("Out of context");
@@ -54,11 +51,12 @@ namespace Core.Helpers
             {
                 var callContextId = (Guid) CallContext.LogicalGetData("CallContextId");
                 context = callContexts.FirstOrDefault(c => c.RequestId == callContextId);
-            }
+            
             if (context != null)
                 return context.AddActionAsTask(action);
             else
                 throw new Exception("Out of context");
+            }
         }
     }
 }

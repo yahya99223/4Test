@@ -31,6 +31,22 @@ namespace Core.Helpers
             lock (locker)
             {
                 tasks.Add(task);
+                Console.WriteLine("Plain Task {0} - Added", task.Id);
+
+                task.ContinueWith(doneTask =>
+                {
+                    lock (locker)
+                    {
+                        tasks.Remove(doneTask);
+                        Console.WriteLine("Plain Task {0} - Removed", doneTask.Id);
+                        if (tasks.Any())
+                        {
+                            Console.WriteLine("Scope - Disposing");
+                            Scope.Dispose();
+                            Console.WriteLine("Scope - Disposed");
+                        }
+                    }
+                });
             }
         }
 
@@ -40,17 +56,27 @@ namespace Core.Helpers
             lock (locker)
             {
                 tasks.Add(t);
+                Console.WriteLine("Action Task {0} - Added", t.Id);
             }
             t.ContinueWith(doneTask =>
             {
                 lock (locker)
                 {
                     tasks.Remove(doneTask);
+                    Console.WriteLine("Action Task {0} - Removed", doneTask.Id);
                     if (!tasks.Any())
+                    {
+                        Console.WriteLine("Scope - Disposing");
                         Scope.Dispose();
+                        Console.WriteLine("Scope - Disposed");
+                    }
                 }
             });
+
+            Console.WriteLine("Action Task {0} - Starting", t.Id);
             t.Start();
+            Console.WriteLine("Action Task {0} - Started", t.Id);
+
             return t;
         }
     }
