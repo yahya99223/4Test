@@ -34,7 +34,7 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
 
         public void Dispose()
         {
-            this.scope.Dispose();
+            //this.scope.Dispose();
         }
     }
 }

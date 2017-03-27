@@ -23,7 +23,7 @@ namespace Core.Services
 
         public async Task AddAsync(User user)
         {
-            await Tasker.Run(() => {
+            await Task.Run(() => {
                 unitOfWork.AddUser(user);
             });
         }

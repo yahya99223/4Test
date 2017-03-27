@@ -26,7 +26,8 @@ namespace ApplicationAPI
 
             OnAppDisposing(app);
 
-            app.Use<VeryStartMiddleware>();
+            //app.Use<VeryStartMiddleware>();
+            //app.Use<ScopingMiddleware>();
             //app.Use<DependOnUnitOfWorkMiddleware>();
             //app.Use<AnotherDependOnUnitOfWorkMiddleware>();
             app.UseWebApi(GlobalConfiguration.Configuration);
@@ -45,14 +46,7 @@ namespace ApplicationAPI
 
         private static void webApiConfigRegister(HttpConfiguration config)
         {
-            // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                      name: "DefaultApi",
-                      routeTemplate: "api/{controller}/{id}",
-                      defaults: new {controller = "Default", id = RouteParameter.Optional}
-                  );
 
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();

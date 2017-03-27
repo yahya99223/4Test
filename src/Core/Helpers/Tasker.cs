@@ -34,9 +34,9 @@ namespace Core.Helpers
 
                     if (task.Status == TaskStatus.Created)
                     {
-                        Console.WriteLine("Plain Task {0} - Starting", task.Id);
+                        //Console.WriteLine("Plain Task {0} - Starting", task.Id);
                         task.Start();
-                        Console.WriteLine("Plain Task {0} - Started", task.Id);
+                        //Console.WriteLine("Plain Task {0} - Started", task.Id);
                     }
                 }
                 else

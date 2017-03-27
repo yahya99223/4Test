@@ -17,7 +17,7 @@ namespace Core
             get { return exception; }
             set
             {
-                Console.WriteLine(string.Format("Exception :{0}", value));
+                //Console.WriteLine(string.Format("Exception :{0}", value));
                 exception = value;
             }
         }

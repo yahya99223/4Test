@@ -1,7 +1,9 @@
-﻿namespace Core
+﻿using System.Threading.Tasks;
+
+namespace Core
 {
     public interface IHandles<in T> where T : IDomainEvent
     {
-        void Handle(T args); 
+        void Handle(T args);
     }
 }

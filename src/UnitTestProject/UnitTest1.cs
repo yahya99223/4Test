@@ -12,11 +12,11 @@ namespace UnitTestProject
         {
             var date = new DateTime(2016, 8, 4);
             var wantedDate = date.AddYears(-50).AddMonths(-3);
-            Console.WriteLine(date.ToString("d"));
-            Console.WriteLine(date.ToString("D"));
-            Console.WriteLine();
-            Console.WriteLine(wantedDate.ToString("d"));
-            Console.WriteLine(wantedDate.ToString("D"));
+            //Console.WriteLine(date.ToString("d"));
+            //Console.WriteLine(date.ToString("D"));
+            //Console.WriteLine();
+            //Console.WriteLine(wantedDate.ToString("d"));
+            //Console.WriteLine(wantedDate.ToString("D"));
         }
 
 

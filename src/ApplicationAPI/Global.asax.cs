@@ -26,12 +26,10 @@ namespace ApplicationAPI
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            StaticInfo.BeginWebRequests += 1;
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
-            StaticInfo.EndWebRequests += 1;
             
             
             var message = new StringBuilder();

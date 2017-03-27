@@ -49,6 +49,24 @@ namespace Core
                 {
                     handler.Handle(args);
                 }
+                try
+                {
+                    IDisposable backgroundScope = null;
+                    Task.Run(() =>
+                    {
+                        backgroundScope = serviceResolver.StartScope();
+                        var backgroundHandlers = serviceResolver.ResolveAll<IBackgroundHandles<T>>() ?? new List<IBackgroundHandles<T>>();
+                        var tasks = backgroundHandlers.Select(x => x.HandlerTask(args)).ToArray();
+                        Task.WaitAll(tasks);
+                    }).ContinueWith(oldTask =>
+                    {
+                        backgroundScope.Dispose();
+                    });
+                }
+                catch (Exception e)
+                {
+                    StaticInfo.Exception = e.Message;
+                }
             }
             if (actions != null)
             {

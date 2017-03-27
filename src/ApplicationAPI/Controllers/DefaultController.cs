@@ -2,31 +2,29 @@
 using System.Web.Http;
 using Core;
 using Core.Services;
+using IoC;
 
 namespace ApplicationAPI.Controllers
 {
     public class DefaultController : ApiController
     {
-        private readonly IUserService userService;
+        private readonly IServiceResolver serviceResolver;
 
-
-        public DefaultController(IUserService userService)
+        public DefaultController()
         {
-            this.userService = userService;
+            this.serviceResolver = ServiceResolverFactory.GetServiceResolver();
         }
 
         [HttpGet]
-        [Route("api/test")]
-        public IHttpActionResult Add()
+        [Route("api/Print")]
+        public IHttpActionResult Print()
         {
-            var user = Core.Model.User.Create("Sameer");
-            userService.Add(user);
-
             var result = new
             {
                 StaticInfo.BeginWebRequests,
-                EndWebRequests = StaticInfo.EndWebRequests + 1,
+                StaticInfo.EndWebRequests,
                 StaticInfo.StartedUnitOfWorks,
+                StaticInfo.CommitedUnitOfWorks,
                 StaticInfo.DisposedUnitOfWorks,
                 StaticInfo.Users,
                 StaticInfo.Exception
@@ -35,22 +33,50 @@ namespace ApplicationAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/test/async")]
-        public async Task<IHttpActionResult> AddAsync()
+        [Route("api/Add/Sync")]
+        public IHttpActionResult AddSync()
         {
+            StaticInfo.BeginWebRequests += 1;
             var user = Core.Model.User.Create("Sameer");
-            await userService.AddAsync(user);
+            var userService = serviceResolver.Resolve<IUserService>();
+            userService.Add(user);
 
+            StaticInfo.EndWebRequests += 1;
             var result = new
             {
                 StaticInfo.BeginWebRequests,
-                EndWebRequests = StaticInfo.EndWebRequests + 1,
+                StaticInfo.EndWebRequests,
                 StaticInfo.StartedUnitOfWorks,
+                StaticInfo.CommitedUnitOfWorks,
                 StaticInfo.DisposedUnitOfWorks,
                 StaticInfo.Users,
                 StaticInfo.Exception
             };
+            return Ok(result);
+        }
 
+        [HttpGet]
+        [Route("api/Add/Async")]
+        public async Task<IHttpActionResult> AddAsync()
+        {
+            StaticInfo.BeginWebRequests += 1;
+
+            var user = Core.Model.User.Create("Sameer");
+            var userService = serviceResolver.Resolve<IUserService>();
+            await userService.AddAsync(user);
+
+            StaticInfo.EndWebRequests += 1;
+
+            var result = new
+            {
+                StaticInfo.BeginWebRequests,
+                StaticInfo.EndWebRequests,
+                StaticInfo.StartedUnitOfWorks,
+                StaticInfo.CommitedUnitOfWorks,
+                StaticInfo.DisposedUnitOfWorks,
+                StaticInfo.Users,
+                StaticInfo.Exception
+            };
             return Ok(result);
         }
     }

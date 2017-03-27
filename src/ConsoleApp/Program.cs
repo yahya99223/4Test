@@ -47,11 +47,12 @@ namespace ConsoleApp
 
                     var requestId = Guid.NewGuid();
                     CallContext.LogicalSetData("CallContextId", requestId);
+
                     var scope = serviceResolver.StartScope();
                     var type = requestType;
                     Task.Factory.StartNew(() =>
                         {
-                             doTheWork(type);
+                            doTheWork(type);
                         }
                         , CancellationToken.None
                         , TaskCreationOptions.None
@@ -60,15 +61,13 @@ namespace ConsoleApp
                     {
                         scope.Dispose();
                     });
-                    //Tasker.RegisterScope(requestId, scope);
-                    //Tasker.Run(Task.Run(async () => await doTheWork(type)));
 
                     StaticInfo.EndWebRequests += 1;
                 }
 
                 if (requestType == "print")
                     showStatistics();
-            } while (requestType != "stop");
+            } while (requestType != "exit");
         }
 
         private static void doTheWork(string type)
@@ -80,10 +79,10 @@ namespace ConsoleApp
                     break;
 
                 case "async":
-                    /*await Tasker.Run(async () =>
+                    Task.Factory.StartNew(async () =>
                     {
                         await doAsyncWork();
-                    });*/
+                    });
                     break;
             }
         }

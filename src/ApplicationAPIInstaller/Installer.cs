@@ -13,20 +13,19 @@ namespace IDScan.OnboardingSuite.Shared.WindsorInstallers.ApplicationAPIInstalle
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            /*container.Register(Component.For<System.Web.Http.Dependencies.IDependencyResolver>().ImplementedBy<WindsorHttpDependencyResolver>());
-            container.Register(Classes.FromAssemblyNamed("ApplicationAPI").BasedOn<IHttpController>().LifestyleScoped());*/
+            container.Register(Component.For<System.Web.Http.Dependencies.IDependencyResolver>().ImplementedBy<WindsorHttpDependencyResolver>());
+            container.Register(Classes.FromAssemblyNamed("ApplicationAPI").BasedOn<IHttpController>().LifestyleScoped());
 
             container.Register(Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifestyleScoped());
-            //container.Register(Component.For<IUnitOfWork>().ImplementedBy<UnitOfWork>().LifestyleScoped(typeof(PerCallContextScopeAccessor)));
 
 
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>().LifeStyle.Transient);
 
 
 
-            container.Register(Component.For<IHandles<UserCreated>>().ImplementedBy<UserCreatedSleepAsync1Handler>().LifeStyle.Transient);
-            container.Register(Component.For<IHandles<UserCreated>>().ImplementedBy<UserCreatedSleepAsync2Handler>().LifeStyle.Transient);
-            container.Register(Component.For<IHandles<UserCreated>>().ImplementedBy<UserCreatedSleepSyncHandler>().LifeStyle.Transient);
+            container.Register(Component.For<IBackgroundHandles<UserCreated>>().ImplementedBy<UserCreated_Async1Handler>().LifeStyle.Transient);
+            container.Register(Component.For<IBackgroundHandles<UserCreated>>().ImplementedBy<UserCreated_Async2Handler>().LifeStyle.Transient);
+            container.Register(Component.For<IHandles<UserCreated>>().ImplementedBy<UserCreated_SyncHandler>().LifeStyle.Transient);
         }
     }
 }

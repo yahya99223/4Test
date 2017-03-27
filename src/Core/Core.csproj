@@ -45,11 +45,12 @@
     <Compile Include="DataAccess\ObjectExtensions.cs" />
     <Compile Include="DataAccess\UnitOfWork.cs" />
     <Compile Include="DomainEvents\DomainEvents.cs" />
+    <Compile Include="DomainEvents\IBackgroundHandles.cs" />
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IHandles.cs" />
-    <Compile Include="Handlers\UserCreatedSleepAsync2Handler.cs" />
-    <Compile Include="Handlers\UserCreatedSleepAsync1Handler.cs" />
-    <Compile Include="Handlers\UserCreatedSleepSyncHandler.cs" />
+    <Compile Include="Handlers\UserCreated_Async2Handler.cs" />
+    <Compile Include="Handlers\UserCreated_Async1Handler.cs" />
+    <Compile Include="Handlers\UserCreated_SyncHandler.cs" />
     <Compile Include="Helpers\LogicalCallContext.cs" />
     <Compile Include="Helpers\Tasker.cs" />
     <Compile Include="IServiceResolver.cs" />
