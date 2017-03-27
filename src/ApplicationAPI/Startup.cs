@@ -27,7 +27,7 @@ namespace ApplicationAPI
             OnAppDisposing(app);
 
             //app.Use<VeryStartMiddleware>();
-            //app.Use<ScopingMiddleware>();
+            app.Use<ScopingMiddleware>();
             //app.Use<DependOnUnitOfWorkMiddleware>();
             //app.Use<AnotherDependOnUnitOfWorkMiddleware>();
             app.UseWebApi(GlobalConfiguration.Configuration);

@@ -36,7 +36,7 @@ namespace Core
         public Task HandlerTask(UserCreated args)
         {
             //Console.WriteLine("Enter - Async1 Handler");
-            return Task.Run(() =>
+            return Task.Factory.StartNew(() =>
             {
                 //Console.WriteLine("Sleeping - Async1 Handler");
                 Thread.Sleep(7000);
@@ -45,7 +45,7 @@ namespace Core
                 //Console.WriteLine("Commiting UnitOfWork Async1 Handler");
                 unitOfWork.Commit();
                 //Console.WriteLine("Commited UnitOfWork Async1 Handler");
-            });
+            },TaskCreationOptions.AttachedToParent);
             //Console.WriteLine("Exit - Async1 Handler");
         }
     }
