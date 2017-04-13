@@ -17,8 +17,12 @@ namespace Application.API
             GlobalConfiguration.Configure(config =>
             {
                 WebApiConfig.Register(config);
-                //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             });
+
+            //app.MapSignalR();
+
+            SignalRConfig.Register(app);
+
         }
     }
 }
