@@ -22,7 +22,6 @@ namespace Application.API
             //app.MapSignalR();
 
             SignalRConfig.Register(app);
-
         }
     }
 }
