@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebApp.Models.UserTask>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DonePercent)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DonePercent)
+        </td>
+        <td>
+            @using (Html.BeginForm("Delete", "Tasks", new {id = item.id}, FormMethod.Post))
+            {
+                @Html.ActionLink("Edit", "Edit", new {id = item.id}, new {@class = "btn btn-default"})
+                @Html.ActionLink("Details", "Details", new {id = item.id}, new {@class = "btn btn-default"})
+                <input type="submit" value="Delete" class="btn btn-default"/>
+            }
+        </td>
+
+    </tr>
+}
+
+</table>
