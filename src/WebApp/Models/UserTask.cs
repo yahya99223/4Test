@@ -58,6 +58,19 @@ namespace WebApp.Models
             await client.CreateDocumentAsync(tasksLink, task);
         }
 
+        public async Task Update(UserTask task)
+        {
+            var document = await GetById(task.id);
+
+            document.Title = task.Title;
+            document.Description = task.Description;
+            document.DonePercent = task.DonePercent;
+            document.Notes = task.Notes;
+
+            var documentLink = UriFactory.CreateDocumentUri(databaseId, collectionId, document.id.ToString());
+            await client.ReplaceDocumentAsync(documentLink, document);
+        }
+
         public async Task Delete(Guid taskId)
         {
             var documentLink = UriFactory.CreateDocumentUri(databaseId, collectionId, taskId.ToString());

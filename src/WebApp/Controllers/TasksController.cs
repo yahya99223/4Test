@@ -39,11 +39,25 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<ActionResult> Edit(Guid id)
+        {
+            var task = await store.GetById(id);
+            return View(task);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(UserTask task)
+        {
+            await store.Update(task);
+            return RedirectToAction("Index");
+        }
+
         public async Task<ActionResult> Details(Guid id)
         {
             var task = await store.GetById(id);
             return View(task);
         }
+        
 
         [HttpPost]
         public async Task<ActionResult> Delete(Guid id)
