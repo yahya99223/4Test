@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Upload Your File</h2>
+<form method="post" enctype="multipart/form-data" action="@Url.Action("Upload","Attachments")">
+    @Html.AntiForgeryToken()
+    <input type="file" name="image" class="glyphicon-upload btn"/>
+    <br/>
+    <input type="submit" class="btn btn-primary" value="Upload!"/>
+</form>
+

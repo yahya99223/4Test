@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -32,12 +33,12 @@ namespace WebApp.Models
     {
         private readonly DocumentClient client;
         private readonly Uri tasksLink;
-        private const string databaseId = "wb-t-4test-mvcapp-cosmosdb";
+        private readonly string databaseId = ConfigurationManager.AppSettings["DocumentDbDatabaseId"];
         private const string collectionId = "Tasks";
 
         public UserTaskStore()
         {
-            client = new DocumentClient(new Uri("https://wb-t-4test-mvcapp-cosmosdb.documents.azure.com:443/"), "nQwJRHrt6412W2uq8qtpd6ju9MaQ9F2uybSjBtK6wnZXNTuI7aR0aShDc6zUX2zieq6uxTM15oqYYSgutHEInA==");
+            client = new DocumentClient(new Uri(ConfigurationManager.AppSettings["DocumentDbEndpointUrl"]), ConfigurationManager.AppSettings["DocumentDbAuthKey"]);
             tasksLink = UriFactory.CreateDocumentCollectionUri(databaseId, collectionId);
         }
 
