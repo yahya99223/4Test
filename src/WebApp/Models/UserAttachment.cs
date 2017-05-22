@@ -35,7 +35,18 @@ namespace WebApp.Models
 
         public Uri UriFor(string imageId)
         {
-            return new Uri(baseUri, $"/images/{imageId}");
+            var container = client.GetContainerReference("images");
+            var blob = container.GetBlockBlobReference(imageId);
+
+            var sharedAccessSignaturePolicy = new SharedAccessBlobPolicy
+            {
+                Permissions = SharedAccessBlobPermissions.Read,
+                SharedAccessStartTime = DateTime.Now.AddMinutes(-10),
+                SharedAccessExpiryTime = DateTime.Now.AddMinutes(3)
+            };
+            var sharedAccessSignatureToken = blob.GetSharedAccessSignature(sharedAccessSignaturePolicy);
+
+            return new Uri(baseUri, $"/images/{imageId}{sharedAccessSignatureToken}");
         }
     }
 }
