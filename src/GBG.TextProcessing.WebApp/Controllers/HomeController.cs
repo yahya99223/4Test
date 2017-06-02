@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using GBG.Microservices.Messaging.Commands;
 using GBG.TextProcessing.WebApp.Models;
-using NServiceBus;
 
 namespace GBG.TextProcessing.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IEndpointInstance endpoint;
-
-        public HomeController(IEndpointInstance endpoint)
-        {
-            this.endpoint = endpoint;
-        }
         public ActionResult Index()
         {
             return View();
