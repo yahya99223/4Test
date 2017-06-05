@@ -1,78 +1,21 @@
-﻿using System;
-using System.Reflection;
-using System.ServiceProcess;
-using System.Threading.Tasks;
-using Autofac;
-using GBG.TextProcessing.ConsoleApp.Modules;
-using MassTransit;
+﻿using Autofac;
+using Topshelf;
 
 namespace GBG.TextProcessing.ConsoleApp
 {
-    public static class Program
+    class Program
     {
-        private static IBusControl bus;
-
-        #region Nested classes to support running as service
-
-        public const string ServiceName = "TextProcessing Service";
-
-        public class Service : ServiceBase
+        static int Main(string[] args)
         {
-            public Service()
+            // Ioc Helper method for Autofac
+            var container = IocConfig.RegisterDependencies();
+
+            return (int)HostFactory.Run(cfg =>
             {
-                ServiceName = Program.ServiceName;
-            }
+                cfg.Service(s => container.Resolve<MyService>());
 
-            protected override void OnStart(string[] args)
-            {
-                Program.Start(args);
-            }
-
-            protected override void OnStop()
-            {
-                Program.Stop();
-            }
-        }
-
-        #endregion
-
-        static void Main(string[] args)
-        {
-            if (!Environment.UserInteractive)
-                // running as service
-                using (var service = new Service())
-                    ServiceBase.Run(service);
-            else
-            {
-                // running as console app
-                Start(args);
-
-                Console.WriteLine("Press any key to stop...");
-                Console.ReadKey(true);
-
-                Stop();
-            }
-        }
-
-        private static void Start(string[] args)
-        {
-            Console.Title = ServiceName;
-
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<Service>();
-
-            builder.RegisterModule(new AzureServiceBusModule(Assembly.GetExecutingAssembly()));
-
-            var builderInstance =  builder.Build();
-
-            Console.WriteLine("Listening for Process Image Command to do FaceRecognition..");
-            Console.ReadKey(true);
-        }
-
-        private static void Stop()
-        {
-            bus.Stop();
+                cfg.RunAsLocalSystem();
+            });
         }
     }
 }
