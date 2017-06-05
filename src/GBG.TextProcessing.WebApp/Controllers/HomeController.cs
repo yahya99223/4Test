@@ -3,11 +3,19 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using GBG.Microservices.Messaging.Commands;
 using GBG.TextProcessing.WebApp.Models;
+using MassTransit;
 
 namespace GBG.TextProcessing.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IBusControl bus;
+
+        public HomeController(IBusControl bus)
+        {
+            this.bus = bus;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -22,7 +30,8 @@ namespace GBG.TextProcessing.WebApp.Controllers
                 Sender = processText.Sender,
                 Text = processText.Text,
             };
-            await endpoint.Send("TextProcessing.ConsoleApp", message).ConfigureAwait(false);
+
+            await bus.Publish(message);
 
             return RedirectToAction("Index");
         }

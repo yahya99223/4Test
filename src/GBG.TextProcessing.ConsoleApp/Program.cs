@@ -1,36 +1,78 @@
 ﻿using System;
+using System.Reflection;
+using System.ServiceProcess;
 using System.Threading.Tasks;
+using Autofac;
+using GBG.TextProcessing.ConsoleApp.Modules;
+using MassTransit;
 
 namespace GBG.TextProcessing.ConsoleApp
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        private static IBusControl bus;
+
+        #region Nested classes to support running as service
+
+        public const string ServiceName = "TextProcessing Service";
+
+        public class Service : ServiceBase
         {
-            AsyncMain().GetAwaiter().GetResult();
+            public Service()
+            {
+                ServiceName = Program.ServiceName;
+            }
+
+            protected override void OnStart(string[] args)
+            {
+                Program.Start(args);
+            }
+
+            protected override void OnStop()
+            {
+                Program.Stop();
+            }
         }
 
-        static async Task AsyncMain()
+        #endregion
+
+        static void Main(string[] args)
         {
-            Console.Title = "TextProcessing Console";
-            LogManager.Use<DefaultFactory>().Level(LogLevel.Info);
-
-            var endpointConfiguration = new EndpointConfiguration("TextProcessing.ConsoleApp");
-            endpointConfiguration.UseTransport<MsmqTransport>();
-            endpointConfiguration.UsePersistence<InMemoryPersistence>();
-            endpointConfiguration.EnableInstallers();
-            endpointConfiguration.SendFailedMessagesTo("error");
-
-            var endpointInstance = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
-            try
+            if (!Environment.UserInteractive)
+                // running as service
+                using (var service = new Service())
+                    ServiceBase.Run(service);
+            else
             {
-                Console.WriteLine("Press any key to stop!");
-                Console.ReadKey();
+                // running as console app
+                Start(args);
+
+                Console.WriteLine("Press any key to stop...");
+                Console.ReadKey(true);
+
+                Stop();
             }
-            finally
-            {
-                await endpointInstance.Stop().ConfigureAwait(false);
-            }
+        }
+
+        private static void Start(string[] args)
+        {
+            Console.Title = ServiceName;
+
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<Service>();
+
+            builder.RegisterModule(new AzureServiceBusModule(Assembly.GetExecutingAssembly()));
+
+            var builderInstance =  builder.Build();
+
+            Console.WriteLine("Listening for Process Image Command to do FaceRecognition..");
+            Console.ReadKey(true);
+        }
+
+        private static void Stop()
+        {
+            bus.Stop();
         }
     }
 }

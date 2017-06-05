@@ -2,13 +2,16 @@
 using System.Threading.Tasks;
 using GBG.Microservices.Messaging.Commands;
 using GBG.Microservices.Messaging.Events;
+using MassTransit;
 
 namespace GBG.TextProcessing.ConsoleApp
 {
-    public class ProcessTextHandler : IHandleMessages<ProcessTextCommand>
+    public class ProcessTextHandler : IConsumer<ProcessTextCommand>
     {
-        public async Task Handle(ProcessTextCommand message, IMessageHandlerContext context)
+        public async Task Consume(ConsumeContext<ProcessTextCommand> context)
         {
+            var message = context.Message;
+
             await Task.Delay(7000);
             if (message.Sender.ToLower() == "wahid")
                 throw new NotImplementedException();
@@ -18,12 +21,12 @@ namespace GBG.TextProcessing.ConsoleApp
             Array.Reverse(charArray);
             var processedText = new string(charArray);
 
-            await context.Publish<ITextProcessed>(e =>
+            await context.Publish<TextProcessed>(new TextProcessed
             {
-                e.CreateDate = message.CreateDate;
-                e.Sender = message.Sender;
-                e.ProcessDate = DateTime.UtcNow;
-                e.ProcessedText = processedText;
+                CreateDate = message.CreateDate,
+                Sender = message.Sender,
+                ProcessDate = DateTime.UtcNow,
+                ProcessedText = processedText,
             });
         }
     }
