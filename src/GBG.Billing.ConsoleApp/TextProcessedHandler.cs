@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GBG.Microservices.Messaging.Events;
+using MassTransit;
 
 namespace GBG.Billing.ConsoleApp
 {
-    public class TextProcessedHandler : IHandleMessages<ITextProcessed>
+    public class TextProcessedHandler : IConsumer<TextProcessed>
     {
         private static int coast = 0;
-        public Task Handle(ITextProcessed message, IMessageHandlerContext context)
+
+
+        public Task Consume(ConsumeContext<TextProcessed> context)
         {
-            coast += message.ProcessedText.Length;
+            coast += context?.Message?.ProcessedText?.Length ?? 0;
             Console.WriteLine(coast);
 
             return Task.FromResult<object>(null);
