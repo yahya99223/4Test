@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using Autofac;
+using GBG.Microservices.Messaging;
 using MassTransit;
 using MassTransit.AzureServiceBusTransport;
 using Microsoft.ServiceBus;
