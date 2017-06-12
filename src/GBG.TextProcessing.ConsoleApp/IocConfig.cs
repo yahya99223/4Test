@@ -9,11 +9,8 @@ namespace GBG.TextProcessing.ConsoleApp
     {
         public static IContainer RegisterDependencies()
         {
-            //IContainer container = new ContainerBuilder().Build();
             var builder = new ContainerBuilder();
-
-            //builder.RegisterInstance(container).SingleInstance().As<IContainer>();
-
+            
             builder.RegisterType<MyService>();
             builder.RegisterType<ProcessTextNativeHandler>().As<IHandler>();
 

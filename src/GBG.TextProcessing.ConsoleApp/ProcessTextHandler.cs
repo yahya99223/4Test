@@ -16,7 +16,7 @@ namespace GBG.TextProcessing.ConsoleApp
             var message = brokeredMessage.GetBody<ProcessTextCommand>();
 
             Console.WriteLine($"We got message from: {message?.Sender}");
-            
+
             if (message?.Sender.ToLower() == "wahid")
                 throw new NotImplementedException();
 

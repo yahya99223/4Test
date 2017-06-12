@@ -11,4 +11,20 @@ namespace GBG.Microservices.Messaging
     {
         void Handle(BrokeredMessage message);
     }
+
+    public interface IBusWrapper
+    {
+        Task SendAsync<T>(T message, string destination);
+        void Send<T>(T message, string destination);
+
+        Task PublishAsync<T>(T message, string topic);
+        void Publish<T>(T message, string topic);
+
+        void Subscribe(string topic);
+    }
+
+    public interface IHandler<in T>
+    {
+        void Handle(T message);
+    }
 }
