@@ -11,4 +11,11 @@ namespace Micro.Shared.Messaging
         public string Text { get; set; }
         public int ProcessComplexity { get; set; }
     }
+
+
+    public interface IBus
+    {
+
+    }
+
 }
