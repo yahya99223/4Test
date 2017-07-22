@@ -4,7 +4,7 @@ namespace ConsoleApp.Model
 {
     internal abstract class ProcessResult
     {
-        public ProcessResult(Guid id, Guid requestId, int stepNumber)
+        protected ProcessResult(Guid id, Guid requestId, int stepNumber)
         {
             Id = id;
             RequestId = requestId;
