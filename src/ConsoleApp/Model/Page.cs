@@ -35,13 +35,15 @@ namespace ConsoleApp.Model
                 .PermitReentryIf(PageCommand.TryProcess, canRetry)
                 .PermitIf(PageCommand.Finish, PageState.Finished, canFinish)
                 .OnExit(onExit);
+
+            machine.OnUnhandledTrigger(unhandledTriggerAction);
         }
 
         public Guid Id { get; }
 
         public PageState State
         {
-            get { return state; }
+            get => state;
             private set
             {
                 Console.WriteLine($"Page state will change from {state} into {value}");
@@ -52,6 +54,11 @@ namespace ConsoleApp.Model
         public PageResult Result { get; private set; }
         public ProcessRequest[] ProcessRequests => processRequests.ToArray();
         public PageProcessResult[] ProcessResults => processResults.ToArray();
+
+        private void unhandledTriggerAction(PageState _state, PageCommand command)
+        {
+            throw new Exception($"The page is {state}. It's not allowed to perform {command}");
+        }
 
         private bool canRetry()
         {

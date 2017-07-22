@@ -11,30 +11,38 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            var page = Page.Create(ProcessRequest.Create(1, "we"));
-            Console.WriteLine($"The page state is: {page.State}");
-            Console.WriteLine($"The page Result is: {page.Result}");
-            Console.WriteLine($"================================");
+            try
+            {
+
+                var page = Page.Create(ProcessRequest.Create(1, "we"));
+                Console.WriteLine($"The page state is: {page.State}");
+                Console.WriteLine($"The page Result is: {page.Result}");
+                Console.WriteLine($"================================");
 
 
-            page.AddProcessRequest(ProcessRequest.Create(1, "ab"));
-            Console.WriteLine($"The page state is: {page.State}");
-            Console.WriteLine($"The page Result is: {page.Result}");
-            Console.WriteLine($"================================");
+                page.AddProcessRequest(ProcessRequest.Create(1, "ab"));
+                Console.WriteLine($"The page state is: {page.State}");
+                Console.WriteLine($"The page Result is: {page.Result}");
+                Console.WriteLine($"================================");
 
 
-            /*page.AddProcessRequest(ProcessRequest.Create(1, "cd"));
-            Console.WriteLine($"The page state is: {page.State}");
-            Console.WriteLine($"The page Result is: {page.Result}");
-            Console.WriteLine($"================================");*/
+                page.AddProcessRequest(ProcessRequest.Create(1, "cd"));
+                Console.WriteLine($"The page state is: {page.State}");
+                Console.WriteLine($"The page Result is: {page.Result}");
+                Console.WriteLine($"================================");
 
 
-            page.AddProcessRequest(ProcessRequest.Create(1, "Wahid"));
-            Console.WriteLine($"The page state is: {page.State}");
-            Console.WriteLine($"The page Result is: {page.Result}");
-            Console.WriteLine($"================================");
-
-
+                page.AddProcessRequest(ProcessRequest.Create(1, "Wahid"));
+                Console.WriteLine($"The page state is: {page.State}");
+                Console.WriteLine($"The page Result is: {page.Result}");
+                Console.WriteLine($"================================");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("====================EXCEPTION====================");
+                Console.WriteLine(e);
+                Console.WriteLine("============================================================");
+            }
             Console.ReadKey();
         }
     }
