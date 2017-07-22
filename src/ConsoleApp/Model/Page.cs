@@ -11,11 +11,12 @@ namespace ConsoleApp.Model
         private readonly IList<ProcessRequest> processRequests;
         private readonly StateMachine<PageState, PageCommand>.TriggerWithParameters<ProcessRequest> processRequestTrigger;
         private readonly IList<PageProcessResult> processResults;
+        private PageState state;
 
         private Page(Guid id, IList<ProcessRequest> processRequests, IList<PageProcessResult> processResults, PageState state, PageResult result)
         {
             Id = id;
-            State = state;
+            this.state = state;
             Result = result;
             this.processRequests = processRequests ?? new List<ProcessRequest>();
             this.processResults = processResults ?? new List<PageProcessResult>();
@@ -25,7 +26,8 @@ namespace ConsoleApp.Model
             processRequestTrigger = machine.SetTriggerParameters<ProcessRequest>(PageCommand.TryProcess);
 
             machine.Configure(PageState.Created)
-                .Permit(PageCommand.TryProcess, PageState.InProgress);
+                .Permit(PageCommand.TryProcess, PageState.InProgress)
+                .OnExit(onExit);
 
 
             machine.Configure(PageState.InProgress)
@@ -36,7 +38,17 @@ namespace ConsoleApp.Model
         }
 
         public Guid Id { get; }
-        public PageState State { get; private set; }
+
+        public PageState State
+        {
+            get { return state; }
+            private set
+            {
+                Console.WriteLine($"Page state will change from {state} into {value}");
+                state = value;
+            }
+        }
+
         public PageResult Result { get; private set; }
         public ProcessRequest[] ProcessRequests => processRequests.ToArray();
         public PageProcessResult[] ProcessResults => processResults.ToArray();

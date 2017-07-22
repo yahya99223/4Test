@@ -16,9 +16,24 @@ namespace ConsoleApp
             Console.WriteLine($"The page Result is: {page.Result}");
             Console.WriteLine($"================================");
 
+
             page.AddProcessRequest(ProcessRequest.Create(1, "ab"));
-            //page.AddProcessRequest(ProcessRequest.Create(1, "cd"));
-            //page.AddProcessRequest(ProcessRequest.Create(1, "Wahid"));
+            Console.WriteLine($"The page state is: {page.State}");
+            Console.WriteLine($"The page Result is: {page.Result}");
+            Console.WriteLine($"================================");
+
+
+            /*page.AddProcessRequest(ProcessRequest.Create(1, "cd"));
+            Console.WriteLine($"The page state is: {page.State}");
+            Console.WriteLine($"The page Result is: {page.Result}");
+            Console.WriteLine($"================================");*/
+
+
+            page.AddProcessRequest(ProcessRequest.Create(1, "Wahid"));
+            Console.WriteLine($"The page state is: {page.State}");
+            Console.WriteLine($"The page Result is: {page.Result}");
+            Console.WriteLine($"================================");
+
 
             Console.ReadKey();
         }
