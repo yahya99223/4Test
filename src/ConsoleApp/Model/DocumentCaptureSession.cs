@@ -13,14 +13,6 @@ namespace ConsoleApp.Model
         {
             Pages = pages ?? new List<Page>();
             machine = new StateMachine<CaptureSessionState, DocumentCaptureSessionCommand>(() => State, s => State = s);
-
-            machine.Configure(CaptureSessionState.Created)
-                .Permit(DocumentCaptureSessionCommand.AddProcessRequest, CaptureSessionState.InProgress);
-
-            machine.Configure(CaptureSessionState.InProgress)
-                .PermitDynamic(DocumentCaptureSessionCommand.AddProcessRequest, () => { return CaptureSessionState.InProgress;})
-                .Permit(DocumentCaptureSessionCommand.AddProcessResult, CaptureSessionState.InProgress)
-                .Permit(DocumentCaptureSessionCommand.AddProcessRequest, CaptureSessionState.InProgress);
         }
 
         public IList<Page> Pages { get; set; }
@@ -35,7 +27,14 @@ namespace ConsoleApp.Model
             get { return Pages.SelectMany(p => p.ProcessResults).ToArray(); }
         }
 
+        public void AddProcessRequest(ProcessRequest request)
+        {
 
+        }
+
+        public void AddProcessResult(PageProcessResult processResult)
+        {
+        }
 
         public static DocumentCaptureSession Create()
         {
