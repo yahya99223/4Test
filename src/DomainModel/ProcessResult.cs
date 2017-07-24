@@ -1,8 +1,8 @@
 using System;
 
-namespace ConsoleApp.Model
+namespace DomainModel
 {
-    internal abstract class ProcessResult
+    public abstract class ProcessResult
     {
         protected ProcessResult(Guid id, Guid requestId, int stepNumber)
         {

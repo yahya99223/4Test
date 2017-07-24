@@ -1,15 +1,15 @@
 using System;
 
-namespace ConsoleApp.Model
+namespace DomainModel
 {
-    internal class ProcessRequest
+    public class ProcessRequest
     {
-        public static ProcessRequest Create(string data)
+        internal static ProcessRequest Create(string data)
         {
             return new ProcessRequest(Guid.NewGuid(), data);
         }
 
-        private ProcessRequest(Guid id, string data)
+        protected ProcessRequest(Guid id, string data)
         {
             Id = id;
             Data = data;

@@ -1,40 +1,42 @@
-namespace ConsoleApp.Model
+namespace DomainModel
 {
-    internal enum CaptureSessionState
+    public enum CaptureSessionState
     {
         Created,
         InProgress,
-        Finished
+        Finished,
+        Cancelled
     }
 
-    internal enum DocumentCaptureSessionCommand
+    public enum DocumentCaptureSessionCommand
     {
         AddProcessRequest,
-        Finish
+        Finish,
+        Cancel
     }
 
-    internal enum CaptureSessionResult
+    public enum CaptureSessionResult
     {
         Undetermined,
         Passed,
         Failed
     }
 
-    internal enum PageResult
+    public enum PageResult
     {
         Undetermined,
         Passed,
         Failed
     }
 
-    internal enum PageState
+    public enum PageState
     {
         Created,
         InProgress,
         Finished
     }
 
-    internal enum PageCommand
+    public enum PageCommand
     {
         TryProcess,
         Finish

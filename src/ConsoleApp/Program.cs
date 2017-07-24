@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleApp.Model;
+using DomainModel;
 
 namespace ConsoleApp
 {
@@ -19,15 +15,14 @@ namespace ConsoleApp
                 Console.WriteLine($"-> CaptureSession {captureSession.Id} is {captureSession.State}");
                 Console.WriteLine("====================***********====================");
 
-                while (captureSession.State != CaptureSessionState.Finished||true)
+                while (captureSession.State != CaptureSessionState.Finished)
                 {
                     Console.WriteLine();
                     Console.WriteLine($" Please enter the data to process it. The string length should be more than 3 characters");
                     Console.WriteLine();
                     Console.WriteLine();
-
-                    var request = ProcessRequest.Create(Console.ReadLine());
-                    captureSession.AddProcessRequest(request);
+                    
+                    captureSession.AddProcessRequest(Console.ReadLine());
                 }
             }
             catch (Exception e)

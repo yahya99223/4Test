@@ -1,8 +1,8 @@
 using System;
 
-namespace ConsoleApp.Model
+namespace DomainModel
 {
-    internal abstract class CaptureSession
+    public abstract class CaptureSession
     {
         private CaptureSessionState state;
 

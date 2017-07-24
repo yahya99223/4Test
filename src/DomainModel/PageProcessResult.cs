@@ -1,16 +1,16 @@
 using System;
 
-namespace ConsoleApp.Model
+namespace DomainModel
 {
-    internal class PageProcessResult : ProcessResult
+    public class PageProcessResult : ProcessResult
     {
-        public static PageProcessResult Create(ProcessRequest request, int stepNumber)
+        internal static PageProcessResult Create(ProcessRequest request, int stepNumber)
         {
             var processedData = Reverse(request.Data);
             return new PageProcessResult(Guid.NewGuid(), request.Id, stepNumber, processedData);
         }
 
-        public PageProcessResult(Guid id, Guid requestId, int stepNumber, string processedData) : base(id, requestId, stepNumber)
+        private PageProcessResult(Guid id, Guid requestId, int stepNumber, string processedData) : base(id, requestId, stepNumber)
         {
             ProcessedData = processedData;
         }

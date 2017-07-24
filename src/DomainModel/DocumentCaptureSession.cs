@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Stateless;
 
-namespace ConsoleApp.Model
+namespace DomainModel
 {
-    internal class DocumentCaptureSession : CaptureSession
+    public class DocumentCaptureSession : CaptureSession
     {
         public static DocumentCaptureSession Create(int pageLimit)
         {
@@ -61,10 +61,10 @@ namespace ConsoleApp.Model
             }
         }
 
-        public void AddProcessRequest(ProcessRequest request)
+        public void AddProcessRequest(string requestData)
         {
-            Console.WriteLine($"Process Request for : {request.Data} - Added to CaptureSession: {Id}");
-            machine.Fire(processRequestTrigger, request);
+            Console.WriteLine($"Process Request for : {requestData} - Added to CaptureSession: {Id}");
+            machine.Fire(processRequestTrigger, ProcessRequest.Create(requestData));
             Console.WriteLine("--------ProcessRequest finished");
             if (canFinish())
                 Finish();

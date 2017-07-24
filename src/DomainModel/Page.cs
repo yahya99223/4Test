@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Stateless;
 
-namespace ConsoleApp.Model
+namespace DomainModel
 {
-    internal class Page
+    public class Page
     {
         internal static Page Create(ProcessRequest request, int stepNumber)
         {
