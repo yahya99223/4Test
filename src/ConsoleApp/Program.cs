@@ -14,15 +14,15 @@ namespace ConsoleApp
 
                 Console.WriteLine($"-> CaptureSession {captureSession.Id} is {captureSession.State}");
                 Console.WriteLine("====================***********====================");
-
-                while (captureSession.State != CaptureSessionState.Finished)
+                string passedValue = null;
+                while (passedValue == null || passedValue.ToLower() != "exit")
                 {
                     Console.WriteLine();
                     Console.WriteLine($" Please enter the data to process it. The string length should be more than 3 characters");
                     Console.WriteLine();
                     Console.WriteLine();
-                    
-                    captureSession.AddProcessRequest(Console.ReadLine());
+                    passedValue = Console.ReadLine();
+                    captureSession.AddProcessRequest(passedValue);
                 }
             }
             catch (Exception e)

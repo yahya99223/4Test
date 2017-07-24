@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Stateless;
 
 namespace DomainModel
 {
@@ -12,30 +11,13 @@ namespace DomainModel
             return new DocumentCaptureSession(Guid.NewGuid(), pageLimit, CaptureSessionState.Created, null);
         }
 
-        private readonly StateMachine<CaptureSessionState, DocumentCaptureSessionCommand> machine;
         private readonly int pageLimit;
         private readonly IList<Page> pages;
-        private readonly StateMachine<CaptureSessionState, DocumentCaptureSessionCommand>.TriggerWithParameters<ProcessRequest> processRequestTrigger;
 
         public DocumentCaptureSession(Guid id, int pageLimit, CaptureSessionState state, IList<Page> pages) : base(id, state)
         {
             this.pageLimit = pageLimit;
             this.pages = pages ?? new List<Page>();
-            machine = new StateMachine<CaptureSessionState, DocumentCaptureSessionCommand>(() => State, s => State = s);
-
-            processRequestTrigger = machine.SetTriggerParameters<ProcessRequest>(DocumentCaptureSessionCommand.AddProcessRequest);
-
-            machine.Configure(CaptureSessionState.Created)
-                .Permit(DocumentCaptureSessionCommand.AddProcessRequest, CaptureSessionState.InProgress)
-                .OnExit(onExit);
-
-            machine.Configure(CaptureSessionState.InProgress)
-                .OnEntryFrom(processRequestTrigger, onAddProcessRequest)
-                .PermitReentryIf(DocumentCaptureSessionCommand.AddProcessRequest, canAddRequest)
-                .PermitIf(DocumentCaptureSessionCommand.Finish, CaptureSessionState.Finished, canFinish)
-                .OnExit(onExit);
-
-            machine.OnUnhandledTrigger(unhandledTriggerAction);
         }
 
         public Page[] Pages => pages.ToArray();
@@ -61,7 +43,7 @@ namespace DomainModel
             }
         }
 
-        public void AddProcessRequest(string requestData)
+        public override void AddProcessRequest(string requestData)
         {
             Console.WriteLine($"Process Request for : {requestData} - Added to CaptureSession: {Id}");
             machine.Fire(processRequestTrigger, ProcessRequest.Create(requestData));
@@ -70,12 +52,17 @@ namespace DomainModel
                 Finish();
         }
 
-        private bool canAddRequest()
+        protected override bool canAddRequest()
         {
             return !canFinish();
         }
 
-        private bool canFinish()
+        protected override bool canCancel()
+        {
+            return State != CaptureSessionState.Finished;
+        }
+
+        protected override bool canFinish()
         {
             var lastPage = pages.OrderBy(p => p.StepNumber).LastOrDefault(p => p.State == PageState.Finished);
 
@@ -109,7 +96,7 @@ namespace DomainModel
             }
         }
 
-        private void onAddProcessRequest(ProcessRequest request)
+        protected override void onAddProcessRequest(ProcessRequest request)
         {
             var stepNumber = pages.Max(x => (int?) x.StepNumber) ?? 0;
             var page = pages.OrderBy(p => p.StepNumber).LastOrDefault(p => p.State == PageState.InProgress);
@@ -119,15 +106,5 @@ namespace DomainModel
                 page.AddProcessRequest(request);
         }
 
-
-        private void onExit()
-        {
-            //Console.WriteLine("onExit <-");
-        }
-
-        private void unhandledTriggerAction(CaptureSessionState _state, DocumentCaptureSessionCommand command)
-        {
-            throw new Exception($"The CaptureSession is {_state}. It's not allowed to perform {command}");
-        }
     }
 }
