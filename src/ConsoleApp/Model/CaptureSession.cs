@@ -1,5 +1,4 @@
-﻿using System;
-using Stateless;
+using System;
 
 namespace ConsoleApp.Model
 {
@@ -20,12 +19,16 @@ namespace ConsoleApp.Model
             get => state;
             protected set
             {
-                Console.WriteLine($"Capture Session state will change from {state} into {value}");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine($"Capture Session state is {value}");
+                Console.WriteLine();
                 state = value;
             }
         }
 
         public abstract ProcessRequest[] ProcessRequests { get; }
         public abstract ProcessResult[] ProcessResults { get; }
+        public abstract CaptureSessionResult Result { get; }
     }
 }

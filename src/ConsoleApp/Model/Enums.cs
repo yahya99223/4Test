@@ -4,14 +4,20 @@ namespace ConsoleApp.Model
     {
         Created,
         InProgress,
-        Finished,
+        Finished
     }
 
     internal enum DocumentCaptureSessionCommand
     {
-        Create,
         AddProcessRequest,
-        AddProcessResult,
+        Finish
+    }
+
+    internal enum CaptureSessionResult
+    {
+        Undetermined,
+        Passed,
+        Failed
     }
 
     internal enum PageResult
@@ -33,5 +39,4 @@ namespace ConsoleApp.Model
         TryProcess,
         Finish
     }
-
 }

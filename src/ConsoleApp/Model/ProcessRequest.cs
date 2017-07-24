@@ -4,20 +4,18 @@ namespace ConsoleApp.Model
 {
     internal class ProcessRequest
     {
-        private ProcessRequest(Guid id, int stepNumber, string data)
+        public static ProcessRequest Create(string data)
+        {
+            return new ProcessRequest(Guid.NewGuid(), data);
+        }
+
+        private ProcessRequest(Guid id, string data)
         {
             Id = id;
-            StepNumber = stepNumber;
             Data = data;
         }
 
         public Guid Id { get; }
-        public int StepNumber { get; }
         public string Data { get; }
-
-        public static ProcessRequest Create(int stepNumber, string data)
-        {
-            return new ProcessRequest(Guid.NewGuid(), stepNumber, data);
-        }
     }
 }

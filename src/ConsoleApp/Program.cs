@@ -13,29 +13,22 @@ namespace ConsoleApp
         {
             try
             {
+                Console.WriteLine($"Please enter the maximum number of pages that your capture session may have");
+                var captureSession = DocumentCaptureSession.Create(int.Parse(Console.ReadLine()));
 
-                var page = Page.Create(ProcessRequest.Create(1, "we"));
-                Console.WriteLine($"The page state is: {page.State}");
-                Console.WriteLine($"The page Result is: {page.Result}");
-                Console.WriteLine($"================================");
+                Console.WriteLine($"-> CaptureSession {captureSession.Id} is {captureSession.State}");
+                Console.WriteLine("====================***********====================");
 
+                while (captureSession.State != CaptureSessionState.Finished||true)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($" Please enter the data to process it. The string length should be more than 3 characters");
+                    Console.WriteLine();
+                    Console.WriteLine();
 
-                page.AddProcessRequest(ProcessRequest.Create(1, "ab"));
-                Console.WriteLine($"The page state is: {page.State}");
-                Console.WriteLine($"The page Result is: {page.Result}");
-                Console.WriteLine($"================================");
-
-
-                page.AddProcessRequest(ProcessRequest.Create(1, "cd"));
-                Console.WriteLine($"The page state is: {page.State}");
-                Console.WriteLine($"The page Result is: {page.Result}");
-                Console.WriteLine($"================================");
-
-
-                page.AddProcessRequest(ProcessRequest.Create(1, "Wahid"));
-                Console.WriteLine($"The page state is: {page.State}");
-                Console.WriteLine($"The page Result is: {page.Result}");
-                Console.WriteLine($"================================");
+                    var request = ProcessRequest.Create(Console.ReadLine());
+                    captureSession.AddProcessRequest(request);
+                }
             }
             catch (Exception e)
             {
