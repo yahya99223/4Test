@@ -49,7 +49,16 @@ namespace WpfApp
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            captureSession?.Cancel();
+            try
+            {
+                captureSession?.Cancel();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("====================EXCEPTION====================");
+                Console.WriteLine(ex);
+                Console.WriteLine("=================================================");
+            }
         }
     }
 }
