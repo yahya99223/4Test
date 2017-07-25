@@ -66,9 +66,6 @@ namespace DomainModel
         {
             Console.WriteLine($"Process Request for : {request.Data} - Added to page number: {StepNumber}");
             machine.Fire(processRequestTrigger, request);
-
-            if (canFinish())
-                Finish();
         }
 
         public void AddProcessResult(PageProcessResult processResult)
@@ -78,6 +75,9 @@ namespace DomainModel
                 Result = PageResult.Passed;
             if (processResults.Count >= 3 && Result != PageResult.Passed)
                 Result = PageResult.Failed;
+
+            if (canFinish())
+                Finish();
         }
 
         private bool canFinish()
