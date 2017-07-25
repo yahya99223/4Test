@@ -5,27 +5,27 @@ namespace DomainModel
 {
     public abstract class CaptureSession
     {
-        protected readonly StateMachine<CaptureSessionState, DocumentCaptureSessionCommand> machine;
-        protected readonly StateMachine<CaptureSessionState, DocumentCaptureSessionCommand>.TriggerWithParameters<ProcessRequest> processRequestTrigger;
+        protected readonly StateMachine<CaptureSessionState, CaptureSessionCommand> machine;
+        protected readonly StateMachine<CaptureSessionState, CaptureSessionCommand>.TriggerWithParameters<ProcessRequest> processRequestTrigger;
         private CaptureSessionState state;
 
         protected CaptureSession(Guid id, CaptureSessionState state)
         {
             Id = id;
             this.state = state;
-            machine = new StateMachine<CaptureSessionState, DocumentCaptureSessionCommand>(() => State, s => State = s);
-            processRequestTrigger = machine.SetTriggerParameters<ProcessRequest>(DocumentCaptureSessionCommand.AddProcessRequest);
+            machine = new StateMachine<CaptureSessionState, CaptureSessionCommand>(() => State, s => State = s);
+            processRequestTrigger = machine.SetTriggerParameters<ProcessRequest>(CaptureSessionCommand.AddProcessRequest);
 
             machine.Configure(CaptureSessionState.Created)
-                .Permit(DocumentCaptureSessionCommand.AddProcessRequest, CaptureSessionState.InProgress)
-                .Permit(DocumentCaptureSessionCommand.Cancel, CaptureSessionState.Cancelled)
+                .Permit(CaptureSessionCommand.AddProcessRequest, CaptureSessionState.InProgress)
+                .Permit(CaptureSessionCommand.Cancel, CaptureSessionState.Cancelled)
                 .OnExit(onExit);
 
             machine.Configure(CaptureSessionState.InProgress)
-                .Permit(DocumentCaptureSessionCommand.Cancel, CaptureSessionState.Cancelled)
+                .Permit(CaptureSessionCommand.Cancel, CaptureSessionState.Cancelled)
                 .OnEntryFrom(processRequestTrigger, onAddProcessRequest)
-                .PermitReentryIf(DocumentCaptureSessionCommand.AddProcessRequest, canAddRequest)
-                .PermitIf(DocumentCaptureSessionCommand.Finish, CaptureSessionState.Finished, canFinish)
+                .PermitReentryIf(CaptureSessionCommand.AddProcessRequest, canAddRequest)
+                .PermitIf(CaptureSessionCommand.Finish, CaptureSessionState.Finished, canFinish)
                 .OnExit(onExit);
 
             machine.OnUnhandledTrigger(unhandledTriggerAction);
@@ -53,7 +53,7 @@ namespace DomainModel
 
         public virtual void Cancel()
         {
-            machine.Fire(DocumentCaptureSessionCommand.Cancel);
+            machine.Fire(CaptureSessionCommand.Cancel);
         }
 
         protected abstract bool canAddRequest();
@@ -67,7 +67,7 @@ namespace DomainModel
         }
 
 
-        private void unhandledTriggerAction(CaptureSessionState _state, DocumentCaptureSessionCommand command)
+        private void unhandledTriggerAction(CaptureSessionState _state, CaptureSessionCommand command)
         {
             throw new Exception($"The CaptureSession is {_state}. It's not allowed to perform {command}");
         }

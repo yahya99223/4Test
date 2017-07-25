@@ -73,7 +73,7 @@ namespace DomainModel
 
         private void Finish()
         {
-            machine.Fire(DocumentCaptureSessionCommand.Finish);
+            machine.Fire(CaptureSessionCommand.Finish);
 
             Console.WriteLine("");
             Console.WriteLine("");

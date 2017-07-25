@@ -8,7 +8,7 @@ namespace DomainModel
         Cancelled
     }
 
-    public enum DocumentCaptureSessionCommand
+    public enum CaptureSessionCommand
     {
         AddProcessRequest,
         Finish,
