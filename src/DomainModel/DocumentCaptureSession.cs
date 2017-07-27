@@ -46,23 +46,24 @@ namespace DomainModel
         public override void AddProcessRequest(string requestData)
         {
             Console.WriteLine($"Process Request for : {requestData} - Added to CaptureSession: {Id}");
-            machine.Fire(processRequestTrigger, ProcessRequest.Create(requestData));
+            machine.Proceed();
+            onAddProcessRequest(ProcessRequest.Create(requestData));
             Console.WriteLine("--------ProcessRequest finished");
             if (canFinish())
                 Finish();
         }
 
-        protected override bool canAddRequest()
+        protected internal override bool canAddRequest()
         {
             return !canFinish();
         }
 
-        protected override bool canCancel()
+        protected internal override bool canCancel()
         {
             return State != CaptureSessionState.Finished;
         }
 
-        protected override bool canFinish()
+        protected internal override bool canFinish()
         {
             var lastPage = pages.OrderBy(p => p.StepNumber).LastOrDefault(p => p.State == PageState.Finished);
 
@@ -73,7 +74,7 @@ namespace DomainModel
 
         private void Finish()
         {
-            machine.Fire(CaptureSessionCommand.Finish);
+            machine.Finish();
 
             Console.WriteLine("");
             Console.WriteLine("");
@@ -96,7 +97,7 @@ namespace DomainModel
             }
         }
 
-        protected override void onAddProcessRequest(ProcessRequest request)
+        protected virtual void onAddProcessRequest(ProcessRequest request)
         {
             var stepNumber = pages.Max(x => (int?) x.StepNumber) ?? 0;
             var page = pages.OrderBy(p => p.StepNumber).LastOrDefault(p => p.State == PageState.InProgress);
