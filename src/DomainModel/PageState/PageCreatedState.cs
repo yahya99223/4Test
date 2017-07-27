@@ -1,6 +1,6 @@
 ﻿namespace DomainModel
 {
-    class PageCreatedState : PageStateAbstraction
+    internal class PageCreatedState : PageStateAbstraction
     {
         public PageCreatedState(Page context) : base(context)
         {

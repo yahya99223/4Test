@@ -1,14 +1,11 @@
 namespace DomainModel
 {
-    class CaptureSessionCancelledState : CaptureSessionStateAbstraction
+    internal class CaptureSessionCancelledState : CaptureSessionStateAbstraction
     {
         public CaptureSessionCancelledState(CaptureSession context) : base(context)
         {
         }
 
-        public override CaptureSessionState State
-        {
-            get { return CaptureSessionState.Cancelled; }
-        }
+        public override CaptureSessionState State => CaptureSessionState.Cancelled;
     }
 }

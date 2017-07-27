@@ -9,7 +9,7 @@ namespace DomainModel
         protected CaptureSession(Guid id, CaptureSessionState state)
         {
             Id = id;
-            this.machine = CaptureSessionStateAbstraction.GetState(state, this);
+            machine = CaptureSessionStateAbstraction.GetState(state, this);
         }
 
         public Guid Id { get; }
@@ -29,7 +29,7 @@ namespace DomainModel
         protected internal abstract bool canAddRequest();
         protected internal abstract bool canCancel();
         protected internal abstract bool canFinish();
-        
+
 
         internal void setState(CaptureSessionStateAbstraction newState)
         {

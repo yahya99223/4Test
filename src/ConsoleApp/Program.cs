@@ -3,9 +3,9 @@ using DomainModel;
 
 namespace ConsoleApp
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             try
             {
@@ -16,7 +16,6 @@ namespace ConsoleApp
                 Console.WriteLine("====================***********====================");
                 string passedValue = null;
                 while (passedValue == null || passedValue.ToLower() != "exit")
-                {
                     try
                     {
                         Console.WriteLine();
@@ -40,7 +39,6 @@ namespace ConsoleApp
                         Console.WriteLine(e);
                         Console.WriteLine("============================================================");
                     }
-                }
             }
             catch (Exception e)
             {

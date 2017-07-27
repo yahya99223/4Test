@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace DomainModel
+﻿namespace DomainModel
 {
-    class PageInProgressState : PageStateAbstraction
+    internal class PageInProgressState : PageStateAbstraction
     {
         public PageInProgressState(Page context) : base(context)
         {

@@ -8,13 +8,6 @@ namespace DomainModel
         Cancelled
     }
 
-    public enum CaptureSessionCommand
-    {
-        AddProcessRequest,
-        Finish,
-        Cancel
-    }
-
     public enum CaptureSessionResult
     {
         Undetermined,
@@ -34,11 +27,5 @@ namespace DomainModel
         Created,
         InProgress,
         Finished
-    }
-
-    public enum PageCommand
-    {
-        TryProcess,
-        Finish
     }
 }

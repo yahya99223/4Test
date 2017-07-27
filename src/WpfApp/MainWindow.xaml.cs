@@ -5,7 +5,7 @@ using DomainModel;
 namespace WpfApp
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -23,7 +23,6 @@ namespace WpfApp
                 var maxPageCount = int.Parse(txtMaximumPageCount.Text);
                 captureSession = DocumentCaptureSession.Create(maxPageCount);
                 Console.WriteLine($"-> CaptureSession {captureSession.Id} is {captureSession.State}");
-
             }
             catch (Exception ex)
             {

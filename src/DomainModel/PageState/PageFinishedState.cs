@@ -1,6 +1,6 @@
 namespace DomainModel
 {
-    class PageFinishedState : PageStateAbstraction
+    internal class PageFinishedState : PageStateAbstraction
     {
         public PageFinishedState(Page context) : base(context)
         {

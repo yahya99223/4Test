@@ -13,9 +13,10 @@ namespace DomainModel
             return page;
         }
 
-        private PageStateAbstraction machine;
         private readonly IList<ProcessRequest> processRequests;
         private readonly IList<PageProcessResult> processResults;
+
+        private PageStateAbstraction machine;
 
         private Page(Guid id, int stepNumber, PageState state, PageResult result, IList<ProcessRequest> processRequests, IList<PageProcessResult> processResults)
         {
@@ -25,7 +26,7 @@ namespace DomainModel
             this.processRequests = processRequests ?? new List<ProcessRequest>();
             this.processResults = processResults ?? new List<PageProcessResult>();
 
-            machine = PageStateAbstraction.GetState(state, this);            
+            machine = PageStateAbstraction.GetState(state, this);
         }
 
         public Guid Id { get; }
@@ -38,7 +39,6 @@ namespace DomainModel
         public void AddProcessRequest(ProcessRequest request)
         {
             Console.WriteLine($"Process Request for : {request.Data} - Added to page number: {StepNumber}");
-
             machine.Proceed();
             onAddProcessRequest(request);
         }
@@ -65,6 +65,12 @@ namespace DomainModel
             return processResults.Count < 3;
         }
 
+        internal void setState(PageStateAbstraction newState)
+        {
+            Console.WriteLine($"Page state will change from {State} into {newState.State}");
+            machine = newState;
+        }
+
         private void Finish()
         {
             machine.Finish();
@@ -78,12 +84,6 @@ namespace DomainModel
 
             var result = PageProcessResult.Create(request, StepNumber);
             AddProcessResult(result);
-        }
-
-        internal void setState(PageStateAbstraction newState)
-        {
-            Console.WriteLine($"Page state will change from {State} into {newState.State}");
-            machine = newState;
         }
     }
 }

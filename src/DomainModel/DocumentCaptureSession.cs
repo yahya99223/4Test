@@ -72,6 +72,16 @@ namespace DomainModel
             return false;
         }
 
+        protected virtual void onAddProcessRequest(ProcessRequest request)
+        {
+            var stepNumber = pages.Max(x => (int?) x.StepNumber) ?? 0;
+            var page = pages.OrderBy(p => p.StepNumber).LastOrDefault(p => p.State == PageState.InProgress);
+            if (page == null)
+                pages.Add(Page.Create(request, stepNumber + 1));
+            else
+                page.AddProcessRequest(request);
+        }
+
         private void Finish()
         {
             machine.Finish();
@@ -96,16 +106,5 @@ namespace DomainModel
                 Console.WriteLine("------------------------------------");
             }
         }
-
-        protected virtual void onAddProcessRequest(ProcessRequest request)
-        {
-            var stepNumber = pages.Max(x => (int?) x.StepNumber) ?? 0;
-            var page = pages.OrderBy(p => p.StepNumber).LastOrDefault(p => p.State == PageState.InProgress);
-            if (page == null)
-                pages.Add(Page.Create(request, stepNumber + 1));
-            else
-                page.AddProcessRequest(request);
-        }
-
     }
 }

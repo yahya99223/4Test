@@ -1,17 +1,12 @@
-﻿using System;
-
-namespace DomainModel
+﻿namespace DomainModel
 {
-    class CaptureSessionInProgressState : CaptureSessionStateAbstraction
+    internal class CaptureSessionInProgressState : CaptureSessionStateAbstraction
     {
         public CaptureSessionInProgressState(CaptureSession context) : base(context)
         {
         }
 
-        public override CaptureSessionState State
-        {
-            get { return CaptureSessionState.InProgress; }
-        }
+        public override CaptureSessionState State => CaptureSessionState.InProgress;
 
         public override void Proceed()
         {

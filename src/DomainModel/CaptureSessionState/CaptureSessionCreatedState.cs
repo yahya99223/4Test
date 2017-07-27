@@ -1,17 +1,12 @@
-﻿using System;
-
-namespace DomainModel
+﻿namespace DomainModel
 {
-    class CaptureSessionCreatedState : CaptureSessionStateAbstraction
+    internal class CaptureSessionCreatedState : CaptureSessionStateAbstraction
     {
         public CaptureSessionCreatedState(CaptureSession context) : base(context)
         {
         }
 
-        public override CaptureSessionState State
-        {
-            get { return CaptureSessionState.Created; }
-        }
+        public override CaptureSessionState State => CaptureSessionState.Created;
 
         public override void Proceed()
         {
