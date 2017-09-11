@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DistributeMe.ImageProcessing.Messaging;
@@ -9,7 +7,6 @@ using DistributeMe.ImageProcessing.WPF.Consumers;
 using DistributeMe.ImageProcessing.WPF.Helpers;
 using DistributeMe.ImageProcessing.WPF.Messages;
 using MassTransit;
-using Microsoft.Win32;
 
 namespace DistributeMe.ImageProcessing.WPF.ViewModels
 {
@@ -80,7 +77,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
                 var processImageCommand = new ProcessImageCommand(request.RequestId, new byte[] {} /*File.ReadAllBytes(dlg.FileName)*/);
                 await bus.Publish<IProcessImageCommand>(processImageCommand);
-
+                
                 /*var faceEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessFaceQueue);
                 var faceEngineEndPoint = await bus.GetSendEndpoint(faceEngineEndPointUri);
                 await faceEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);

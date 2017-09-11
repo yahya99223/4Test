@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using DistributeMe.ImageProcessing.Messaging;
+using GreenPipes;
 using MassTransit;
 
 namespace DistributeMe.ImageProcessing.FaceRecognition

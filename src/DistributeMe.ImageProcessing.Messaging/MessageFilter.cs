@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using MassTransit;
-using MassTransit.Configurators;
-using MassTransit.PipeBuilders;
-using MassTransit.PipeConfigurators;
-using MassTransit.Pipeline;
+using GreenPipes;
 
 namespace DistributeMe.ImageProcessing.Messaging
 {
