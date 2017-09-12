@@ -36,8 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreenPipes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
-      <HintPath>..\packages\GreenPipes.1.0.9\lib\net452\GreenPipes.dll</HintPath>
+    <Reference Include="GreenPipes, Version=1.1.0.83, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\GreenPipes.1.0.10\lib\net452\GreenPipes.dll</HintPath>
     </Reference>
     <Reference Include="MassTransit, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <HintPath>..\packages\MassTransit.3.5.7\lib\net452\MassTransit.dll</HintPath>
@@ -83,7 +83,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Consumers\ProcessFaceConsumer.cs" />
+    <Compile Include="Consumers\ProcessFinishedConsumer.cs" />
     <Compile Include="Consumers\ProcessOcrConsumer.cs" />
+    <Compile Include="Consumers\ProcessRequestAddedConsumer.cs" />
     <Compile Include="Helpers\AsyncRelayCommand.cs" />
     <Compile Include="Messages\ProcessImageCommand.cs" />
     <Compile Include="ViewModels\AddImageProcessOrder.cs" />

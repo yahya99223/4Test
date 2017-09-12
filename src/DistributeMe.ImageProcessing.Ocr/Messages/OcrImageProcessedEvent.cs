@@ -14,6 +14,7 @@ namespace DistributeMe.ImageProcessing.Ocr.Messages
         }
 
         public Guid RequestId { get; }
+        public Guid CorrelationId { get; set; }
         public string ExtractedText { get; }
         public DateTime ProcessStartTime { get; }
         public DateTime ProcessFinishTime { get; }

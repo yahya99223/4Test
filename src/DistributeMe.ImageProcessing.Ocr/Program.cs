@@ -59,14 +59,14 @@ namespace DistributeMe.ImageProcessing.Ocr
             startDate = DateTime.UtcNow;
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
-                cfg.UseMessageFilter();
+                /*cfg.UseMessageFilter();
                 cfg.UseCircuitBreaker(cb =>
                 {
                     cb.ActiveThreshold = 3;
                     cb.TrackingPeriod = TimeSpan.FromSeconds(65);
                     cb.TripThreshold = 70;
                     cb.ResetInterval = TimeSpan.FromMinutes(3);
-                });
+                });*/
                 cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
                 {
                     e.Consumer<ProcessOcrConsumer>();

@@ -60,7 +60,7 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.ProcessFaceQueue, e =>
                 {
-                    e.UseRateLimit(1,TimeSpan.FromSeconds(2));
+                    //e.UseRateLimit(1,TimeSpan.FromSeconds(2));
                     e.Consumer<ProcessFaceConsumer>();
                 });
             });

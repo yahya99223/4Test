@@ -14,6 +14,7 @@ namespace DistributeMe.ImageProcessing.FaceRecognition.Messages
         }
 
         public Guid RequestId { get; }
+        public Guid CorrelationId { get; set; }
         public int FacesCount { get; }
         public DateTime ProcessStartTime { get; }
         public DateTime ProcessFinishTime { get; }

@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace DistributeMe.ImageProcessing.FaceRecognition
 {
-    internal class ProcessFaceConsumer : IConsumer<IProcessImageCommand>
+    internal class ProcessFaceConsumer : IConsumer<IProcessRequestAddedEvent>
     {
         private Random random;
 
@@ -16,7 +16,7 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
             random = new Random();
         }
 
-        public async Task Consume(ConsumeContext<IProcessImageCommand> context)
+        public async Task Consume(ConsumeContext<IProcessRequestAddedEvent> context)
         {
             var command = context.Message;
 

@@ -14,7 +14,6 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
     {
         private ObservableCollection<ProcessRequest> processRequests;
         private IBusControl bus;
-        private static readonly object locker = new object();
 
         public AddImageProcessOrder()
         {
@@ -23,10 +22,12 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
-                cfg.ReceiveEndpoint(host, MessagingConstants.ProcessNotificationQueue, e =>
+                cfg.ReceiveEndpoint(host, MessagingConstants.NotificationQueue, e =>
                 {
+                    e.Consumer(() => new ProcessRequestAddedConsumer(processRequests));
                     e.Consumer(() => new ProcessOcrConsumer(processRequests));
                     e.Consumer(() => new ProcessFaceConsumer(processRequests));
+                    e.Consumer(() => new ProcessFinishedConsumer(processRequests));
                 });
             });
 
@@ -75,16 +76,12 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
                 };
                 ProcessRequests.Insert(0, request);
 
-                var processImageCommand = new ProcessImageCommand(request.RequestId, new byte[] {} /*File.ReadAllBytes(dlg.FileName)*/);
-                await bus.Publish<IProcessImageCommand>(processImageCommand);
+                var processImageCommand = new ProcessCommand(request.RequestId, new byte[] {} /*File.ReadAllBytes(dlg.FileName)*/);
+                //await bus.Publish<IProcessCommand>(processImageCommand);
                 
-                /*var faceEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessFaceQueue);
-                var faceEngineEndPoint = await bus.GetSendEndpoint(faceEngineEndPointUri);
-                await faceEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);
-
-                var ocrEngineEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.ProcessOcrQueue);
-                var ocrEngineEndPoint = await bus.GetSendEndpoint(ocrEngineEndPointUri);
-                await ocrEngineEndPoint.Send<IProcessImageCommand>(processImageCommand);*/
+                var sagaEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.SagaQueue);
+                var sagaEngineEndPoint = await bus.GetSendEndpoint(sagaEndPointUri);
+                await sagaEngineEndPoint.Send<IProcessCommand>(processImageCommand);                
             }
         }
 

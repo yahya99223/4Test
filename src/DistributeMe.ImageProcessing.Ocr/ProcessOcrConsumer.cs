@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace DistributeMe.ImageProcessing.Ocr
 {
-    internal class ProcessOcrConsumer : IConsumer<IProcessImageCommand>
+    internal class ProcessOcrConsumer : IConsumer<IProcessRequestAddedEvent>
     {
         private Random random;
 
@@ -16,7 +16,7 @@ namespace DistributeMe.ImageProcessing.Ocr
             random = new Random();
         }
 
-        public async Task Consume(ConsumeContext<IProcessImageCommand> context)
+        public async Task Consume(ConsumeContext<IProcessRequestAddedEvent> context)
         {
             var command = context.Message;
 

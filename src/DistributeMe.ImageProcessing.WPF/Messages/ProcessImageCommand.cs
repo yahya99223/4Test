@@ -7,9 +7,9 @@ using DistributeMe.ImageProcessing.Messaging;
 
 namespace DistributeMe.ImageProcessing.WPF.Messages
 {
-    public class ProcessImageCommand: IProcessImageCommand
+    public class ProcessCommand: IProcessCommand
     {
-        public ProcessImageCommand(Guid requestId, byte[] data)
+        public ProcessCommand(Guid requestId, byte[] data)
         {
             RequestId = requestId;
             Data = data;
