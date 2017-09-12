@@ -37,8 +37,6 @@ namespace DistributeMe.Saga
                     .Then(context =>
                     {
                         Console.WriteLine($"OcrProcessed - RequestId: {context.Data.RequestId} With CorrelationId: {context.Instance.CorrelationId}");
-                        context.Instance.ExtractedText = context.Data.ExtractedText;
-                        context.Instance.OcrFinished = true;
                     })
                 //.If(x => x.Instance.FaceFinished, x => x.TransitionTo(Finished))
                 ,
@@ -46,8 +44,6 @@ namespace DistributeMe.Saga
                     .Then(context =>
                     {
                         Console.WriteLine($"FaceProcessed - RequestId: {context.Data.RequestId} With CorrelationId: {context.Instance.CorrelationId}");
-                        context.Instance.FacesCount = context.Data.FacesCount;
-                        context.Instance.FaceFinished = true;
                     })
             );
             
