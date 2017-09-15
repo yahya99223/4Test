@@ -20,16 +20,12 @@ namespace DistributeMe.ImageProcessing.Ocr
         {
             var command = context.Message;
 
-            await Console.Out.WriteLineAsync($"Processing Request: {command.RequestId}");
+            Console.WriteLine($"Processing Request: {command.RequestId}");
 
             var processStartDate = DateTime.UtcNow;
-            Thread.Sleep(random.Next(1000, 5000));
-            /*if (DateTime.UtcNow < Program.startDate.AddSeconds(60))
-                throw new ArgumentException("Fake Exception");*/
+            await Task.Delay(random.Next(2000, 9000));
 
-            await Console.Out.WriteLineAsync($"DONE");
-            await Console.Out.WriteLineAsync($"====");
-            await Console.Out.WriteLineAsync($"");
+            Console.WriteLine($"FINISHED {command.RequestId}");
 
             var notificationEvent = new OcrImageProcessedEvent(command.RequestId, "extracted text", processStartDate, DateTime.UtcNow);
             await context.Publish<IOcrImageProcessedEvent>(notificationEvent);

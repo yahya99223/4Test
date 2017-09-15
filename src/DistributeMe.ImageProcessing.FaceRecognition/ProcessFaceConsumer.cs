@@ -20,14 +20,12 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
         {
             var command = context.Message;
 
-            await Console.Out.WriteLineAsync($"Processing Request: {command.RequestId}");
+            Console.WriteLine($"Processing Request: {command.RequestId}");
 
             var processStartDate = DateTime.UtcNow;
-            Thread.Sleep(random.Next(500, 2000));
+            await Task.Delay(random.Next(500, 5000));
 
-            await Console.Out.WriteLineAsync($"DONE");
-            await Console.Out.WriteLineAsync($"====");
-            await Console.Out.WriteLineAsync($"");
+            Console.WriteLine($"FINISHED {command.RequestId}");
 
             var notificationEvent = new FaceRecognitionImageProcessedEvent(command.RequestId, 2, processStartDate, DateTime.UtcNow);
             await context.Publish<IFaceRecognitionImageProcessedEvent>(notificationEvent);

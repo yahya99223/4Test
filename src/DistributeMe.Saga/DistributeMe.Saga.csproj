@@ -98,7 +98,6 @@
     <Compile Include="Sagas\ProcessRequestAddedEvent.cs" />
     <Compile Include="Sagas\ProcessRequestFinishedEvent.cs" />
     <Compile Include="States\AddingProcessRequestSagaState.cs" />
-    <Compile Include="SetupSagaConsumer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sagas\AddingProcessRequestStateMachine.cs" />

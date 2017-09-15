@@ -32,7 +32,6 @@ namespace DistributeMe.Saga
                 cfg.ReceiveEndpoint(host, MessagingConstants.SagaQueue, e =>
                 {
                     e.StateMachineSaga(machine, repository.Value); 
-                    //e.Consumer<SetupSagaConsumer>();
                 });
             });
             log.Info("Starting bus...");

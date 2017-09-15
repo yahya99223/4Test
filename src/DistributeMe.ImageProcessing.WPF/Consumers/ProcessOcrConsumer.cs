@@ -10,7 +10,6 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
 {
     public class ProcessOcrConsumer : IConsumer<IOcrImageProcessedEvent>
     {
-        private static readonly object locker = new object();
         private readonly ObservableCollection<ProcessRequest> processRequests;
 
         public ProcessOcrConsumer(ObservableCollection<ProcessRequest> processRequests)
@@ -18,20 +17,24 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             this.processRequests = processRequests;
         }
 
-        public async Task Consume(ConsumeContext<IOcrImageProcessedEvent> context)
+        public Task Consume(ConsumeContext<IOcrImageProcessedEvent> context)
         {
             var command = context.Message;
 
             var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
-            if (request == null)
-                return;
-            lock (locker)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                if (request == null)
                 {
-                    request.Notifications.Insert(0, $"OCR result:{context.Message.ExtractedText}");
-                });
-            }
+                    request = new ProcessRequest
+                    {
+                        RequestId = command.RequestId
+                    };
+                    processRequests.Add(request);
+                }
+                request.Notifications.Insert(0, $"OCR result:{context.Message.ExtractedText}");
+            });
+            return Task.FromResult<object>(null);
         }
     }
 }

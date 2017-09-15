@@ -10,6 +10,7 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
 {
     public class ProcessFinishedConsumer : IConsumer<IProcessRequestFinishedEvent>
     {
+        private static readonly object locker = new object();
         private readonly ObservableCollection<ProcessRequest> processRequests;
 
         public ProcessFinishedConsumer(ObservableCollection<ProcessRequest> processRequests)
@@ -21,13 +22,30 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
         {
             var command = context.Message;
 
-            var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
-            if (request == null)
-                return;
+            ProcessRequest request;
 
-            Application.Current.Dispatcher.Invoke(() =>
+            lock (locker)
             {
-                request.Notifications.Insert(0, $"Request Processing Finished");
+                request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
+                if (request == null)
+                {
+                    request = new ProcessRequest
+                    {
+                        RequestId = command.RequestId
+                    };
+                    Application.Current.Dispatcher.Invoke(() => { processRequests.Add(request); });
+                }
+            }
+
+            Application.Current.Dispatcher.Invoke(() => { request.Notifications.Insert(0, $"Request Processing Finished"); });
+
+            await Task.Run(async () =>
+            {
+                await Task.Delay(1500);
+                lock (locker)
+                {
+                    Application.Current.Dispatcher.Invoke(() => { processRequests.Remove(request); });
+                }
             });
         }
     }

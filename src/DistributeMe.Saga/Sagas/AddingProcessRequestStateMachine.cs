@@ -56,8 +56,8 @@ namespace DistributeMe.Saga
                         Console.WriteLine($"FinishProcessing - CorrelationId: {context.Instance.CorrelationId}");
                         context.Instance.EndProcessDate = DateTime.Now;
                     })
-                    .Publish(context => new ProcessRequestFinishedEvent(context.Instance.RequestId, null))
                     .Finalize()
+                    .Publish(context => new ProcessRequestFinishedEvent(context.Instance.RequestId, null))
             );
             //SetCompletedWhenFinalized();
         }

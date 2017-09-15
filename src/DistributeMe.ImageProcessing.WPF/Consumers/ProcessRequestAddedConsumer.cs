@@ -17,18 +17,24 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             this.processRequests = processRequests;
         }
 
-        public async Task Consume(ConsumeContext<IProcessRequestAddedEvent> context)
+        public Task Consume(ConsumeContext<IProcessRequestAddedEvent> context)
         {
             var command = context.Message;
 
             var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
-            if (request == null)
-                return;
-
             Application.Current.Dispatcher.Invoke(() =>
             {
+                if (request == null)
+                {
+                    request = new ProcessRequest
+                    {
+                        RequestId = command.RequestId
+                    };
+                    processRequests.Add(request);
+                }
                 request.Notifications.Insert(0, $"Request Added to the Queue");
             });
+            return Task.FromResult<object>(null);
         }
     }
 }
