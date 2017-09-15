@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using DistributeMe.ImageProcessing.Messaging;
 using DistributeMe.ImageProcessing.WPF.Consumers;
@@ -17,9 +18,10 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
         public AddImageProcessOrder()
         {
-            OpenImageFileCommand = new AsyncRelayCommand(openImageFileCommand_Executed);
             processRequests = new ObservableCollection<ProcessRequest>();
-
+            ProcessSingleCommand = new AsyncRelayCommand(processSingleCommand_Executed);
+            ProcessParallelCommand = new AsyncRelayCommand(processParallelCommand_Executed);
+            
             bus = BusConfigurator.ConfigureBus((cfg, host) =>
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.NotificationQueue, e =>
@@ -44,9 +46,9 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
             }
         }
 
-        public ICommand OpenImageFileCommand { get; }
+        public ICommand ProcessSingleCommand { get; }
 
-        private async Task openImageFileCommand_Executed(object obj)
+        private async Task processSingleCommand_Executed(object obj)
         {
             /*for (int i = 0; i < 16; i++)
             {
@@ -69,21 +71,48 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
             var result = dlg.ShowDialog();
             if (result == true)*/
-            {
-                var request = new ProcessRequest
-                {
-                    RequestId = Guid.NewGuid()
-                };
-                ProcessRequests.Insert(0, request);
 
-                var processImageCommand = new ProcessCommand(request.RequestId, new byte[] {} /*File.ReadAllBytes(dlg.FileName)*/);
-                //await bus.Publish<IProcessCommand>(processImageCommand);
-                
-                var sagaEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.SagaQueue);
-                var sagaEngineEndPoint = await bus.GetSendEndpoint(sagaEndPointUri);
-                await sagaEngineEndPoint.Send<IProcessCommand>(processImageCommand);                
-            }
+            var request = new ProcessRequest
+            {
+                RequestId = Guid.NewGuid()
+            };
+            ProcessRequests.Insert(0, request);
+
+            var processImageCommand = new ProcessCommand(request.RequestId, new byte[] { } /*File.ReadAllBytes(dlg.FileName)*/);
+            //await bus.Publish<IProcessCommand>(processImageCommand);
+
+            var sagaEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.SagaQueue);
+            var sagaEngineEndPoint = await bus.GetSendEndpoint(sagaEndPointUri);
+            await sagaEngineEndPoint.Send<IProcessCommand>(processImageCommand);
         }
+
+
+
+        public ICommand ProcessParallelCommand { get; }
+        private async Task processParallelCommand_Executed(object arg)
+        {
+            await Task.Run(() =>
+            {
+                Parallel.For(0, 100, async (i) =>
+                {
+                    var request = new ProcessRequest
+                    {
+                        RequestId = Guid.NewGuid()
+                    };
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        ProcessRequests.Insert(0, request);
+                    });
+                    var processImageCommand = new ProcessCommand(request.RequestId, new byte[] { } /*File.ReadAllBytes(dlg.FileName)*/);
+                    //await bus.Publish<IProcessCommand>(processImageCommand);
+
+                    var sagaEndPointUri = new Uri(MessagingConstants.MqUri + MessagingConstants.SagaQueue);
+                    var sagaEngineEndPoint = await bus.GetSendEndpoint(sagaEndPointUri);
+                    await sagaEngineEndPoint.Send<IProcessCommand>(processImageCommand);
+                });
+            });
+        }
+
 
         public void Dispose()
         {

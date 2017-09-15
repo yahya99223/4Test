@@ -23,7 +23,8 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Command="{Binding OpenImageFileCommand}" Height="40" Width="120" HorizontalAlignment="Left">Select Image</Button>
+        <Button Grid.Row="0" Command="{Binding ProcessSingleCommand}" Height="40" Width="120" HorizontalAlignment="Left">Process one</Button>
+        <Button Grid.Row="0" Command="{Binding ProcessParallelCommand}" Height="40" Width="120" HorizontalAlignment="Left" Margin="125,5,0,5">Process Parallel</Button>
         <ListBox Grid.Row="1" ItemsSource="{Binding ProcessRequests}" Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

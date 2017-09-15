@@ -33,7 +33,10 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
                     {
                         RequestId = command.RequestId
                     };
-                    Application.Current.Dispatcher.Invoke(() => { processRequests.Add(request); });
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        processRequests.Add(request);
+                    });
                 }
             }
 

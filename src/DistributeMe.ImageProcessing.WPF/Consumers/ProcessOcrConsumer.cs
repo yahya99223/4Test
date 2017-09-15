@@ -21,9 +21,9 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
         {
             var command = context.Message;
 
-            var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
             Application.Current.Dispatcher.Invoke(() =>
             {
+            var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
                 if (request == null)
                 {
                     request = new ProcessRequest

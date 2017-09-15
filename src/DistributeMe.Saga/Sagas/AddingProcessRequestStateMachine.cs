@@ -59,7 +59,7 @@ namespace DistributeMe.Saga
                     .Finalize()
                     .Publish(context => new ProcessRequestFinishedEvent(context.Instance.RequestId, null))
             );
-            //SetCompletedWhenFinalized();
+            SetCompletedWhenFinalized();
         }
 
 
