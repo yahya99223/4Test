@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DistributeMe.ImageProcessing.Messaging;
-using DistributeMe.ImageProcessing.Ocr.Messages;
 using MassTransit;
 
 namespace DistributeMe.ImageProcessing.Ocr

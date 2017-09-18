@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DistributeMe.ImageProcessing.FaceRecognition.Messages;
 using DistributeMe.ImageProcessing.Messaging;
 using MassTransit;
 
@@ -24,6 +23,9 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
 
             var processStartDate = DateTime.UtcNow;
             await Task.Delay(random.Next(500, 5000));
+
+            /*if (random.Next(1, 9) % 2 == 0)
+                throw new Exception("There is no face");*/
 
             Console.WriteLine($"FINISHED {command.RequestId}");
 

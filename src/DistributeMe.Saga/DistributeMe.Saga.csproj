@@ -96,8 +96,6 @@
     <Compile Include="ProcessFaultConsumer.cs" />
     <Compile Include="SagaDbContextFactoryProvider.cs" />
     <Compile Include="SagaService.cs" />
-    <Compile Include="Sagas\ProcessRequestAddedEvent.cs" />
-    <Compile Include="Sagas\ProcessRequestFinishedEvent.cs" />
     <Compile Include="States\AddingProcessRequestSagaState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

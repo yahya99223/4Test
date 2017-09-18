@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceProcess;
+using System.Threading.Tasks;
 using DistributeMe.ImageProcessing.Messaging;
 using GreenPipes;
 using MassTransit;
@@ -67,10 +68,15 @@ namespace DistributeMe.ImageProcessing.Ocr
                     cb.TripThreshold = 70;
                     cb.ResetInterval = TimeSpan.FromMinutes(3);
                 });*/
+
                 cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
                 {
+                    e.Handler<Fault<ProcessRequestAddedEvent>>(context =>
+                    {
+                        return Task.FromResult(0);
+                    });
                     e.Consumer<ProcessOcrConsumer>();
-                    e.Consumer<ProcessFaultConsumer>();
+                    e.Consumer(() => new ProcessFaultConsumer());
                 });
             });
             bus.Start();

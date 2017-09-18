@@ -6,7 +6,6 @@ using System.Windows.Input;
 using DistributeMe.ImageProcessing.Messaging;
 using DistributeMe.ImageProcessing.WPF.Consumers;
 using DistributeMe.ImageProcessing.WPF.Helpers;
-using DistributeMe.ImageProcessing.WPF.Messages;
 using MassTransit;
 
 namespace DistributeMe.ImageProcessing.WPF.ViewModels

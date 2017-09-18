@@ -31,7 +31,7 @@ namespace DistributeMe.Saga
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.SagaQueue, e =>
                 {
-                    //e.Consumer<ProcessFaultConsumer>();
+                    e.Consumer<ProcessFaultConsumer>();
                     e.StateMachineSaga(machine, repository.Value); 
                 });
             });
