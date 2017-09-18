@@ -7,12 +7,12 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 {
     public class ProcessRequest : ObservableObject
     {
-        private ObservableCollection<string> notifications;
+        private ObservableSetCollection<string> notifications;
         private Guid requestId;
 
         public ProcessRequest()
         {
-            notifications = new ObservableCollection<string>();
+            notifications = new ObservableSetCollection<string>();
         }
 
         public Guid RequestId
@@ -25,7 +25,7 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
             }
         }
 
-        public ObservableCollection<string> Notifications
+        public ObservableSetCollection<string> Notifications
         {
             get { return notifications; }
             set

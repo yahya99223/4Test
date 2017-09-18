@@ -84,9 +84,11 @@
     </Compile>
     <Compile Include="Consumers\ProcessFaceConsumer.cs" />
     <Compile Include="Consumers\ProcessFinishedConsumer.cs" />
+    <Compile Include="Consumers\ProcessFaultConsumer.cs" />
     <Compile Include="Consumers\ProcessOcrConsumer.cs" />
     <Compile Include="Consumers\ProcessRequestAddedConsumer.cs" />
     <Compile Include="Helpers\AsyncRelayCommand.cs" />
+    <Compile Include="Helpers\ObservableSetCollection.cs" />
     <Compile Include="Messages\ProcessImageCommand.cs" />
     <Compile Include="ViewModels\AddImageProcessOrder.cs" />
     <Compile Include="ViewModels\ProcessRequest.cs" />

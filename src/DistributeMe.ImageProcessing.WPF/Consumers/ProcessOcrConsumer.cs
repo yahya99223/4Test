@@ -20,6 +20,8 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
         public Task Consume(ConsumeContext<IOcrImageProcessedEvent> context)
         {
             var command = context.Message;
+            if (App.RemovedRequests.Contains(command.RequestId))
+                return Task.FromResult<object>(null);
 
             Application.Current.Dispatcher.Invoke(() =>
             {

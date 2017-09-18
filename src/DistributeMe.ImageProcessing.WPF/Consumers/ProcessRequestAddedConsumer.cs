@@ -21,6 +21,9 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
         {
             var command = context.Message;
 
+            if (App.RemovedRequests.Contains(command.RequestId))
+                return Task.FromResult<object>(null);
+
             Application.Current.Dispatcher.Invoke(() =>
             {
             var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);

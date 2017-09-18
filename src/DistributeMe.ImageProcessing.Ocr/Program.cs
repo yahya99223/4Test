@@ -70,6 +70,7 @@ namespace DistributeMe.ImageProcessing.Ocr
                 cfg.ReceiveEndpoint(host, MessagingConstants.ProcessOcrQueue, e =>
                 {
                     e.Consumer<ProcessOcrConsumer>();
+                    e.Consumer<ProcessFaultConsumer>();
                 });
             });
             bus.Start();

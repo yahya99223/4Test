@@ -20,10 +20,12 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
         public Task Consume(ConsumeContext<IFaceRecognitionImageProcessedEvent> context)
         {
             var command = context.Message;
+            if (App.RemovedRequests.Contains(command.RequestId))
+                return Task.FromResult<object>(null);
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-            var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
+                var request = processRequests.FirstOrDefault(r => r.RequestId == command.RequestId);
                 if (request == null)
                 {
                     request = new ProcessRequest
@@ -32,6 +34,7 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
                     };
                     processRequests.Add(request);
                 }
+
                 request.Notifications.Insert(0, $"Face(s) count:{context.Message.FacesCount}");
             });
             return Task.FromResult<object>(null);

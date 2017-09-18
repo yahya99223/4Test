@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Messages\FaceRecognitionImageProcessedEvent.cs" />
     <Compile Include="ProcessFaceConsumer.cs" />
+    <Compile Include="ProcessFaultConsumer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

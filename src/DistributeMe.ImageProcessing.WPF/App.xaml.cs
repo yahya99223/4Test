@@ -14,6 +14,9 @@ namespace DistributeMe.ImageProcessing.WPF
     /// </summary>
     public partial class App : Application
     {
+        public static List<Guid> RemovedRequests = new List<Guid>();
+        public static readonly object Locker = new object();
+
         public App()
         {
             IDisposable disposableViewModel = null;

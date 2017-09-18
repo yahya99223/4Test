@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddingProcessRequestSagaMap.cs" />
+    <Compile Include="ProcessFaultConsumer.cs" />
     <Compile Include="SagaDbContextFactoryProvider.cs" />
     <Compile Include="SagaService.cs" />
     <Compile Include="Sagas\ProcessRequestAddedEvent.cs" />
