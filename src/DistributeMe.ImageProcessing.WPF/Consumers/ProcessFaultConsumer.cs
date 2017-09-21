@@ -9,10 +9,10 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
         IConsumer<Fault<ProcessCommand>>,
         IConsumer<Fault<IProcessRequestAddedEvent>>,
         IConsumer<Fault<ProcessRequestAddedEvent>>,
-        IConsumer<Fault<IOcrImageProcessedEvent>>,
-        IConsumer<Fault<OcrImageProcessedEvent>>,
-        IConsumer<Fault<IFaceRecognitionImageProcessedEvent>>,
-        IConsumer<Fault<FaceRecognitionImageProcessedEvent>>,
+        IConsumer<Fault<IOcrProcessedEvent>>,
+        IConsumer<Fault<OcrProcessedEvent>>,
+        IConsumer<Fault<IFaceProcessedEvent>>,
+        IConsumer<Fault<FaceProcessedEvent>>,
         IConsumer<Fault<IProcessRequestFinishedEvent>>,
         IConsumer<Fault<ProcessRequestFinishedEvent>>
     {
@@ -21,12 +21,12 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<IOcrImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<IOcrProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<IFaceRecognitionImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<IFaceProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }
@@ -51,12 +51,12 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<OcrImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<OcrProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<FaceRecognitionImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<FaceProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }

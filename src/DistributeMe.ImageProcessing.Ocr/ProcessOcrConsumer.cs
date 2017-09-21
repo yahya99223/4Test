@@ -26,8 +26,8 @@ namespace DistributeMe.ImageProcessing.Ocr
 
             Console.WriteLine($"FINISHED {command.RequestId}");
 
-            var notificationEvent = new OcrImageProcessedEvent(command.RequestId, "extracted text", processStartDate, DateTime.UtcNow);
-            await context.Publish<IOcrImageProcessedEvent>(notificationEvent);
+            var notificationEvent = new OcrProcessedEvent(command.RequestId, "extracted text", processStartDate, DateTime.UtcNow);
+            await context.Publish<IOcrProcessedEvent>(notificationEvent);
         }
     }
 }

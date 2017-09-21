@@ -8,7 +8,7 @@ using MassTransit;
 
 namespace DistributeMe.ImageProcessing.WPF.Consumers
 {
-    public class ProcessOcrConsumer : IConsumer<IOcrImageProcessedEvent>
+    public class ProcessOcrConsumer : IConsumer<IOcrProcessedEvent>
     {
         private readonly ObservableCollection<ProcessRequest> processRequests;
 
@@ -17,7 +17,7 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             this.processRequests = processRequests;
         }
 
-        public Task Consume(ConsumeContext<IOcrImageProcessedEvent> context)
+        public Task Consume(ConsumeContext<IOcrProcessedEvent> context)
         {
             var command = context.Message;
             if (App.RemovedRequests.Contains(command.RequestId))

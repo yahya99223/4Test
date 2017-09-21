@@ -1,29 +1,29 @@
-using System;
+﻿using System;
 
 namespace DistributeMe.ImageProcessing.Messaging
 {
-    public interface IFaceRecognitionImageProcessedEvent
+    public interface IOcrProcessedEvent
     {
         Guid RequestId { get; }
         Guid CorrelationId { get; set; }
-        int FacesCount { get; }
+        string ExtractedText { get; }
         DateTime ProcessStartTime { get; }
         DateTime ProcessFinishTime { get; }
     }
 
-    public class FaceRecognitionImageProcessedEvent : IFaceRecognitionImageProcessedEvent
+    public class OcrProcessedEvent : IOcrProcessedEvent
     {
-        public FaceRecognitionImageProcessedEvent(Guid requestId, int facesCount, DateTime processStartTime, DateTime processFinishTime)
+        public OcrProcessedEvent(Guid requestId, string extractedText, DateTime processStartTime, DateTime processFinishTime)
         {
             RequestId = requestId;
-            FacesCount = facesCount;
+            ExtractedText = extractedText;
             ProcessStartTime = processStartTime;
             ProcessFinishTime = processFinishTime;
         }
 
         public Guid RequestId { get; }
         public Guid CorrelationId { get; set; }
-        public int FacesCount { get; }
+        public string ExtractedText { get; }
         public DateTime ProcessStartTime { get; }
         public DateTime ProcessFinishTime { get; }
     }

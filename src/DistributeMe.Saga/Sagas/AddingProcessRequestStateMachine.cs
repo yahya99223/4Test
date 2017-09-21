@@ -27,7 +27,7 @@ namespace DistributeMe.Saga
                         context.Instance.RequestId = context.Data.RequestId;
                     })
                     .Then(context => Console.Out.WriteLine($"ProcessCommandReceived - RequestId: {context.Data.RequestId} With CorrelationId: {context.Instance.CorrelationId}"))
-                    .TransitionTo(Received)
+                    .TransitionTo(Received)                    
                     .Publish(context => new ProcessRequestAddedEvent(context.Instance.RequestId, null))
             );
 
@@ -66,8 +66,8 @@ namespace DistributeMe.Saga
         public State Received { get; private set; }
 
         public Event<IProcessCommand> ProcessCommandReceived { get; private set; }
-        public Event<IFaceRecognitionImageProcessedEvent> FaceRecognitionProcessed { get; private set; }
-        public Event<IOcrImageProcessedEvent> OcrProcessed { get; private set; }
+        public Event<IFaceProcessedEvent> FaceRecognitionProcessed { get; private set; }
+        public Event<IOcrProcessedEvent> OcrProcessed { get; private set; }
 
         public Event ProcessFinished
         {

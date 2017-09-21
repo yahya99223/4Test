@@ -8,7 +8,7 @@ using MassTransit;
 
 namespace DistributeMe.ImageProcessing.WPF.Consumers
 {
-    public class ProcessFaceConsumer : IConsumer<IFaceRecognitionImageProcessedEvent>
+    public class ProcessFaceConsumer : IConsumer<IFaceProcessedEvent>
     {
         private readonly ObservableCollection<ProcessRequest> processRequests;
 
@@ -17,7 +17,7 @@ namespace DistributeMe.ImageProcessing.WPF.Consumers
             this.processRequests = processRequests;
         }
 
-        public Task Consume(ConsumeContext<IFaceRecognitionImageProcessedEvent> context)
+        public Task Consume(ConsumeContext<IFaceProcessedEvent> context)
         {
             var command = context.Message;
             if (App.RemovedRequests.Contains(command.RequestId))

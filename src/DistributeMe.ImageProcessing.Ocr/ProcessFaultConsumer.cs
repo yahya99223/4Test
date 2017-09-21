@@ -21,12 +21,12 @@ namespace DistributeMe.ImageProcessing.Ocr
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<IOcrImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<IOcrProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<IFaceRecognitionImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<IFaceProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }
@@ -55,12 +55,12 @@ namespace DistributeMe.ImageProcessing.Ocr
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<OcrImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<OcrProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }
 
-        public Task Consume(ConsumeContext<Fault<FaceRecognitionImageProcessedEvent>> context)
+        public Task Consume(ConsumeContext<Fault<FaceProcessedEvent>> context)
         {
             return Task.FromResult<object>(null);
         }

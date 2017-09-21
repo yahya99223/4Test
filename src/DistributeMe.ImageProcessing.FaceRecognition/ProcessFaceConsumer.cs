@@ -29,8 +29,8 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
 
             Console.WriteLine($"FINISHED {command.RequestId}");
 
-            var notificationEvent = new FaceRecognitionImageProcessedEvent(command.RequestId, 2, processStartDate, DateTime.UtcNow);
-            await context.Publish<IFaceRecognitionImageProcessedEvent>(notificationEvent);
+            var notificationEvent = new FaceProcessedEvent(command.RequestId, 2, processStartDate, DateTime.UtcNow);
+            await context.Publish<IFaceProcessedEvent>(notificationEvent);
         }
     }
 }
