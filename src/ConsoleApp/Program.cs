@@ -20,7 +20,7 @@ namespace ConsoleApp
             {
                 using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
                 {
-                    foreach (var result in searcher.FindAll())
+                    foreach (var result in searcher.FindAll().Take(1))
                     {
                         DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
                         foreach (var deProperty in de.Properties.PropertyNames)
