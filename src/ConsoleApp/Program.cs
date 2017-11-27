@@ -16,7 +16,7 @@ namespace ConsoleApp
 
 
 
-            using (var context = new PrincipalContext(ContextType.Domain, "corp.idscan.com", "OU=Mersin,DC=corp,DC=idscan,DC=com"))
+            using (var context = new PrincipalContext(ContextType.Domain, "full.domain.com", "OU=someOU,DC=full,DC=domain,DC=com"))
             {
                 using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
                 {
@@ -40,7 +40,7 @@ namespace ConsoleApp
         {
             List<string> orgUnits = new List<string>();
 
-            DirectoryEntry startingPoint = new DirectoryEntry("LDAP://DC=corp,DC=idscan,DC=com");
+            DirectoryEntry startingPoint = new DirectoryEntry("LDAP://DC=full,DC=domain,DC=com");
             var children = startingPoint.Children;
             DirectorySearcher searcher = new DirectorySearcher(startingPoint);
             searcher.Filter = "(objectCategory=organizationalUnit)";
