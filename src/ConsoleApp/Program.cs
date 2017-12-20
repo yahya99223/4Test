@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp
 {
@@ -12,11 +10,37 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            //getOUs();
+            Console.WriteLine("Please enter the full name of the domain e.g.");
+            Console.WriteLine("corp.mycompany.com");
 
+            var fullDomainString = Console.ReadLine();
+            if (string.IsNullOrEmpty(fullDomainString))
+                throw new Exception("Domain Full Name is required!");
 
+            var fullDomainParts = fullDomainString.Split('.');
+            var domainContainer = string.Join(",", fullDomainParts.Select(x => "DC=" + x));
 
-            using (var context = new PrincipalContext(ContextType.Domain, "full.domain.com", "OU=someOU,DC=full,DC=domain,DC=com"))
+            string ou = null;
+            Console.WriteLine("Please enter the name of OU 'Organization Unit'");
+            Console.WriteLine("Incase you want to know all OUs in your domain enter : INVESTIGATE");
+            var temp = Console.ReadLine();
+            if (temp == "INVESTIGATE")
+            {
+                getOUs(domainContainer);
+                Console.WriteLine();
+                Console.WriteLine("Please enter the name of OU 'Organization Unit'");
+                ou = Console.ReadLine();
+            }
+            else
+            {
+                ou = temp;
+            }
+
+            if (!string.IsNullOrEmpty(ou))
+                domainContainer = "OU=" + ou + "," + domainContainer;
+
+            //using (var context = new PrincipalContext(ContextType.Domain, "corp.idscan.com", "OU=London,DC=corp,DC=idscan,DC=com"))
+            using (var context = new PrincipalContext(ContextType.Domain, fullDomainString, domainContainer))
             {
                 using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
                 {
@@ -29,27 +53,48 @@ namespace ConsoleApp
                             if (!string.IsNullOrEmpty(val))
                                 Console.WriteLine(deProperty + ": " + val);
                         }
+
                         Console.WriteLine();
                     }
                 }
             }
+
             Console.ReadLine();
         }
 
-        static void getOUs()
+        static void getOUs(string domainContainer)
         {
             List<string> orgUnits = new List<string>();
 
-            DirectoryEntry startingPoint = new DirectoryEntry("LDAP://DC=full,DC=domain,DC=com");
-            var children = startingPoint.Children;
-            DirectorySearcher searcher = new DirectorySearcher(startingPoint);
-            searcher.Filter = "(objectCategory=organizationalUnit)";
+            //DirectoryEntry startingPoint = new DirectoryEntry("LDAP://DC=corp,DC=idscan,DC=com");
+            var startingPoint = new DirectoryEntry("LDAP://" + domainContainer);
+            DirectorySearcher searcher = new DirectorySearcher(startingPoint)
+            {
+                Filter = "(objectCategory=organizationalUnit)"
+            };
 
-            foreach (SearchResult res in searcher.FindAll()) 
+            foreach (SearchResult res in searcher.FindAll())
             {
                 orgUnits.Add(res.Path);
                 Console.WriteLine(res.Path);
             }
         }
+    }
+
+    public class User
+    {
+        public User()
+        {
+            Properties = new List<DirectoryProperty>();
+        }
+
+        public string Name { get; set; }
+        public ICollection<DirectoryProperty> Properties { get; set; }
+    }
+
+    public class DirectoryProperty
+    {
+        public string PropertyName { get; set; }
+        public string PropertyValue { get; set; }
     }
 }
