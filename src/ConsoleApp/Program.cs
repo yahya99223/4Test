@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace ConsoleApp
 {
@@ -38,27 +40,47 @@ namespace ConsoleApp
 
             if (!string.IsNullOrEmpty(ou))
                 domainContainer = "OU=" + ou + "," + domainContainer;
+            var usersList = new List<User>();
 
             //using (var context = new PrincipalContext(ContextType.Domain, "corp.idscan.com", "OU=London,DC=corp,DC=idscan,DC=com"))
             using (var context = new PrincipalContext(ContextType.Domain, fullDomainString, domainContainer))
             {
                 using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
                 {
-                    foreach (var result in searcher.FindAll().Take(1))
+                    foreach (var result in searcher.FindAll().Take(3))
                     {
                         DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
+
+                        var user = new User()
+                        {
+                            Name = de.Name.Replace("CN=","")
+                        };
                         foreach (var deProperty in de.Properties.PropertyNames)
                         {
-                            var val = de.Properties[deProperty.ToString()]?.Value?.ToString();
-                            if (!string.IsNullOrEmpty(val))
+                            var val = de.Properties[deProperty.ToString()]?.Value;
+                            if (val != null)
+                            {
+                                user.Properties.Add(new DirectoryProperty
+                                {
+                                    PropertyName = deProperty.ToString(),
+                                    PropertyType = val.GetType(),
+                                    PropertyValue = val
+                                });
                                 Console.WriteLine(deProperty + ": " + val);
+                            }
                         }
 
+                        usersList.Add(user);
+                        Console.WriteLine("==============");
                         Console.WriteLine();
                     }
                 }
             }
 
+            var usersListJson = JsonConvert.SerializeObject(usersList);
+            File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "users.json"), usersListJson);
+
+            Console.WriteLine("Press any key to close");
             Console.ReadLine();
         }
 
@@ -94,7 +116,8 @@ namespace ConsoleApp
 
     public class DirectoryProperty
     {
-        public string PropertyName { get; set; }
-        public string PropertyValue { get; set; }
+        public object PropertyName { get; set; }
+        public Type PropertyType { get; set; }
+        public object PropertyValue { get; set; }
     }
 }
