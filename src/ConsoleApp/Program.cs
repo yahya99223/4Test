@@ -40,6 +40,12 @@ namespace ConsoleApp
 
             if (!string.IsNullOrEmpty(ou))
                 domainContainer = "OU=" + ou + "," + domainContainer;
+
+            Console.WriteLine("Please enter how many users you want to pull from AD");
+
+            if (!int.TryParse(Console.ReadLine(), out var usersCount))
+                throw new Exception("Users count should be a valid integer");
+
             var usersList = new List<User>();
 
             //using (var context = new PrincipalContext(ContextType.Domain, "corp.idscan.com", "OU=London,DC=corp,DC=idscan,DC=com"))
@@ -47,7 +53,7 @@ namespace ConsoleApp
             {
                 using (var searcher = new PrincipalSearcher(new UserPrincipal(context)))
                 {
-                    foreach (var result in searcher.FindAll().Take(3))
+                    foreach (var result in searcher.FindAll().Take(usersCount))
                     {
                         DirectoryEntry de = result.GetUnderlyingObject() as DirectoryEntry;
 
