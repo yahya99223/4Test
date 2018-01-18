@@ -25,8 +25,6 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.NotificationQueue, e =>
                 {
-                    e.Consumer<ProcessFaultConsumer>();
-
                     e.Consumer(() => new ProcessRequestAddedConsumer(processRequests));
 
                     e.Consumer(() => new ProcessOcrConsumer(processRequests));
@@ -54,28 +52,6 @@ namespace DistributeMe.ImageProcessing.WPF.ViewModels
 
         private async Task processSingleCommand_Executed(object obj)
         {
-            /*for (int i = 0; i < 16; i++)
-            {
-                var request = new ProcessRequest
-                {
-                    RequestId = Guid.NewGuid()
-                };
-                ProcessRequests.Insert(0, request);
-
-                var processImageCommand = new ProcessImageCommand(request.RequestId, File.ReadAllBytes(@"D:\UserData\Pictures\Untitled.png"));
-                await bus.Publish<IProcessImageCommand>(processImageCommand);
-                Thread.Sleep(100);
-            }*/
-
-            /*var dlg = new OpenFileDialog
-            {
-                DefaultExt = "JPG Files (*.jpg)|*.jpg",
-                Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png"
-            };
-
-            var result = dlg.ShowDialog();
-            if (result == true)*/
-
             var request = new ProcessRequest
             {
                 RequestId = Guid.NewGuid()

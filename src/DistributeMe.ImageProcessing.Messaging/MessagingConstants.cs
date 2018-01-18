@@ -3,9 +3,9 @@ namespace DistributeMe.ImageProcessing.Messaging
 {
     public static class MessagingConstants
     {
-        public const string MqUri = "rabbitmq://localhost/DistributeMe/";
+        public const string MqUri = "rabbitmq://http://onboarding-db/IDScanSaaSWahid/";
         public const string UserName = "wahid";
-        public const string Password = "poi098";
+        public const string Password = "W@123123";
 
 
         public const string ProcessFaceQueue = "FaceProcessing.Service";

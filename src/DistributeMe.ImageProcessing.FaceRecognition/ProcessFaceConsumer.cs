@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DistributeMe.ImageProcessing.Messaging;
+using IDScan.SaaS.SharedBlocks.Helpers.Core;
 using MassTransit;
 
 namespace DistributeMe.ImageProcessing.FaceRecognition
@@ -24,8 +25,8 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
             var processStartDate = DateTime.UtcNow;
             await Task.Delay(random.Next(500, 5000));
 
-            /*if (random.Next(1, 9) % 2 == 0)
-                throw new Exception("There is no face");*/
+            if (random.Next(1, 9) % 2 == 0)
+                throw new InternalApplicationException<IProcessRequestAddedEvent>(x => x.RequestId, ViolationType.NotFound);
 
             Console.WriteLine($"FINISHED {command.RequestId}");
 

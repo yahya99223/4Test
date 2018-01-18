@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeMe.ImageProcessing.WPF", "DistributeMe.ImageProcessing.WPF\DistributeMe.ImageProcessing.WPF.csproj", "{546A405F-B8E4-47ED-BD71-1C2C38C0287F}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeMe.ImageProcessing.Ocr", "DistributeMe.ImageProcessing.Ocr\DistributeMe.ImageProcessing.Ocr.csproj", "{9F115F53-1842-4958-8A56-5E40A6E84865}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributeMe.Saga", "DistributeMe.Saga\DistributeMe.Saga.csproj", "{399972B6-BE67-44C9-AA4A-24E1CE222E52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34B371AF-2D26-4F49-8FE4-88C8250AC35A}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.config = nuget.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +47,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F90B1BB2-6D82-4B7D-AE64-EC0BECB95DF2}
 	EndGlobalSection
 EndGlobal

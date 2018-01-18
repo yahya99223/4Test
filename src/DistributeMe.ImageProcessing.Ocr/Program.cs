@@ -76,7 +76,6 @@ namespace DistributeMe.ImageProcessing.Ocr
                         return Task.FromResult(0);
                     });
                     e.Consumer<ProcessOcrConsumer>();
-                    e.Consumer(() => new ProcessFaultConsumer());
                 });
             });
             bus.Start();

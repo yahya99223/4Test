@@ -37,6 +37,9 @@
     <Reference Include="GreenPipes, Version=1.2.0.96, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\GreenPipes.1.2.0\lib\net452\GreenPipes.dll</HintPath>
     </Reference>
+    <Reference Include="IDScan.SaaS.SharedBlocks.Helpers.Core, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IDScan.SaaS.SharedBlocks.Helpers.Core.2.0.3\lib\netstandard2.0\IDScan.SaaS.SharedBlocks.Helpers.Core.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -83,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProcessFaceConsumer.cs" />
-    <Compile Include="ProcessFaultConsumer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

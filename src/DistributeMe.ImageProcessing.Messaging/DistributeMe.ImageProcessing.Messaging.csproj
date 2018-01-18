@@ -34,6 +34,9 @@
     <Reference Include="GreenPipes, Version=1.2.0.96, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\GreenPipes.1.2.0\lib\net452\GreenPipes.dll</HintPath>
     </Reference>
+    <Reference Include="IDScan.SaaS.SharedBlocks.Helpers.Core, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IDScan.SaaS.SharedBlocks.Helpers.Core.2.0.3\lib\netstandard2.0\IDScan.SaaS.SharedBlocks.Helpers.Core.dll</HintPath>
+    </Reference>
     <Reference Include="MassTransit, Version=4.0.0.1371, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <HintPath>..\packages\MassTransit.4.0.0\lib\net452\MassTransit.dll</HintPath>
     </Reference>

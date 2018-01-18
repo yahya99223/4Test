@@ -62,7 +62,6 @@ namespace DistributeMe.ImageProcessing.FaceRecognition
                 {
                     //e.UseRateLimit(1,TimeSpan.FromSeconds(2));
                     e.Consumer<ProcessFaceConsumer>();
-                    e.Consumer<ProcessFaultConsumer>();
                 });
             });
             bus.Start();
