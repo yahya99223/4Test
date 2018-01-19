@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using IDScan.SaaS.SharedBlocks.Helpers.Core;
+using MassTransit;
+using Message.Contracts.Events;
 using OrderManagement.DbModel;
 
 namespace OrderManagement.ViewModel
@@ -17,9 +19,11 @@ namespace OrderManagement.ViewModel
         private readonly ObservableCollection<ServiceItem> services;
         private readonly OrderManagementDbContext dbContext;
         private string textToProcess;
+        private IBusControl bus;
 
         public CreateOrder()
         {
+            bus = BusHelper.GetBusControl();
             ProcessCommand = new AsyncRelayCommand(processCommand);
 
             dbContext = new OrderManagementDbContext();
@@ -51,7 +55,7 @@ namespace OrderManagement.ViewModel
         private async Task processCommand(object arg)
         {
             var servicesIds = Services.Where(s => s.IsSelected).Select(s => s.Id).ToHashSet();
-            dbContext.Orders.Add(new Order
+            var order = new Order
             {
                 Id = Guid.NewGuid(),
                 Services = dbContext.Services.Where(s => servicesIds.Contains(s.Id)).ToList(),
@@ -59,9 +63,17 @@ namespace OrderManagement.ViewModel
                 LastUpdateDate = DateTime.UtcNow,
                 OriginalText = TextToProcess,
                 Status = "Created",
-            });
+            };
+            dbContext.Orders.Add(order);
             TextToProcess = null;
             await dbContext.SaveChangesAsync();
+            await bus.Publish<IOrderCreated>(new OrderCreated
+            {
+                Id = order.Id,
+                CreateDate = order.CreateDate,
+                OriginalText = order.OriginalText,
+                Services = order.Services.Select(s => s.Name).ToList()
+            });
         }
 
         public void Dispose()
