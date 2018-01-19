@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using IDScan.SaaS.SharedBlocks.Helpers.Core;
+using Helpers.Core;
 using MassTransit;
 using Message.Contracts.Events;
 using OrderManagement.DbModel;

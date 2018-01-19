@@ -43,15 +43,6 @@
     <Reference Include="GreenPipes, Version=1.2.0.96, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\GreenPipes.1.2.0\lib\net452\GreenPipes.dll</HintPath>
     </Reference>
-    <Reference Include="IDScan.SaaS.SharedBlocks.Helpers.Core, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IDScan.SaaS.SharedBlocks.Helpers.Core.2.0.3\lib\netstandard2.0\IDScan.SaaS.SharedBlocks.Helpers.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="IDScan.SaaS.SharedBlocks.Helpers.Messaging, Version=2.0.0.2, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\packages\IDScan.SaaS.SharedBlocks.Helpers.Messaging.2.0.2\lib\net471\IDScan.SaaS.SharedBlocks.Helpers.Messaging.dll</HintPath>
-    </Reference>
-    <Reference Include="IDScan.SaaS.SharedBlocks.Messaging.Contracts, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IDScan.SaaS.SharedBlocks.Messaging.Contracts.1.0.4\lib\netstandard2.0\IDScan.SaaS.SharedBlocks.Messaging.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="MassTransit, Version=4.0.0.1371, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <HintPath>..\packages\MassTransit.4.0.0\lib\net452\MassTransit.dll</HintPath>
     </Reference>
@@ -186,6 +177,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Helpers.Core\Helpers.Core.csproj">
+      <Project>{EDCCE0D1-6D04-43A3-9460-2AB41B506819}</Project>
+      <Name>Helpers.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Message.Contracts\Message.Contracts.csproj">
       <Project>{9e0bc1b4-8cae-4eb6-a330-b38af99902cd}</Project>
       <Name>Message.Contracts</Name>

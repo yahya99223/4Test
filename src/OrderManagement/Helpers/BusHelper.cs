@@ -1,4 +1,4 @@
-﻿using IDScan.SaaS.SharedBlocks.Helpers.Messaging;
+﻿using Helpers.Core;
 using MassTransit;
 using Message.Contracts;
 

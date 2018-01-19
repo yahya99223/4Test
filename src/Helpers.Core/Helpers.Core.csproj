@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1F3103B3-DC50-463A-B6EA-B43D106AE7C8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Capitalize.Service</RootNamespace>
-    <AssemblyName>Capitalize.Service</AssemblyName>
+    <ProjectGuid>{EDCCE0D1-6D04-43A3-9460-2AB41B506819}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Helpers.Core</RootNamespace>
+    <AssemblyName>Helpers.Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -67,11 +65,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="DomainEvents\DomainEvents.cs" />
+    <Compile Include="DomainEvents\IDomainEvent.cs" />
+    <Compile Include="DomainEvents\IHandles.cs" />
+    <Compile Include="DomainModel\Entity.cs" />
+    <Compile Include="DomainModel\ValidatableEntity.cs" />
+    <Compile Include="DomainModel\ValidatableValueObject.cs" />
+    <Compile Include="DomainModel\ValueObject.cs" />
+    <Compile Include="Extensions\ListsExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtentions.cs" />
+    <Compile Include="InternalApplicationException.cs" />
+    <Compile Include="IServiceResolver.cs" />
+    <Compile Include="Messaging\BusConfigurator.cs" />
+    <Compile Include="Messaging\BusExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionHelpers.cs" />
+    <Compile Include="ServiceEvents\IServiceEvent.cs" />
+    <Compile Include="ServiceEvents\IServiceEventHandler.cs" />
+    <Compile Include="ServiceEvents\ServiceEvents.cs" />
+    <Compile Include="Validation\IValidatedResult.cs" />
+    <Compile Include="Validation\IViolation.cs" />
+    <Compile Include="Validation\Validatable.cs" />
+    <Compile Include="Validation\ValidatedResult.cs" />
+    <Compile Include="Validation\ValidationEnums.cs" />
+    <Compile Include="Validation\Violation.cs" />
+    <Compile Include="Validation\ViolationHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
