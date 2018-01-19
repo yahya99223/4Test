@@ -64,6 +64,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Migrations\201801190701539_UpdatedRelations.cs" />
+    <Compile Include="Migrations\201801190701539_UpdatedRelations.Designer.cs">
+      <DependentUpon>201801190701539_UpdatedRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801190715055_UpdateOrderModel.cs" />
+    <Compile Include="Migrations\201801190715055_UpdateOrderModel.Designer.cs">
+      <DependentUpon>201801190715055_UpdateOrderModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CreateOrder.cs" />
+    <Compile Include="ViewModel\ObservableObject.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +111,12 @@
     <EmbeddedResource Include="Migrations\201801181643401_FirstTables.resx">
       <DependentUpon>201801181643401_FirstTables.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801190701539_UpdatedRelations.resx">
+      <DependentUpon>201801190701539_UpdatedRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801190715055_UpdateOrderModel.resx">
+      <DependentUpon>201801190715055_UpdateOrderModel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -114,5 +130,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

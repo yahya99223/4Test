@@ -3,10 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:OrderManagement.ViewModel"
         xmlns:local="clr-namespace:OrderManagement"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Order Management" Height="350" Width="525">
+
+<Window.DataContext>
+    <viewModel:CreateOrder/>
+</Window.DataContext>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
+        <Button Grid.Row="0" Command="{Binding ProcessCommand}" Width="55" HorizontalAlignment="Left" Margin="215,10,0,17">Process</Button>
+
     </Grid>
 </Window>
