@@ -32,11 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Automatonymous, Version=3.6.1.84, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Automatonymous.3.6.1\lib\net452\Automatonymous.dll</HintPath>
+    </Reference>
     <Reference Include="GreenPipes, Version=1.2.0.96, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\GreenPipes.1.2.0\lib\net452\GreenPipes.dll</HintPath>
     </Reference>
     <Reference Include="MassTransit, Version=4.0.0.1371, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <HintPath>..\packages\MassTransit.4.0.0\lib\net452\MassTransit.dll</HintPath>
+    </Reference>
+    <Reference Include="MassTransit.AutomatonymousIntegration, Version=4.0.0.1371, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\MassTransit.Automatonymous.4.0.0\lib\net452\MassTransit.AutomatonymousIntegration.dll</HintPath>
     </Reference>
     <Reference Include="MassTransit.RabbitMqTransport, Version=4.0.0.1371, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <HintPath>..\packages\MassTransit.RabbitMQ.4.0.0\lib\net452\MassTransit.RabbitMqTransport.dll</HintPath>
@@ -67,12 +73,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrderCreatedSagaState.cs" />
+    <Compile Include="OrderCreatedStateMachine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helpers.Core\Helpers.Core.csproj">
+      <Project>{EDCCE0D1-6D04-43A3-9460-2AB41B506819}</Project>
+      <Name>Helpers.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Message.Contracts\Message.Contracts.csproj">
+      <Project>{9E0BC1B4-8CAE-4EB6-A330-B38AF99902CD}</Project>
+      <Name>Message.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

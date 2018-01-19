@@ -6,7 +6,7 @@ namespace Message.Contracts.Events
     public interface IOrderCreated
     {
         DateTime CreateDate { get; set; }
-        Guid Id { get; set; }
+        Guid OrderId { get; set; }
         string OriginalText { get; set; }
         ICollection<string> Services { get; set; }
     }
@@ -18,7 +18,7 @@ namespace Message.Contracts.Events
             Services = new List<string>();
         }
 
-        public Guid Id { get; set; }
+        public Guid OrderId { get; set; }
         public DateTime CreateDate { get; set; }
         public string OriginalText { get; set; }
         public ICollection<string> Services { get; set; }

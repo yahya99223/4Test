@@ -3,7 +3,7 @@ namespace Message.Contracts
 {
     public static class MessagingConstants
     {
-        public const string MqUri = "rabbitmq://localhost/IDScanSaaSWahid/";
+        public const string MqUri = "rabbitmq://onboarding-db/IDScanSaaSWahid/";
         public const string UserName = "wahid";
         public const string Password = "W@123123";
 

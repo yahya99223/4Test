@@ -69,7 +69,7 @@ namespace OrderManagement.ViewModel
             await dbContext.SaveChangesAsync();
             await bus.Publish<IOrderCreated>(new OrderCreated
             {
-                Id = order.Id,
+                OrderId = order.Id,
                 CreateDate = order.CreateDate,
                 OriginalText = order.OriginalText,
                 Services = order.Services.Select(s => s.Name).ToList()
@@ -79,6 +79,7 @@ namespace OrderManagement.ViewModel
         public void Dispose()
         {
             dbContext?.Dispose();
+            bus?.Stop();
         }
     }
 }

@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\IOrderCapitalized.cs" />
+    <Compile Include="Events\IOrderNormalized.cs" />
     <Compile Include="Events\IOrderProcessRequested.cs" />
+    <Compile Include="Events\IOrderValidated.cs" />
     <Compile Include="MessagingConstants.cs" />
     <Compile Include="Events\IOrderCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
