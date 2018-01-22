@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MassTransit;
+using OrderManagement.DbModel;
 
 namespace OrderManagement
 {
@@ -20,9 +22,19 @@ namespace OrderManagement
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static IBusControl BusControl;
+
         public MainWindow()
         {
             InitializeComponent();
+            BusControl = BusHelper.GetBusControl();
+
+            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
+
+        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        {
+            BusControl?.Stop();
         }
     }
 }

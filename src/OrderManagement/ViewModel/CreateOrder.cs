@@ -14,30 +14,60 @@ using OrderManagement.DbModel;
 
 namespace OrderManagement.ViewModel
 {
-    public class CreateOrder : ObservableObject, IDisposable
+    public class CreateOrder : ObservableObject
     {
-        private readonly ObservableCollection<ServiceItem> services;
-        private readonly OrderManagementDbContext dbContext;
+        private ObservableCollection<ServiceItem> services;
+        private ObservableCollection<ProcessRequest> processRequests;
         private string textToProcess;
-        private IBusControl bus;
 
         public CreateOrder()
         {
-            bus = BusHelper.GetBusControl();
             ProcessCommand = new AsyncRelayCommand(processCommand);
+            ProcessRequests = new ObservableCollection<ProcessRequest>();
 
-            dbContext = new OrderManagementDbContext();
-            services = new ObservableCollection<ServiceItem>(dbContext.Services.Select(s => new ServiceItem
+            Task.Run(() =>
             {
-                Id = s.Id,
-                Name = s.Name,
-                IsSelected = true,
-            }));
+                using (var dbContext = new OrderManagementDbContext())
+                {
+                    Services = new ObservableCollection<ServiceItem>(dbContext.Services.Select(s => new ServiceItem
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        IsSelected = true,
+                    }));
+
+                    ProcessRequests = new ObservableCollection<ProcessRequest>(dbContext.Orders
+                        .Where(o => o.Status != "Finished")
+                        .ToList()
+                        .Select(x => new ProcessRequest
+                        {
+                            RequestId = x.Id,
+                            //NotificationString = x.Notifications,
+                        }));
+
+                    /*foreach (var processRequest in dbContext.Orders
+                        .Where(o => o.Status != "Finished")
+                        .ToList()
+                        .Select(x => new ProcessRequest
+                        {
+                            RequestId = x.Id,
+                            //NotificationString = x.Notifications,
+                        }))
+                    {
+                        ProcessRequests.Add(processRequest);
+                    }*/
+                }
+            });
         }
 
         public IEnumerable<ServiceItem> Services
         {
             get { return services; }
+            set
+            {
+                services = new ObservableCollection<ServiceItem>(value);
+                RaisePropertyChanged("Services");
+            }
         }
 
         public ICommand ProcessCommand { get; }
@@ -52,34 +82,46 @@ namespace OrderManagement.ViewModel
             }
         }
 
+        public ObservableCollection<ProcessRequest> ProcessRequests
+        {
+            get { return processRequests; }
+            set
+            {
+                processRequests = value;
+                RaisePropertyChanged("ProcessRequests");
+            }
+        }
+
         private async Task processCommand(object arg)
         {
             var servicesIds = Services.Where(s => s.IsSelected).Select(s => s.Id).ToHashSet();
-            var order = new Order
+            using (var dbContext = new OrderManagementDbContext())
             {
-                Id = Guid.NewGuid(),
-                Services = dbContext.Services.Where(s => servicesIds.Contains(s.Id)).ToList(),
-                CreateDate = DateTime.UtcNow,
-                LastUpdateDate = DateTime.UtcNow,
-                OriginalText = TextToProcess,
-                Status = "Created",
-            };
-            dbContext.Orders.Add(order);
-            TextToProcess = null;
-            await dbContext.SaveChangesAsync();
-            await bus.Publish<IOrderCreatedEvent>(new OrderCreated
-            {
-                OrderId = order.Id,
-                CreateDate = order.CreateDate,
-                OriginalText = order.OriginalText,
-                Services = order.Services.Select(s => s.Name).ToList()
-            });
-        }
+                var order = new Order
+                {
+                    Id = Guid.NewGuid(),
+                    Services = dbContext.Services.Where(s => servicesIds.Contains(s.Id)).ToList(),
+                    CreateDate = DateTime.UtcNow,
+                    LastUpdateDate = DateTime.UtcNow,
+                    OriginalText = TextToProcess,
+                    Status = "Created",
+                };
+                dbContext.Orders.Add(order);
+                TextToProcess = null;
+                await dbContext.SaveChangesAsync();
+                ProcessRequests.Add(new ProcessRequest
+                {
+                    RequestId = order.Id,
+                });
 
-        public void Dispose()
-        {
-            dbContext?.Dispose();
-            bus?.Stop();
+                await MainWindow.BusControl.Publish<IOrderCreatedEvent>(new OrderCreated
+                {
+                    OrderId = order.Id,
+                    CreateDate = order.CreateDate,
+                    OriginalText = order.OriginalText,
+                    Services = order.Services.Select(s => s.Name).ToList()
+                });
+            }
         }
     }
 }

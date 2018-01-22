@@ -14,7 +14,7 @@ namespace Validate.Service
         {
             var command = context.Message;
 
-            await context.Publish(new ValidateOrderResponse
+            await context.Publish<IValidateOrderResponse>(new ValidateOrderResponse
             {
                 OrderId = command.OrderId,
                 StartProcessTime = DateTime.UtcNow,

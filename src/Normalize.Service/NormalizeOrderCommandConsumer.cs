@@ -14,7 +14,7 @@ namespace Normalize.Service
             var command = context.Message;
             var result = Regex.Replace(command.OriginalText, " {2,}", " "); 
 
-            await context.Publish(new NormalizeOrderResponse
+            await context.Publish<INormalizeOrderResponse>(new NormalizeOrderResponse
             {
                 OrderId = command.OrderId,
                 StartProcessTime = startTime,

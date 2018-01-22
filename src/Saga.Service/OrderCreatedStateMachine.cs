@@ -26,7 +26,7 @@ namespace Saga.Service
                 {
                     context.Instance.OriginalText = context.Data.OriginalText;
                     context.Instance.CreateDate = context.Data.CreateDate;
-                    context.Instance.RemainingServices = context.Data.Services;
+                    context.Instance.RemainingServices = string.Join("|", context.Data.Services);
                 })
                 .TransitionTo(Active)
                 .If(context => context.Data.Services.Any(s => s == "Validate"), binder =>
@@ -57,6 +57,10 @@ namespace Saga.Service
 
             During(Active,
                 When(ValidateOrderResponse)
+                    .Then(context =>
+                    {
+                        context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Validate"));
+                    })
                     .TransitionTo(Validated)
                     .Publish(context => new OrderValidatedEvent
                     {
@@ -68,6 +72,10 @@ namespace Saga.Service
 
             During(Validated, NoValidationRequired,
                 When(NormalizeOrderResponse)
+                    .Then(context =>
+                    {
+                        context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s=>s!= "Normalize"));
+                    })
                     .Publish(context => new OrderNormalized
                     {
                         OrderId = context.Data.OrderId,
@@ -75,6 +83,10 @@ namespace Saga.Service
                         ProcessTime = (context.Data.EndProcessTime - context.Data.StartProcessTime).Milliseconds,
                     }),
                 When(CapitalizeOrderResponse)
+                    .Then(context =>
+                    {
+                        context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Capitalize"));
+                    })
                     .Publish(context => new OrderCapitalized
                     {
                         OrderId = context.Data.OrderId,

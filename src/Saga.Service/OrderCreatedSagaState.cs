@@ -6,17 +6,12 @@ namespace Saga.Service
 {
     public class OrderCreatedSagaState : SagaStateMachineInstance
     {
-        public OrderCreatedSagaState()
-        {
-            RemainingServices = new List<string>();
-        }
-
         public Guid CorrelationId { get; set; }
-        public State CurrentState { get; set; }
+        public string CurrentState { get; set; }
         public Guid OrderId { get; set; }
         public string OriginalText { get; set; }
         public DateTime CreateDate { get; set; }
-        public ICollection<string> RemainingServices { get; set; }
+        public string RemainingServices { get; set; }
 
         public int RequestFinishedStatusBits { get; set; }
 

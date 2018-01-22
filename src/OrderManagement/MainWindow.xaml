@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:OrderManagement.ViewModel"
-        xmlns:local="clr-namespace:OrderManagement"
         mc:Ignorable="d"
         Title="Order Management" Height="350" Width="525">
+
 
     <Window.DataContext>
         <viewModel:CreateOrder/>
@@ -14,7 +14,7 @@
 
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0" Height="58" Margin="10,10,207,0" Text="{Binding Path=TextToProcess}" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -26,6 +26,28 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding ProcessRequests}" Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="{Binding RequestId}"></Label>
+                        <ListBox Grid.Column="1" ItemsSource="{Binding Notifications}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </Window>

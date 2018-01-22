@@ -13,7 +13,7 @@ namespace Capitalize.Service
             var command = context.Message;
             var result = command.OriginalText.ToUpper();
 
-            await context.Publish(new CapitalizeOrderResponse
+            await context.Publish<ICapitalizeOrderResponse>(new CapitalizeOrderResponse
             {
                 OrderId = command.OrderId,
                 StartProcessTime = startTime,
