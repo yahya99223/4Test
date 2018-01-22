@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Message.Contracts
 {
@@ -6,13 +7,17 @@ namespace Message.Contracts
     {
         Guid OrderId { get; set; }
         int ProcessTime { get; set; }
-        string Errors { get; set; }
+        IEnumerable<string> Errors { get; set; }
     }
 
     public class OrderValidatedEvent : IOrderValidatedEvent
     {
+        public OrderValidatedEvent()
+        {
+            Errors = new List<string>();
+        }
         public Guid OrderId { get; set; }
         public int ProcessTime { get; set; }
-        public string Errors { get; set; }
+        public IEnumerable<string> Errors { get; set; }
     }
 }

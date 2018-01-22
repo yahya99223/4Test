@@ -69,10 +69,21 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CapitalizeOrderCommandConsumer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helpers.Core\Helpers.Core.csproj">
+      <Project>{EDCCE0D1-6D04-43A3-9460-2AB41B506819}</Project>
+      <Name>Helpers.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Message.Contracts\Message.Contracts.csproj">
+      <Project>{9E0BC1B4-8CAE-4EB6-A330-B38AF99902CD}</Project>
+      <Name>Message.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

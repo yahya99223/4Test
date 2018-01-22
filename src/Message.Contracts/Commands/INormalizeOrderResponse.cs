@@ -9,4 +9,12 @@ namespace Message.Contracts
         DateTime EndProcessTime { get; set; }
         string NormalizedText { get; set; }
     }
+
+    public class NormalizeOrderResponse : INormalizeOrderResponse
+    {
+        public Guid OrderId { get; set; }
+        public DateTime StartProcessTime { get; set; }
+        public DateTime EndProcessTime { get; set; }
+        public string NormalizedText { get; set; }
+    }
 }
