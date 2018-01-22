@@ -21,7 +21,7 @@ namespace Validate.Service
 
                 cfg.ReceiveEndpoint(host, MessagingConstants.ValidateServiceQueue, e =>
                 {
-
+                    e.Consumer<ValidateOrderCommandConsumer>();
                 });
             });
 

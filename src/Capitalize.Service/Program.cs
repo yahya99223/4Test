@@ -19,7 +19,7 @@ namespace Capitalize.Service
 
                 cfg.ReceiveEndpoint(host, MessagingConstants.CapitalizeServiceQueue, e =>
                 {
-
+                    e.Consumer<CapitalizeOrderCommandConsumer>();
                 });
             });
 

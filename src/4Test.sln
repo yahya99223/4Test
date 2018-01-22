@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saga.Service", "Saga.Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers.Core", "Helpers.Core\Helpers.Core.csproj", "{EDCCE0D1-6D04-43A3-9460-2AB41B506819}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9848FF17-C511-4846-8802-DFA0FCB389F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{54074EAA-BD13-4F36-83CC-687EE458618E} = {9848FF17-C511-4846-8802-DFA0FCB389F5}
+		{1F3103B3-DC50-463A-B6EA-B43D106AE7C8} = {9848FF17-C511-4846-8802-DFA0FCB389F5}
+		{3D8E340F-0F92-4236-B9CE-C125FAFA17A2} = {9848FF17-C511-4846-8802-DFA0FCB389F5}
+		{34F392F3-8D86-4F9C-B22D-C9EDB94721EC} = {9848FF17-C511-4846-8802-DFA0FCB389F5}
+		{2AFFF0F7-3DB7-44B1-AFAA-58F1FDA13738} = {9848FF17-C511-4846-8802-DFA0FCB389F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A4AC6E9-06D6-464E-A6F6-A04995905A42}

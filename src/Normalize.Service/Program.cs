@@ -19,7 +19,7 @@ namespace Normalize.Service
 
                 cfg.ReceiveEndpoint(host, MessagingConstants.NormalizeServiceQueue, e =>
                 {
-
+                    e.Consumer<NormalizeOrderCommandConsumer>();
                 });
             });
 
