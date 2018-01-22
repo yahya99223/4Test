@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace Message.Contracts.Events
+namespace Message.Contracts
 {
-    public interface IOrderProcessRequested
+    public interface ICapitalizeOrderCommand
     {
         Guid OrderId { get; set; }
         string OriginalText { get; set; }
     }
 
-
-    public class OrderProcessRequested : IOrderProcessRequested
+    public class CapitalizeOrderCommand : ICapitalizeOrderCommand
     {
         public Guid OrderId { get; set; }
         public string OriginalText { get; set; }

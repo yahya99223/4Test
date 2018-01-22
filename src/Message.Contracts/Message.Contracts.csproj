@@ -40,16 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\IOrderCapitalized.cs" />
-    <Compile Include="Events\IOrderNormalized.cs" />
-    <Compile Include="Events\IOrderProcessRequested.cs" />
-    <Compile Include="Events\IOrderValidated.cs" />
+    <Compile Include="Commands\INormalizeOrderCommand.cs" />
+    <Compile Include="Commands\ICapitalizeOrderCommand.cs" />
+    <Compile Include="Commands\ICapitalizeOrderResponse.cs" />
+    <Compile Include="Commands\INormalizeOrderResponse.cs" />
+    <Compile Include="Commands\IValidateOrderCommand.cs" />
+    <Compile Include="Events\IOrderCapitalizedEvent.cs" />
+    <Compile Include="Events\IOrderNormalizedEvent.cs" />
+    <Compile Include="Commands\IValidateOrderResponse.cs" />
+    <Compile Include="Events\IOrderValidatedEvent.cs" />
     <Compile Include="MessagingConstants.cs" />
-    <Compile Include="Events\IOrderCreated.cs" />
+    <Compile Include="Events\IOrderCreatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

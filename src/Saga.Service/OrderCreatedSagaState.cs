@@ -1,14 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using Automatonymous;
 
 namespace Saga.Service
 {
     public class OrderCreatedSagaState : SagaStateMachineInstance
     {
+        public OrderCreatedSagaState()
+        {
+            RemainingServices = new List<string>();
+        }
+
         public Guid CorrelationId { get; set; }
         public State CurrentState { get; set; }
         public Guid OrderId { get; set; }
         public string OriginalText { get; set; }
         public DateTime CreateDate { get; set; }
+        public ICollection<string> RemainingServices { get; set; }
+
+        public int RequestFinishedStatusBits { get; set; }
+
+        public CompositeEventStatus RequestFinishedStatus
+        {
+            get { return new CompositeEventStatus(RequestFinishedStatusBits); }
+            set { RequestFinishedStatusBits = value.Bits; }
+        }
+
     }
 }

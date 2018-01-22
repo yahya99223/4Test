@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Message.Contracts.Events
+namespace Message.Contracts
 {
-    public interface IOrderCreated
+    public interface IOrderCreatedEvent
     {
         DateTime CreateDate { get; set; }
         Guid OrderId { get; set; }
@@ -11,7 +11,7 @@ namespace Message.Contracts.Events
         ICollection<string> Services { get; set; }
     }
 
-    public class OrderCreated : IOrderCreated
+    public class OrderCreated : IOrderCreatedEvent
     {
         public OrderCreated()
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Helpers.Core;
 using MassTransit;
-using Message.Contracts.Events;
+using Message.Contracts;
 using OrderManagement.DbModel;
 
 namespace OrderManagement.ViewModel
@@ -67,7 +67,7 @@ namespace OrderManagement.ViewModel
             dbContext.Orders.Add(order);
             TextToProcess = null;
             await dbContext.SaveChangesAsync();
-            await bus.Publish<IOrderCreated>(new OrderCreated
+            await bus.Publish<IOrderCreatedEvent>(new OrderCreated
             {
                 OrderId = order.Id,
                 CreateDate = order.CreateDate,
