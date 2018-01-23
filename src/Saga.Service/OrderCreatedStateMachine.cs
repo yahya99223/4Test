@@ -63,7 +63,7 @@ namespace Saga.Service
                     .Publish(context => new OrderValidatedEvent
                     {
                         OrderId = context.Data.OrderId,
-                        Errors = context.Data.Errors,
+                        Errors = context.Data.Validate,
                         ProcessTime = (context.Data.EndProcessTime - context.Data.StartProcessTime).Milliseconds,
                     })
             );

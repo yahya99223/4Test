@@ -1,8 +1,12 @@
-﻿namespace Helpers.Core
+﻿using System.Linq;
+
+namespace Helpers.Core
 {
     public interface IValidatable
     {
         IViolation[] Validate();
+        IViolation[] Violations { get; }
+        bool IsValid { get; }
     }
 
     public abstract class Validatable : IValidatable
@@ -17,6 +21,8 @@
 
 
         public abstract IViolation[] Validate();
+        public abstract IViolation[] Violations { get; }
+        public virtual bool IsValid => Violations.All(v => v.Level != ViolationLevel.Error);
     }
 
 

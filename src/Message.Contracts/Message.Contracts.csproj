@@ -44,6 +44,7 @@
     <Compile Include="Commands\ICapitalizeOrderCommand.cs" />
     <Compile Include="Commands\ICapitalizeOrderResponse.cs" />
     <Compile Include="Commands\INormalizeOrderResponse.cs" />
+    <Compile Include="IValidatedMessage.cs" />
     <Compile Include="Commands\IValidateOrderCommand.cs" />
     <Compile Include="Events\IOrderCapitalizedEvent.cs" />
     <Compile Include="Events\IOrderNormalizedEvent.cs" />
@@ -54,6 +55,11 @@
     <Compile Include="Events\IOrderCreatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Helpers.Core\Helpers.Core.csproj">
+      <Project>{edcce0d1-6d04-43a3-9460-2ab41b506819}</Project>
+      <Name>Helpers.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

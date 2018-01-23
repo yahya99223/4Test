@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Helpers.Core;
 
 namespace Message.Contracts
 {
-    public interface IValidateOrderResponse
+    public interface IValidateOrderResponse : IValidatedMessage
     {
         Guid OrderId { get; set; }
         DateTime StartProcessTime { get; set; }
         DateTime EndProcessTime { get; set; }
-        bool IsValid { get; set; }
-        IList<string> Errors { get; set; }
+
     }
 
-    public class ValidateOrderResponse : IValidateOrderResponse
+    public class ValidateOrderResponse : ValidatedMessage, IValidateOrderResponse
     {
-        public ValidateOrderResponse()
+        public ValidateOrderResponse(IList<IViolation> violations) : base(violations)
         {
-            Errors = new List<string>();
         }
 
         public Guid OrderId { get; set; }
+
         public DateTime StartProcessTime { get; set; }
+
         public DateTime EndProcessTime { get; set; }
-        public bool IsValid { get; set; }
-        public IList<string> Errors { get; set; }
     }
 }

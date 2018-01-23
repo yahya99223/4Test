@@ -88,7 +88,6 @@
     <Compile Include="Validation\IValidatedResult.cs" />
     <Compile Include="Validation\IViolation.cs" />
     <Compile Include="Validation\Validatable.cs" />
-    <Compile Include="Validation\ValidatedResult.cs" />
     <Compile Include="Validation\ValidationEnums.cs" />
     <Compile Include="Validation\Violation.cs" />
     <Compile Include="Validation\ViolationHandler.cs" />

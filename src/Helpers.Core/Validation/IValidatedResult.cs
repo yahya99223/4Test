@@ -1,7 +1,7 @@
 ﻿namespace Helpers.Core
 {
 
-    public interface IValidatedResult
+/*    public interface IValidatedResult
     {
         /// <summary>
         /// </summary>
@@ -21,5 +21,5 @@
     public interface IValidatedResult<T> : IValidatedResult
     {
         T Data { get; }
-    }
+    }*/
 }

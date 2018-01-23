@@ -58,40 +58,9 @@ namespace Helpers.Core
             return key;
         }
 
-        public bool IsValid()
+        public bool IsValid
         {
-            return ViolationsHashSet.All(v => v.Level != ViolationLevel.Error);
-        }
-
-        /// <summary>
-        ///     Wrap the data object with ValidatedResult
-        /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        public IValidatedResult ReturnResult(object result = null)
-        {
-            return new ValidatedResult(result, ViolationsHashSet);
-        }
-
-        /// <summary>
-        ///     Wrap the generic data object with ValidatedResult
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        public virtual IValidatedResult<T> ReturnResult<T>(T result)
-        {
-            return new ValidatedResult<T>(result, ViolationsHashSet);
-        }
-
-        /// <summary>
-        ///     ValidatedResult with null Data value
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public IValidatedResult<T> ReturnResult<T>()
-        {
-            return new ValidatedResult<T>(ViolationsHashSet);
+            get { return ViolationsHashSet.All(v => v.Level != ViolationLevel.Error); }
         }
 
 
