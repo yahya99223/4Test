@@ -9,7 +9,7 @@ namespace Message.Contracts
         DateTime StartProcessTime { get; set; }
         DateTime EndProcessTime { get; set; }
         bool IsValid { get; set; }
-        IEnumerable<string> Errors { get; set; }
+        IList<string> Errors { get; set; }
     }
 
     public class ValidateOrderResponse : IValidateOrderResponse
@@ -23,6 +23,6 @@ namespace Message.Contracts
         public DateTime StartProcessTime { get; set; }
         public DateTime EndProcessTime { get; set; }
         public bool IsValid { get; set; }
-        public IEnumerable<string> Errors { get; set; }
+        public IList<string> Errors { get; set; }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Events\IOrderCapitalizedEvent.cs" />
     <Compile Include="Events\IOrderNormalizedEvent.cs" />
     <Compile Include="Commands\IValidateOrderResponse.cs" />
+    <Compile Include="Events\IOrderReadyToProcessEvent.cs" />
     <Compile Include="Events\IOrderValidatedEvent.cs" />
     <Compile Include="MessagingConstants.cs" />
     <Compile Include="Events\IOrderCreatedEvent.cs" />
