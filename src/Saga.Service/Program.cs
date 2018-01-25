@@ -11,8 +11,6 @@ namespace Saga.Service
 {
     class Program
     {
-        private static BusHandle busHandle;
-
         private static OrderCreatedStateMachine machine;
 
         //private static ISagaRepository<OrderCreatedSagaState> repository;
@@ -35,7 +33,8 @@ namespace Saga.Service
                     e.StateMachineSaga(machine, lazyRepository.Value);
                 });
             });
-            busHandle = bus.StartAsync().Result;
+            bus.ConnectConsumeMessageObserver(new ViolationObserver());
+            bus.Start();
         }
     }
 
