@@ -26,14 +26,14 @@ namespace Saga.Service
             var bus = BusConfigurator.ConfigureBus(MessagingConstants.MqUri, MessagingConstants.UserName, MessagingConstants.Password, (cfg, host) =>
             {
                 //cfg.UseRetry(retryConfig => retryConfig.Interval(7, TimeSpan.FromSeconds(5)));
-
+                cfg.UseViolationHandler();
                 cfg.ReceiveEndpoint(host, MessagingConstants.SagaQueue, e =>
                 {
                     //e.StateMachineSaga(machine, repository);
                     e.StateMachineSaga(machine, lazyRepository.Value);
                 });
             });
-            bus.ConnectConsumeMessageObserver(new ViolationObserver());
+            //bus.ConnectConsumeMessageObserver(new ViolationObserver());
             bus.Start();
         }
     }
