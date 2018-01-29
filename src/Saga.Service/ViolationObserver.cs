@@ -11,7 +11,7 @@ namespace Saga.Service
         {
             if (!context.Message.IsValid)
             {
-                await context.Publish<IViolationOccurred>(new ViolationOccurred(context.Message.Violations));
+                await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(context.Message.CorrelationId, context.Message.Violations));
                 throw new Exception("There is violations");
             }
         }

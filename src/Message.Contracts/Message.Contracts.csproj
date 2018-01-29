@@ -51,7 +51,7 @@
     <Compile Include="Commands\IValidateOrderResponse.cs" />
     <Compile Include="Events\IOrderReadyToProcessEvent.cs" />
     <Compile Include="Events\IOrderValidatedEvent.cs" />
-    <Compile Include="Events\IViolationOccurred.cs" />
+    <Compile Include="IViolationOccurred.cs" />
     <Compile Include="MessagingConstants.cs" />
     <Compile Include="Events\IOrderCreatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

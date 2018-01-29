@@ -40,7 +40,7 @@ namespace Validate.Service
                 throw;
             }
 
-            await context.Publish<IValidateOrderResponse>(new ValidateOrderResponse(violationHandler.Violations)
+            await context.Publish<IValidateOrderResponse>(new ValidateOrderResponse(command.OrderId,violationHandler.Violations)
             {
                 OrderId = command.OrderId,
                 StartProcessTime = DateTime.UtcNow,

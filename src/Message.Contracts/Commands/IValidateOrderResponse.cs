@@ -15,8 +15,9 @@ namespace Message.Contracts
 
     public class ValidateOrderResponse : ValidatedMessage, IValidateOrderResponse
     {
-        public ValidateOrderResponse(IList<IViolation> violations) : base(violations)
+        public ValidateOrderResponse(Guid orderId, IList<IViolation> violations) : base(orderId, violations)
         {
+            OrderId = orderId;
         }
 
         public Guid OrderId { get; set; }
