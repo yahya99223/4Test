@@ -87,6 +87,7 @@
     <Compile Include="OrderCreatedStateMachine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiveObserver.cs" />
     <Compile Include="ViolationHandlerFilterExtensions.cs" />
     <Compile Include="ViolationObserver.cs" />
     <Compile Include="SagaDbContextFactoryProvider.cs" />

@@ -12,7 +12,9 @@ namespace Normalize.Service
         {
             var startTime = DateTime.UtcNow;
             var command = context.Message;
-            var result = Regex.Replace(command.OriginalText, " {2,}", " "); 
+            var result = Regex.Replace(command.OriginalText, " {2,}", " ");
+            Console.WriteLine($"Processing the message: {command.OriginalText} from the order: {command.OrderId}");
+            Console.WriteLine($"The result is: {result}");
 
             await context.Publish<INormalizeOrderResponse>(new NormalizeOrderResponse
             {

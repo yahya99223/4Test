@@ -12,11 +12,7 @@ namespace Saga.Service
 
             Event(() => OrderCreated, x => x.CorrelateBy(cart => cart.OrderId.ToString(), context => context.Message.OrderId.ToString())
                 .SelectId(context => context.Message.OrderId/*Guid.NewGuid()*/));
-
-            /*Event(() => ValidateOrderResponse, x => x.CorrelateBy((state, context) => state.CorrelationId == context.CorrelationId));
-            Event(() => NormalizeOrderResponse, x => x.CorrelateBy((state, context) => state.CorrelationId == context.CorrelationId));
-            Event(() => CapitalizeOrderResponse, x => x.CorrelateBy((state, context) => state.CorrelationId == context.CorrelationId));*/
-
+            
             Event(() => ValidateOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => NormalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => CapitalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));

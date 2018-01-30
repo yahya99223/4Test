@@ -11,7 +11,10 @@ namespace Capitalize.Service
         {
             var startTime = DateTime.UtcNow;
             var command = context.Message;
+
             var result = command.OriginalText.ToUpper();
+            Console.WriteLine($"Processing the message: {command.OriginalText} from the order: {command.OrderId}");
+            Console.WriteLine($"The result is: {result}");
 
             await context.Publish<ICapitalizeOrderResponse>(new CapitalizeOrderResponse
             {

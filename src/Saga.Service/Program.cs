@@ -33,6 +33,7 @@ namespace Saga.Service
                     e.StateMachineSaga(machine, lazyRepository.Value);
                 });
             });
+            bus.ConnectConsumeObserver(new ConsumeObserver());
             //bus.ConnectConsumeMessageObserver(new ViolationObserver());
             bus.Start();
         }

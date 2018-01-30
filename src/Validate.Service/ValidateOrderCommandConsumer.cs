@@ -32,6 +32,12 @@ namespace Validate.Service
 
                 if (!violationHandler.IsValid)
                     throw new InternalApplicationException(violationHandler.Violations);
+
+                await context.Publish<IValidateOrderResponse>(new ValidateOrderResponse(command.OrderId)
+                {
+                    StartProcessTime = DateTime.UtcNow,
+                    EndProcessTime = DateTime.UtcNow,
+                });
             }
             catch (InternalApplicationException ex)
             {

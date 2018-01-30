@@ -5,7 +5,7 @@ using Message.Contracts;
 
 namespace Saga.Service
 {
-/*    public class ViolationObserver : IConsumeMessageObserver<IValidatedMessage>
+    public class ViolationObserver : IConsumeMessageObserver<IValidatedMessage>
     {
         public async Task PreConsume(ConsumeContext<IValidatedMessage> context)
         {
@@ -26,5 +26,5 @@ namespace Saga.Service
         {
             return Task.CompletedTask;
         }
-    }*/
+    }
 }
