@@ -5,12 +5,13 @@ using Message.Contracts;
 
 namespace Saga.Service
 {
-    public class ViolationObserver : IConsumeMessageObserver<IValidatedMessage>
+/*    public class ViolationObserver : IConsumeMessageObserver<IValidatedMessage>
     {
         public async Task PreConsume(ConsumeContext<IValidatedMessage> context)
         {
             if (!context.Message.IsValid)
             {
+                await context.NotifyConsumed(TimeSpan.FromSeconds(1), "ViolationObserver");
                 await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(context.Message.CorrelationId, context.Message.Violations));
                 throw new Exception("There is violations");
             }
@@ -25,5 +26,5 @@ namespace Saga.Service
         {
             return Task.CompletedTask;
         }
-    }
+    }*/
 }

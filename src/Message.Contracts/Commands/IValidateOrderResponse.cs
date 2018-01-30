@@ -5,7 +5,7 @@ using Helpers.Core;
 
 namespace Message.Contracts
 {
-    public interface IValidateOrderResponse : IValidatedMessage
+    public interface IValidateOrderResponse 
     {
         Guid OrderId { get; set; }
         DateTime StartProcessTime { get; set; }
@@ -13,9 +13,9 @@ namespace Message.Contracts
 
     }
 
-    public class ValidateOrderResponse : ValidatedMessage, IValidateOrderResponse
+    public class ValidateOrderResponse : IValidateOrderResponse
     {
-        public ValidateOrderResponse(Guid orderId, IList<IViolation> violations) : base(orderId, violations)
+        public ValidateOrderResponse(Guid orderId)
         {
             OrderId = orderId;
         }

@@ -51,6 +51,13 @@ namespace Saga.Service
             );
 
             During(Active,
+                When(ViolationOccurredEvent)
+                    .Then(context => { context.Instance.RemainingServices = ""; })
+                    .TransitionTo(Finished)
+                    .Finalize()
+            );
+
+            During(Active,
                 When(ValidateOrderResponse)
                     .Then(context => { context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Validate")); })
                     .TransitionTo(Validated)

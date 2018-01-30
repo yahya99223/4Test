@@ -29,24 +29,19 @@ namespace Validate.Service
 
                 if (command.OriginalText.Contains("123"))
                     violationHandler.AddViolation(x => x.OriginalText, ViolationType.Invalid);
+
+                if (!violationHandler.IsValid)
+                    throw new InternalApplicationException(violationHandler.Violations);
             }
             catch (InternalApplicationException ex)
             {
-                violationHandler.AddRange(ex.Violations);
+                await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(command.OrderId, ex.Violations));
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 throw;
             }
-
-            await context.Publish<IValidateOrderResponse>(new ValidateOrderResponse(command.OrderId,violationHandler.Violations)
-            {
-                OrderId = command.OrderId,
-                StartProcessTime = DateTime.UtcNow,
-                EndProcessTime = DateTime.UtcNow,
-                //Errors = errors
-            });
         }
     }
 }
