@@ -9,7 +9,7 @@ namespace Saga.Service
         public Guid CorrelationId { get; set; }
         public string CurrentState { get; set; }
         public Guid OrderId { get; set; }
-        public string OriginalText { get; set; }
+        public string Text { get; set; }
         public DateTime CreateDate { get; set; }
         public string RemainingServices { get; set; }
 

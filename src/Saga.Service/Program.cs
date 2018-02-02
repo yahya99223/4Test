@@ -46,7 +46,7 @@ namespace Saga.Service
             Property(x => x.CurrentState).HasMaxLength(64);
             Property(x => x.OrderId);
             Property(x => x.CreateDate);
-            Property(x => x.OriginalText);
+            Property(x => x.Text);
             Property(x => x.RemainingServices);
             Property(x => x.RequestFinishedStatusBits);
         }

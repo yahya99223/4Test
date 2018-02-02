@@ -43,6 +43,7 @@ namespace OrderManagement.DbModel
                     m.ToTable("OrdersServices");
                 });
 
+
             modelBuilder.Entity<ProcessResult>()
                 .HasRequired(x => x.Service)
                 .WithMany()
