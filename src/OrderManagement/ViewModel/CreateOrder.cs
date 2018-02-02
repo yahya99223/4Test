@@ -17,13 +17,13 @@ namespace OrderManagement.ViewModel
     public class CreateOrder : ObservableObject
     {
         private ObservableCollection<ServiceItem> services;
-        private ObservableCollection<ProcessRequest> processRequests;
+        private ObservableCollection<Order> orders;
         private string textToProcess;
 
         public CreateOrder()
         {
             ProcessCommand = new AsyncRelayCommand(processCommand);
-            ProcessRequests = new ObservableCollection<ProcessRequest>();
+            Orders = new ObservableCollection<Order>();
 
             Task.Run(() =>
             {
@@ -36,14 +36,7 @@ namespace OrderManagement.ViewModel
                         IsSelected = true,
                     }));
 
-                    ProcessRequests = new ObservableCollection<ProcessRequest>(dbContext.Orders
-                        .Where(o => o.Status != "Finished")
-                        .ToList()
-                        .Select(x => new ProcessRequest
-                        {
-                            RequestId = x.Id,
-                            //NotificationString = x.Notifications,
-                        }));
+                    Orders = new ObservableCollection<Order>(dataToRow(dbContext));
 
                     /*foreach (var processRequest in dbContext.Orders
                         .Where(o => o.Status != "Finished")
@@ -60,6 +53,46 @@ namespace OrderManagement.ViewModel
             });
         }
 
+        Order toOrder(DbModel.Order order)
+        {
+            return new Order()
+            {
+                Notifications = order.Notifications?.Split('&').ToList(),
+                Id = order.Id,
+                Status = order.Status,
+                CreateDate = order.CreateDate,
+                FinalResult = order.FinalResult,
+                LastUpdateDate = order.LastUpdateDate,
+                OriginalText = order.OriginalText,
+                ProcessResults = order.ProcessResults,
+                Services = order.Services
+            };
+        }
+
+        DbModel.Order toDB(Order order)
+        {
+            return new DbModel.Order()
+            {
+                Notifications = string.Join(",", order.Notifications.ToArray()),
+                Id = order.Id,
+                Status = order.Status,
+                CreateDate = order.CreateDate,
+                FinalResult = order.FinalResult,
+                LastUpdateDate = order.LastUpdateDate,
+                OriginalText = order.OriginalText,
+                ProcessResults = order.ProcessResults,
+                Services = order.Services
+            };
+        }
+        public List<Order> dataToRow(OrderManagementDbContext context)
+        {
+            List<Order> orders= new List<Order>();
+            foreach (var order in context.Orders)
+            {
+                orders.Add(toOrder(order));
+            }
+            return orders;
+        }
         public IEnumerable<ServiceItem> Services
         {
             get { return services; }
@@ -82,13 +115,13 @@ namespace OrderManagement.ViewModel
             }
         }
 
-        public ObservableCollection<ProcessRequest> ProcessRequests
+        public ObservableCollection<Order> Orders
         {
-            get { return processRequests; }
+            get { return orders; }
             set
             {
-                processRequests = value;
-                RaisePropertyChanged("ProcessRequests");
+                orders = value;
+                RaisePropertyChanged("Orders");
             }
         }
 
@@ -106,12 +139,12 @@ namespace OrderManagement.ViewModel
                     OriginalText = TextToProcess,
                     Status = "Created",
                 };
-                dbContext.Orders.Add(order);
+                dbContext.Orders.Add(toDB( order));
                 TextToProcess = null;
                 await dbContext.SaveChangesAsync();
-                ProcessRequests.Add(new ProcessRequest
+                Orders.Add(new Order()
                 {
-                    RequestId = order.Id,
+                    Id = order.Id,
                 });
 
                 await MainWindow.BusControl.Publish<IOrderCreatedEvent>(new OrderCreated
@@ -123,5 +156,23 @@ namespace OrderManagement.ViewModel
                 });
             }
         }
+    }
+    public class Order
+    {
+        public Order()
+        {
+            Services = new HashSet<Service>();
+            ProcessResults = new HashSet<ProcessResult>();
+        }
+
+        public Guid Id { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime LastUpdateDate { get; set; }
+        public string OriginalText { get; set; }
+        public string FinalResult { get; set; }
+        public string Status { get; set; }
+        public List<string> Notifications { get; set; }
+        public ICollection<Service> Services { get; set; }
+        public ICollection<ProcessResult> ProcessResults { get; set; }
     }
 }

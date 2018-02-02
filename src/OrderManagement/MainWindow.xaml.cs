@@ -30,6 +30,7 @@ namespace OrderManagement
             BusControl = BusHelper.GetBusControl();
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+            
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
