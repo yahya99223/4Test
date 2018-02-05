@@ -23,34 +23,19 @@ namespace OrderManagement.ViewModel
         public CreateOrder()
         {
             ProcessCommand = new AsyncRelayCommand(processCommand);
-            Orders = new ObservableCollection<Order>();
+            orders = new ObservableCollection<Order>();
 
-            Task.Run(() =>
+            using (var dbContext = new OrderManagementDbContext())
             {
-                using (var dbContext = new OrderManagementDbContext())
+                Services = new ObservableCollection<ServiceItem>(dbContext.Services.Select(s => new ServiceItem
                 {
-                    Services = new ObservableCollection<ServiceItem>(dbContext.Services.Select(s => new ServiceItem
-                    {
-                        Id = s.Id,
-                        Name = s.Name,
-                        IsSelected = true,
-                    }));
+                    Id = s.Id,
+                    Name = s.Name,
+                    IsSelected = true,
+                }));
 
-                    Orders = new ObservableCollection<Order>(dataToRow(dbContext));
-
-                    /*foreach (var processRequest in dbContext.Orders
-                        .Where(o => o.Status != "Finished")
-                        .ToList()
-                        .Select(x => new ProcessRequest
-                        {
-                            RequestId = x.Id,
-                            //NotificationString = x.Notifications,
-                        }))
-                    {
-                        ProcessRequests.Add(processRequest);
-                    }*/
-                }
-            });
+                orders = new ObservableCollection<Order>(dataToRow(dbContext));
+            }
         }
 
         Order toOrder(DbModel.Order order)
@@ -86,7 +71,7 @@ namespace OrderManagement.ViewModel
         }
         public List<Order> dataToRow(OrderManagementDbContext context)
         {
-            List<Order> orders= new List<Order>();
+            List<Order> orders = new List<Order>();
             foreach (var order in context.Orders)
             {
                 orders.Add(toOrder(order));
@@ -139,7 +124,7 @@ namespace OrderManagement.ViewModel
                     OriginalText = TextToProcess,
                     Status = "Created",
                 };
-                dbContext.Orders.Add(toDB( order));
+                dbContext.Orders.Add(toDB(order));
                 TextToProcess = null;
                 await dbContext.SaveChangesAsync();
                 Orders.Add(new Order()
@@ -163,6 +148,7 @@ namespace OrderManagement.ViewModel
         {
             Services = new HashSet<Service>();
             ProcessResults = new HashSet<ProcessResult>();
+            Notifications = new List<string>();
         }
 
         public Guid Id { get; set; }
@@ -171,7 +157,7 @@ namespace OrderManagement.ViewModel
         public string OriginalText { get; set; }
         public string FinalResult { get; set; }
         public string Status { get; set; }
-        public List<string> Notifications { get; set; }
+        public ICollection<string> Notifications { get; set; }
         public ICollection<Service> Services { get; set; }
         public ICollection<ProcessResult> ProcessResults { get; set; }
     }
