@@ -1,5 +1,7 @@
 ﻿using System;
 using Automatonymous;
+using GreenPipes;
+using GreenPipes.Configurators;
 using Helpers.Core;
 using MassTransit;
 using MassTransit.EntityFrameworkIntegration;
@@ -25,17 +27,24 @@ namespace Saga.Service
 
             var bus = BusConfigurator.ConfigureBus(MessagingConstants.MqUri, MessagingConstants.UserName, MessagingConstants.Password, (cfg, host) =>
             {
-                //cfg.UseRetry(retryConfig => retryConfig.Interval(7, TimeSpan.FromSeconds(5)));
-                //cfg.UseViolationHandler();
+                
                 cfg.ReceiveEndpoint(host, MessagingConstants.SagaQueue, e =>
                 {
+                    e.UseRetry(retryPolicy);
+
                     //e.StateMachineSaga(machine, repository);
                     e.StateMachineSaga(machine, lazyRepository.Value);
                 });
             });
-            bus.ConnectConsumeObserver(new ConsumeObserver());
+            //bus.ConnectConsumeObserver(new ConsumeObserver());
             //bus.ConnectConsumeMessageObserver(new ViolationObserver());
             bus.Start();
+        }
+
+        private static void retryPolicy(IRetryConfigurator cfg)
+        {
+            cfg.Ignore<InternalApplicationException>();
+            cfg.Interval(7, TimeSpan.FromSeconds(3));
         }
     }
 

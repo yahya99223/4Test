@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Automatonymous;
+using MassTransit;
 using Message.Contracts;
 
 namespace Saga.Service
@@ -17,7 +18,8 @@ namespace Saga.Service
             Event(() => NormalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => CapitalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => OrderReadyToProcessEvent, x => x.CorrelateById(context => context.Message.OrderId));
-            Event(() => ViolationOccurredEvent, x => x.CorrelateById(context => context.Message.CorrelationId));
+            Event(() => ValidateOrderCommandFailed, x => x.CorrelateById(context => context.Message.Message.OrderId));
+            //Event(() => ViolationOccurredEvent, x => x.CorrelateById(context => context.Message.CorrelationId));
 
 
             Initially(When(OrderCreated)
@@ -47,8 +49,11 @@ namespace Saga.Service
             );
 
             During(Active,
-                When(ViolationOccurredEvent)
-                    .Then(context => { context.Instance.RemainingServices = ""; })
+                When(ValidateOrderCommandFailed)
+                    .Then(context =>
+                    {
+                        context.Instance.RemainingServices = "";
+                    })
                     .TransitionTo(Finished)
                     .Finalize()
             );
@@ -109,7 +114,7 @@ namespace Saga.Service
                     .Then(context =>
                     {
                         context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Capitalize"));
-                        context.Instance.Text = context.Data.CapitalizeText;
+                        context.Instance.Text = context.Data.CapitalizeText;                        
                     })
                     .Publish(context => new OrderCapitalized
                     {
@@ -138,7 +143,10 @@ namespace Saga.Service
         public Event<IOrderCreatedEvent> OrderCreated { get; set; }
         public Event<IOrderReadyToProcessEvent> OrderReadyToProcessEvent { get; set; }
         public Event<IValidateOrderResponse> ValidateOrderResponse { get; set; }
-        public Event<IViolationOccurredEvent> ViolationOccurredEvent { get; set; }
+        
+        public Event<Fault<IValidateOrderCommand>> ValidateOrderCommandFailed { get; set; }
+
+        //public Event<IViolationOccurredEvent> ViolationOccurredEvent { get; set; }
         public Event<INormalizeOrderResponse> NormalizeOrderResponse { get; set; }
         public Event<ICapitalizeOrderResponse> CapitalizeOrderResponse { get; set; }
     }
