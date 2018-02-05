@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GreenPipes;
+using GreenPipes.Configurators;
 using Helpers.Core;
 using MassTransit;
 using MassTransit.Saga;
@@ -17,7 +19,7 @@ namespace Validate.Service
 
             var bus = BusConfigurator.ConfigureBus(MessagingConstants.MqUri, MessagingConstants.UserName, MessagingConstants.Password, (cfg, host) =>
             {
-                //cfg.UseRetry(retryConfig => retryConfig.Interval(7, TimeSpan.FromSeconds(5)));
+                cfg.UseRetry(retryPolicy);
 
                 cfg.ReceiveEndpoint(host, MessagingConstants.ValidateServiceQueue, e =>
                 {
@@ -26,6 +28,12 @@ namespace Validate.Service
             });
 
             bus.Start();
+        }
+
+        private static void retryPolicy(IRetryConfigurator cfg)
+        {
+            cfg.Ignore<InternalApplicationException>();
+            cfg.Interval(7, TimeSpan.FromSeconds(3));
         }
     }
 }

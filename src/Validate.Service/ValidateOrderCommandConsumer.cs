@@ -11,6 +11,12 @@ namespace Validate.Service
 {
     public class ValidateOrderCommandConsumer : IConsumer<IValidateOrderCommand>
     {
+        private Random random;
+
+        public ValidateOrderCommandConsumer()
+        {
+            random = new Random();
+        }
         public async Task Consume(ConsumeContext<IValidateOrderCommand> context)
         {
             var violationHandler = new ViolationHandler<IValidateOrderCommand>();
@@ -18,8 +24,11 @@ namespace Validate.Service
 
             try
             {
+                if (random.Next(1, 9) % 2 == 0)
+                    throw new Exception("Bad luck!. Try again :P");
+
                 if (command == null)
-                    throw new NullReferenceException("There is no message in the context");
+                    throw new InternalApplicationException<IValidateOrderCommand>(x => x, ViolationType.Null);
 
                 if (string.IsNullOrWhiteSpace(command.OriginalText))
                     throw new InternalApplicationException<IValidateOrderCommand>(x => x.OriginalText, ViolationType.Required);
@@ -39,10 +48,10 @@ namespace Validate.Service
                     EndProcessTime = DateTime.UtcNow,
                 });
             }
-            catch (InternalApplicationException ex)
+            /*catch (InternalApplicationException ex)
             {
                 await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(command.OrderId, ex.Violations));
-            }
+            }*/
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
