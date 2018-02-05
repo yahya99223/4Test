@@ -95,11 +95,6 @@
     <Compile Include="DbModel\ProcessResult.cs" />
     <Compile Include="DbModel\Service.cs" />
     <Compile Include="Helpers\AsyncRelayCommand.cs" />
-    <Compile Include="Helpers\BindableSelectedItemBehavior.cs" />
-    <Compile Include="Helpers\NotifyPropertyChangedInvocatorAttribute.cs" />
-    <Compile Include="Helpers\ObservableObject.cs" />
-    <Compile Include="Helpers\ObservableSetCollection.cs" />
-    <Compile Include="Helpers\PropertySupport.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\RelayCommandGeneric.cs" />
     <Compile Include="Migrations\201801190701539_UpdatedRelations.cs" />

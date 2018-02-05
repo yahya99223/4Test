@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MassTransit;
 using Message.Contracts;
@@ -11,6 +12,8 @@ namespace Saga.Service
         {
             if (!context.Message.IsValid)
             {
+                //here
+                await context.Forward(new Uri("sds"));
                 await context.NotifyConsumed(TimeSpan.FromSeconds(1), "ViolationObserver");
                 await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(context.Message.CorrelationId, context.Message.Violations));
                 throw new Exception("There is violations");

@@ -30,11 +30,20 @@ namespace OrderManagement
             BusControl = BusHelper.GetBusControl();
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+            
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
             BusControl?.Stop();
         }
+
+        private void btnDeleteAllFinished_Click(object sender, RoutedEventArgs e)
+        {
+            var source = dgOrders.Items;
+            
+        }
+
+     
     }
 }
