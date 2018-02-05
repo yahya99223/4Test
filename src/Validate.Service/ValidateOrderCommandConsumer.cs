@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Helpers.Core;
 using MassTransit;
+using MassTransit.Events;
 using Message.Contracts;
 
 namespace Validate.Service
@@ -48,10 +49,10 @@ namespace Validate.Service
                     EndProcessTime = DateTime.UtcNow,
                 });
             }
-            /*catch (InternalApplicationException ex)
+            catch (InternalApplicationException ex)
             {
                 await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(command.OrderId, ex.Violations));
-            }*/
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);

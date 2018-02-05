@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Emit;
 using Automatonymous;
 using GreenPipes;
 using GreenPipes.Configurators;
@@ -31,7 +32,6 @@ namespace Saga.Service
                 cfg.ReceiveEndpoint(host, MessagingConstants.SagaQueue, e =>
                 {
                     e.UseRetry(retryPolicy);
-
                     //e.StateMachineSaga(machine, repository);
                     e.StateMachineSaga(machine, lazyRepository.Value);
                 });
