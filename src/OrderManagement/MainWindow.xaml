@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:OrderManagement.ViewModel"
         mc:Ignorable="d"
-        Title="Order Management" Height="350" Width="525">
+        Title="Order Management" Height="500" Width="800">
 
 
     <Window.DataContext>
@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBox  Margin="10,5" Text="{Binding Path=TextToProcess}" TextWrapping="Wrap"/>
-            <Button  Command="{Binding ProcessCommand}" Margin="10,5" Grid.Column="2"  >Process</Button>
+            <Button  Command="{Binding ProcessCommand}" Margin="10,5" Grid.Column="2"   >Process</Button>
             <ItemsControl  ItemsSource="{Binding Path=Services}" Margin="10,5"  Grid.Column="1" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -34,21 +34,44 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
-        <DataGrid Name="ordersContainer" ItemsSource="{Binding Orders}" Grid.Row="1" Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}">
-            <DataGridTemplateColumn Header="template">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <DataGrid ItemsSource="{Binding Path=Notifications}"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Orders}" Margin="5,10" Name="dgOrders" Grid.Row="1" ColumnWidth="*">
+            <DataGrid.Columns>
+              <DataGridTextColumn Binding="{Binding Id}" Header="Id"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding CreateDate}" Header="Create Date"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding LastUpdateDate}" Header="Last Update Date"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding FinalResult}" Header="Final Result"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Status}" Header="Status"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding OriginalText}" Header="Original Text"></DataGridTextColumn>
+                
+                <DataGridTemplateColumn Header="Notifications">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding Notifications}"></ListBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Services">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding OrderServices}"></ListBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Results">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding ProcessResults}"></ListBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Name="btnDeleteAllFinished"  Margin="10,5">Delete All Finished</Button>
+            <Button Name="btnDeleteAllFinished"  Margin="10,5" >Delete All Finished</Button>
             <Button Name="btnDeleteSelected" Grid.Column="1"  Margin="10,5">Delete Selected</Button>
         </Grid>
     </Grid>

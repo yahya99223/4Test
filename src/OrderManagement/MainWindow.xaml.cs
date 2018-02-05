@@ -37,5 +37,13 @@ namespace OrderManagement
         {
             BusControl?.Stop();
         }
+
+        private void btnDeleteAllFinished_Click(object sender, RoutedEventArgs e)
+        {
+            var source = dgOrders.Items;
+            
+        }
+
+     
     }
 }

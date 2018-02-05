@@ -14,11 +14,13 @@ using OrderManagement.DbModel;
 
 namespace OrderManagement.ViewModel
 {
-    public class CreateOrder : ObservableObject
+    public class CreateOrder : INotifyPropertyChanged
     {
         private ObservableCollection<ServiceItem> services;
         private ObservableCollection<Order> orders;
         private string textToProcess;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public CreateOrder()
         {
@@ -42,15 +44,15 @@ namespace OrderManagement.ViewModel
         {
             return new Order()
             {
-                Notifications = order.Notifications?.Split('&').ToList(),
+                Notifications = new ObservableCollection<string>((order.Notifications ?? "").Split('&')),
                 Id = order.Id,
                 Status = order.Status,
                 CreateDate = order.CreateDate,
                 FinalResult = order.FinalResult,
                 LastUpdateDate = order.LastUpdateDate,
                 OriginalText = order.OriginalText,
-                ProcessResults = order.ProcessResults,
-                Services = order.Services
+                ProcessResults = new ObservableCollection<ProcessResult>(order.ProcessResults),
+                OrderServices = new ObservableCollection<Service>(order.Services)
             };
         }
 
@@ -66,7 +68,7 @@ namespace OrderManagement.ViewModel
                 LastUpdateDate = order.LastUpdateDate,
                 OriginalText = order.OriginalText,
                 ProcessResults = order.ProcessResults,
-                Services = order.Services
+                Services = order.OrderServices
             };
         }
         public List<Order> dataToRow(OrderManagementDbContext context)
@@ -78,13 +80,13 @@ namespace OrderManagement.ViewModel
             }
             return orders;
         }
-        public IEnumerable<ServiceItem> Services
+        public ObservableCollection<ServiceItem> Services
         {
             get { return services; }
             set
             {
                 services = new ObservableCollection<ServiceItem>(value);
-                RaisePropertyChanged("Services");
+                
             }
         }
 
@@ -96,7 +98,7 @@ namespace OrderManagement.ViewModel
             set
             {
                 textToProcess = value;
-                RaisePropertyChanged("TextToProcess");
+                
             }
         }
 
@@ -105,8 +107,8 @@ namespace OrderManagement.ViewModel
             get { return orders; }
             set
             {
-                orders = value;
-                RaisePropertyChanged("Orders");
+                orders = new ObservableCollection<Order>(value);
+                
             }
         }
 
@@ -118,7 +120,7 @@ namespace OrderManagement.ViewModel
                 var order = new Order
                 {
                     Id = Guid.NewGuid(),
-                    Services = dbContext.Services.Where(s => servicesIds.Contains(s.Id)).ToList(),
+                    OrderServices = new ObservableCollection<Service>(dbContext.Services.Where(s => servicesIds.Contains(s.Id))),
                     CreateDate = DateTime.UtcNow,
                     LastUpdateDate = DateTime.UtcNow,
                     OriginalText = TextToProcess,
@@ -137,7 +139,7 @@ namespace OrderManagement.ViewModel
                     OrderId = order.Id,
                     CreateDate = order.CreateDate,
                     OriginalText = order.OriginalText,
-                    Services = order.Services.Select(s => s.Name).ToList()
+                    Services = order.OrderServices.Select(s => s.Name).ToList()
                 });
             }
         }
@@ -146,9 +148,9 @@ namespace OrderManagement.ViewModel
     {
         public Order()
         {
-            Services = new HashSet<Service>();
-            ProcessResults = new HashSet<ProcessResult>();
-            Notifications = new List<string>();
+            OrderServices = new ObservableCollection<Service>();
+            ProcessResults = new ObservableCollection<ProcessResult>();
+            Notifications = new ObservableCollection<string>();
         }
 
         public Guid Id { get; set; }
@@ -157,8 +159,8 @@ namespace OrderManagement.ViewModel
         public string OriginalText { get; set; }
         public string FinalResult { get; set; }
         public string Status { get; set; }
-        public ICollection<string> Notifications { get; set; }
-        public ICollection<Service> Services { get; set; }
-        public ICollection<ProcessResult> ProcessResults { get; set; }
+        public ObservableCollection<string> Notifications { get; set; }
+        public ObservableCollection<Service> OrderServices { get; set; }
+        public ObservableCollection<ProcessResult> ProcessResults { get; set; }
     }
 }

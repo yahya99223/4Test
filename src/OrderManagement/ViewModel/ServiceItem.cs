@@ -2,7 +2,7 @@
 
 namespace OrderManagement.ViewModel
 {
-    public class ServiceItem : ObservableObject
+    public class ServiceItem 
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
