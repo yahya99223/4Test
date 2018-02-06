@@ -18,8 +18,8 @@ namespace Saga.Service
             Event(() => NormalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => CapitalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => OrderReadyToProcessEvent, x => x.CorrelateById(context => context.Message.OrderId));
+            Event(() => ViolationOccurredEvent, x => x.CorrelateById(context => context.Message.CorrelationId));
             Event(() => ValidateOrderCommandFailed, x => x.CorrelateById(context => context.Message.Message.OrderId));
-            //Event(() => ViolationOccurredEvent, x => x.CorrelateById(context => context.Message.CorrelationId));
 
 
             Initially(When(OrderCreated)
@@ -48,7 +48,8 @@ namespace Saga.Service
                 )
             );
 
-            During(Active,
+
+            DuringAny(
                 When(ValidateOrderCommandFailed)
                     .Then(context =>
                     {
@@ -57,6 +58,7 @@ namespace Saga.Service
                     .TransitionTo(Finished)
                     .Finalize()
             );
+            
 
             During(Active,
                 When(ValidateOrderResponse)
@@ -137,17 +139,18 @@ namespace Saga.Service
         public State Active { get; private set; }
         public State NoValidationRequired { get; private set; }
         public State Validated { get; private set; }
+        public State Failed { get; private set; }
         public State Finished { get; private set; }
 
 
         public Event<IOrderCreatedEvent> OrderCreated { get; set; }
         public Event<IOrderReadyToProcessEvent> OrderReadyToProcessEvent { get; set; }
-        public Event<IValidateOrderResponse> ValidateOrderResponse { get; set; }
-        
-        public Event<Fault<IValidateOrderCommand>> ValidateOrderCommandFailed { get; set; }
-
-        //public Event<IViolationOccurredEvent> ViolationOccurredEvent { get; set; }
+        public Event<IValidateOrderResponse> ValidateOrderResponse { get; set; }       
         public Event<INormalizeOrderResponse> NormalizeOrderResponse { get; set; }
         public Event<ICapitalizeOrderResponse> CapitalizeOrderResponse { get; set; }
+
+
+        public Event<IViolationOccurredEvent> ViolationOccurredEvent { get; set; }
+        public Event<Fault<IValidateOrderCommand>> ValidateOrderCommandFailed { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Validate.Service
         {
             random = new Random();
         }
+
         public async Task Consume(ConsumeContext<IValidateOrderCommand> context)
         {
             var violationHandler = new ViolationHandler<IValidateOrderCommand>();
@@ -51,7 +52,7 @@ namespace Validate.Service
             }
             catch (InternalApplicationException ex)
             {
-                await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(command.OrderId, ex.Violations));
+                await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(command.OrderId, "Validation", "The Order is not valid", ex.Violations));
             }
             catch (Exception ex)
             {
