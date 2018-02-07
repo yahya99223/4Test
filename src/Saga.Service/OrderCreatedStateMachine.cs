@@ -58,16 +58,19 @@ namespace Saga.Service
 
             During(Active,
                 When(ValidateOrderResponse, context => context.Data.IsValid)
-                    .Then(context =>
-                    {
-                        context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Validate"));
-                    })
+                    .Then(context => { context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Validate")); })
                     .TransitionTo(Validated)
                     .Publish(context => new OrderReadyToProcessEvent
                     {
                         OrderId = context.Data.OrderId,
                         OriginalText = context.Instance.Text,
                         Services = context.Instance.RemainingServices.Split('|'),
+                    }),
+                When(ValidateOrderResponse)
+                    .Publish(context => new OrderValidatedEvent(context.Data.OrderId, context.Data.Violations)
+                    {
+                        StartProcessTime = context.Data.StartProcessTime,
+                        EndProcessTime = context.Data.EndProcessTime,
                     })
             );
 

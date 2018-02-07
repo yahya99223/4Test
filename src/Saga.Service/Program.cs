@@ -31,7 +31,7 @@ namespace Saga.Service
                 
                 cfg.ReceiveEndpoint(host, MessagingConstants.SagaQueue, e =>
                 {
-                    e.UseRetry(retryPolicy);
+                    //e.UseRetry(retryPolicy);
                     //e.StateMachineSaga(machine, repository);
                     e.StateMachineSaga(machine, lazyRepository.Value);
                 });
@@ -41,11 +41,11 @@ namespace Saga.Service
             bus.Start();
         }
 
-        private static void retryPolicy(IRetryConfigurator cfg)
+        /*private static void retryPolicy(IRetryConfigurator cfg)
         {
             cfg.Ignore<InternalApplicationException>();
             cfg.Interval(7, TimeSpan.FromSeconds(3));
-        }
+        }*/
     }
 
     public class OrderCreatedSagaSagaMap : SagaClassMapping<OrderCreatedSagaState>

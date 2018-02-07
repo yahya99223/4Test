@@ -36,7 +36,7 @@ namespace Validate.Service
                 if (random.Next(1, 9) % 2 == 0)
                     throw new Exception("Bad luck!. Try again :P");
 
-                if (command.OriginalText.Contains("asd"))
+                if (command.OriginalText == "asd")
                     violationHandler.AddViolation(x => x.OriginalText, ViolationType.NotAllowed);
 
                 if (command.OriginalText.Contains("123"))
@@ -62,7 +62,7 @@ namespace Validate.Service
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
