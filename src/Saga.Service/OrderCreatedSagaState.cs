@@ -13,13 +13,13 @@ namespace Saga.Service
         public DateTime CreateDate { get; set; }
         public string RemainingServices { get; set; }
 
-        public int RequestFinishedStatusBits { get; set; }
+        /*public int RequestFinishedStatusBits { get; set; }
 
         public CompositeEventStatus RequestFinishedStatus
         {
             get { return new CompositeEventStatus(RequestFinishedStatusBits); }
             set { RequestFinishedStatusBits = value.Bits; }
-        }
+        }*/
 
     }
 }

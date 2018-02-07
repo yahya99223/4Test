@@ -30,10 +30,6 @@ namespace OrderManagement.DbModel
                 .HasMaxLength(150);
 
             modelBuilder.Entity<Order>()
-                .Property(x => x.FinalResult)
-                .HasMaxLength(150);
-
-            modelBuilder.Entity<Order>()
                 .HasMany(x => x.Services)
                 .WithMany()
                 .Map(m =>

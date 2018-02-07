@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Automatonymous;
-using MassTransit;
 using Message.Contracts;
 
 namespace Saga.Service
@@ -12,32 +11,31 @@ namespace Saga.Service
             InstanceState(x => x.CurrentState);
 
             Event(() => OrderCreated, x => x.CorrelateBy(cart => cart.OrderId.ToString(), context => context.Message.OrderId.ToString())
-                .SelectId(context => context.Message.OrderId/*Guid.NewGuid()*/));
-            
+                .SelectId(context => context.Message.OrderId /*Guid.NewGuid()*/));
+
             Event(() => ValidateOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => NormalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => CapitalizeOrderResponse, x => x.CorrelateById(context => context.Message.OrderId));
             Event(() => OrderReadyToProcessEvent, x => x.CorrelateById(context => context.Message.OrderId));
-            Event(() => ViolationOccurredEvent, x => x.CorrelateById(context => context.Message.CorrelationId));
-            Event(() => ValidateOrderCommandFailed, x => x.CorrelateById(context => context.Message.Message.OrderId));
+
+            Event(() => ValidatedMessageReceived, x => x.CorrelateById(context => context.Message.CorrelationId));
+
+            /*Event(() => ViolationOccurredEvent, x => x.CorrelateById(context => context.Message.CorrelationId));
+            Event(() => ValidateOrderCommandFailed, x => x.CorrelateById(context => context.Message.Message.OrderId));*/
 
 
-            Initially(When(OrderCreated)
-                .Then(context =>
-                {
-                    context.Instance.OrderId = context.Data.OrderId;
-                    context.Instance.Text = context.Data.OriginalText;
-                    context.Instance.CreateDate = context.Data.CreateDate;
-                    context.Instance.RemainingServices = string.Join("|", context.Data.Services);
-                })
-                .TransitionTo(Active)
-                .If(context => context.Data.Services.Any(s => s == "Validate"), binder => binder
+            Initially(
+                When(OrderCreated, shouldValidate)
+                    .Then(updateState)
+                    .TransitionTo(Active)
                     .Publish(args => new ValidateOrderCommand
                     {
                         OriginalText = args.Data.OriginalText,
                         OrderId = args.Data.OrderId,
-                    }))
-                .If(context => context.Data.Services.All(s => s != "Validate"), binder => binder
+                    }),
+
+                When(OrderCreated, context => !shouldValidate(context))
+                    .Then(updateState)
                     .TransitionTo(NoValidationRequired)
                     .Publish(context => new OrderReadyToProcessEvent
                     {
@@ -45,23 +43,21 @@ namespace Saga.Service
                         OriginalText = context.Data.OriginalText,
                         Services = context.Data.Services,
                     })
-                )
             );
 
-
             DuringAny(
-                When(ValidateOrderCommandFailed)
+                When(ValidatedMessageReceived, context => !context.Data.IsValid)
                     .Then(context =>
                     {
                         context.Instance.RemainingServices = "";
                     })
-                    .TransitionTo(Finished)
+                    .TransitionTo(Failed)
                     .Finalize()
             );
-            
+
 
             During(Active,
-                When(ValidateOrderResponse)
+                When(ValidateOrderResponse, context => context.Data.IsValid)
                     .Then(context =>
                     {
                         context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Validate"));
@@ -73,29 +69,22 @@ namespace Saga.Service
                         OriginalText = context.Instance.Text,
                         Services = context.Instance.RemainingServices.Split('|'),
                     })
-                    .Publish(context => new OrderValidatedEvent
-                    {
-                        OrderId = context.Data.OrderId,
-                        ProcessTime = (context.Data.EndProcessTime - context.Data.StartProcessTime).Milliseconds,
-                    })
             );
 
 
             During(Validated, NoValidationRequired,
-                When(OrderReadyToProcessEvent)
-                    .If(c => c.Data.Services.Any(s => s == "Normalize"), builder =>
-                        builder.Publish(args => new NormalizeOrderCommand
-                        {
-                            OriginalText = args.Data.OriginalText,
-                            OrderId = args.Data.OrderId,
-                        }))
-
-                    .If(c => c.Data.Services.Any(s => s == "Capitalize"), builder =>
-                        builder.Publish(args => new CapitalizeOrderCommand
-                        {
-                            OriginalText = args.Data.OriginalText,
-                            OrderId = args.Data.OrderId,
-                        }))
+                When(OrderReadyToProcessEvent, context => context.Instance.RemainingServices.Contains("Normalize"))
+                    .Publish(args => new NormalizeOrderCommand
+                    {
+                        OriginalText = args.Data.OriginalText,
+                        OrderId = args.Data.OrderId
+                    }),
+                When(OrderReadyToProcessEvent, context => context.Instance.RemainingServices.Contains("Capitalize"))
+                    .Publish(args => new CapitalizeOrderCommand
+                    {
+                        OriginalText = args.Data.OriginalText,
+                        OrderId = args.Data.OrderId
+                    })
             );
 
 
@@ -106,23 +95,21 @@ namespace Saga.Service
                         context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Normalize"));
                         context.Instance.Text = context.Data.NormalizedText;
                     })
-                    .Publish(context => new OrderNormalized
+                    .Publish(context => new OrderNormalized(context.Data.OrderId)
                     {
-                        OrderId = context.Data.OrderId,
                         NormalizedText = context.Data.NormalizedText,
-                        ProcessTime = (context.Data.EndProcessTime - context.Data.StartProcessTime).Milliseconds,
+                        ProcessTime = (context.Data.EndProcessTime - context.Data.StartProcessTime).Milliseconds
                     }),
                 When(CapitalizeOrderResponse)
                     .Then(context =>
                     {
                         context.Instance.RemainingServices = string.Join("|", context.Instance.RemainingServices.Split('|').Where(s => s != "Capitalize"));
-                        context.Instance.Text = context.Data.CapitalizeText;                        
+                        context.Instance.Text = context.Data.CapitalizeText;
                     })
-                    .Publish(context => new OrderCapitalized
+                    .Publish(context => new OrderCapitalized(context.Data.OrderId)
                     {
-                        OrderId = context.Data.OrderId,
                         CapitalizedText = context.Data.CapitalizeText,
-                        ProcessTime = (context.Data.EndProcessTime - context.Data.StartProcessTime).Milliseconds,
+                        ProcessTime = (context.Data.EndProcessTime - context.Data.StartProcessTime).Milliseconds
                     }),
                 When(NormalizeOrderResponse, context => !context.Instance.RemainingServices.Any())
                     .TransitionTo(Finished)
@@ -145,12 +132,25 @@ namespace Saga.Service
 
         public Event<IOrderCreatedEvent> OrderCreated { get; set; }
         public Event<IOrderReadyToProcessEvent> OrderReadyToProcessEvent { get; set; }
-        public Event<IValidateOrderResponse> ValidateOrderResponse { get; set; }       
+        public Event<IValidateOrderResponse> ValidateOrderResponse { get; set; }
         public Event<INormalizeOrderResponse> NormalizeOrderResponse { get; set; }
         public Event<ICapitalizeOrderResponse> CapitalizeOrderResponse { get; set; }
+        public Event<IValidatedMessage> ValidatedMessageReceived { get; set; }
 
+        /*public Event<IViolationOccurredEvent> ViolationOccurredEvent { get; set; }
+        public Event<Fault<IValidateOrderCommand>> ValidateOrderCommandFailed { get; set; }*/
 
-        public Event<IViolationOccurredEvent> ViolationOccurredEvent { get; set; }
-        public Event<Fault<IValidateOrderCommand>> ValidateOrderCommandFailed { get; set; }
+        private bool shouldValidate(EventContext<OrderCreatedSagaState, IOrderCreatedEvent> context)
+        {
+            return context.Data.Services.Any(s => s == "Validate");
+        }
+
+        private void updateState(BehaviorContext<OrderCreatedSagaState, IOrderCreatedEvent> context)
+        {
+            context.Instance.OrderId = context.Data.OrderId;
+            context.Instance.Text = context.Data.OriginalText;
+            context.Instance.CreateDate = context.Data.CreateDate;
+            context.Instance.RemainingServices = string.Join("|", context.Data.Services);
+        }
     }
 }

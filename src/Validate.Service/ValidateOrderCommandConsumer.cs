@@ -23,17 +23,18 @@ namespace Validate.Service
         {
             var violationHandler = new ViolationHandler<IValidateOrderCommand>();
             var command = context.Message;
+            var startProcessTime = DateTime.UtcNow;
 
             try
             {
-                if (random.Next(1, 9) % 2 == 0)
-                    throw new Exception("Bad luck!. Try again :P");
-
                 if (command == null)
                     throw new InternalApplicationException<IValidateOrderCommand>(x => x, ViolationType.Null);
 
                 if (string.IsNullOrWhiteSpace(command.OriginalText))
                     throw new InternalApplicationException<IValidateOrderCommand>(x => x.OriginalText, ViolationType.Required);
+
+                if (random.Next(1, 9) % 2 == 0)
+                    throw new Exception("Bad luck!. Try again :P");
 
                 if (command.OriginalText.Contains("asd"))
                     violationHandler.AddViolation(x => x.OriginalText, ViolationType.NotAllowed);
@@ -46,13 +47,18 @@ namespace Validate.Service
 
                 await context.Publish<IValidateOrderResponse>(new ValidateOrderResponse(command.OrderId)
                 {
-                    StartProcessTime = DateTime.UtcNow,
+                    StartProcessTime = startProcessTime,
                     EndProcessTime = DateTime.UtcNow,
                 });
             }
             catch (InternalApplicationException ex)
             {
-                await context.Publish<IViolationOccurredEvent>(new ViolationOccurredEvent(command.OrderId, "Validation", "The Order is not valid", ex.Violations));
+                await context.Publish<IValidateOrderResponse>(new ValidateOrderResponse(command.OrderId, ex.Violations)
+                    {
+                        StartProcessTime = startProcessTime,
+                        EndProcessTime = DateTime.UtcNow,
+                    }
+                );
             }
             catch (Exception ex)
             {

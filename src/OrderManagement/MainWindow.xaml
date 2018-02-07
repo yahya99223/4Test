@@ -39,7 +39,6 @@
               <DataGridTextColumn Binding="{Binding Id}" Header="Id"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding CreateDate}" Header="Create Date"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding LastUpdateDate}" Header="Last Update Date"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding FinalResult}" Header="Final Result"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Status}" Header="Status"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding OriginalText}" Header="Original Text"></DataGridTextColumn>
                 
@@ -50,13 +49,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Services">
+                <!--<DataGridTemplateColumn Header="Services">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ListBox ItemsSource="{Binding OrderServices}"></ListBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
                 <DataGridTemplateColumn Header="Results">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

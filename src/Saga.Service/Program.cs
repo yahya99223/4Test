@@ -57,7 +57,7 @@ namespace Saga.Service
             Property(x => x.CreateDate);
             Property(x => x.Text);
             Property(x => x.RemainingServices);
-            Property(x => x.RequestFinishedStatusBits);
+            //Property(x => x.RequestFinishedStatusBits);
         }
     }
 }

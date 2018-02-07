@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MassTransit;
 using OrderManagement.DbModel;
+using OrderManagement.ViewModel;
 
 namespace OrderManagement
 {
@@ -22,28 +23,10 @@ namespace OrderManagement
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static IBusControl BusControl;
-
         public MainWindow()
         {
             InitializeComponent();
-            BusControl = BusHelper.GetBusControl();
-
-            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
-            
+            //Closing += CreateOrder.OnWindowClosing;
         }
-
-        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
-        {
-            BusControl?.Stop();
-        }
-
-        private void btnDeleteAllFinished_Click(object sender, RoutedEventArgs e)
-        {
-            var source = dgOrders.Items;
-            
-        }
-
-     
     }
 }

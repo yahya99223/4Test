@@ -76,6 +76,7 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtentions.cs" />
+    <Compile Include="Extensions\ViolationExtensions.cs" />
     <Compile Include="InternalApplicationException.cs" />
     <Compile Include="IServiceResolver.cs" />
     <Compile Include="Messaging\BusConfigurator.cs" />

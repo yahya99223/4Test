@@ -45,13 +45,12 @@
     <Compile Include="Commands\ICapitalizeOrderResponse.cs" />
     <Compile Include="Commands\INormalizeOrderResponse.cs" />
     <Compile Include="Commands\IShowNotificationCommand.cs" />
+    <Compile Include="Events\IOrderValidatedEvent.cs" />
     <Compile Include="IValidatedMessage.cs" />
     <Compile Include="Commands\IValidateOrderCommand.cs" />
     <Compile Include="Events\IOrderCapitalizedEvent.cs" />
     <Compile Include="Events\IOrderNormalizedEvent.cs" />
     <Compile Include="Commands\IValidateOrderResponse.cs" />
-    <Compile Include="Events\IOrderReadyToProcessEvent.cs" />
-    <Compile Include="Events\IOrderValidatedEvent.cs" />
     <Compile Include="IViolationOccurred.cs" />
     <Compile Include="MessagingConstants.cs" />
     <Compile Include="Events\IOrderCreatedEvent.cs" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Message.Contracts
+namespace Saga.Service
 {
     public interface IOrderReadyToProcessEvent
     {
