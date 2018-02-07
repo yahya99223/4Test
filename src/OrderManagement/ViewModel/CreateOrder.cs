@@ -42,7 +42,7 @@ namespace OrderManagement.ViewModel
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.OrderManagementQueue, e =>
                 {
-                    //e.Consumer<UpdateOrderConsumer>();
+                    e.Consumer<UpdateOrderConsumer>();
                     e.Consumer(() => new NotificationConsumer(Orders));
                 });
             });
@@ -129,7 +129,9 @@ namespace OrderManagement.ViewModel
                 await dbContext.SaveChangesAsync();
 
                 Orders.Add(order);
-                await bus.Publish<IOrderCreatedEvent>(new OrderCreated
+                var address = new Uri(MessagingConstants.MqUri + MessagingConstants.SagaQueue);
+                var sagaEndpoint = await bus.GetSendEndpoint(address);                
+                await sagaEndpoint.Send<IOrderCreatedEvent>(new OrderCreated
                 {
                     OrderId = order.Id,
                     CreateDate = order.CreateDate,

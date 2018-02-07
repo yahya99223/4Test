@@ -24,7 +24,7 @@ namespace OrderManagement
                             Id = Guid.NewGuid(),
                             IsValid = context.Message.IsValid,
                             OrderId = order.Id,
-                            //Result = context.Message.IsValid ? "Valid" : $"Invalid: {context.Message.Violations.FriendlyMessage()}",
+                            Result = context.Message.IsValid ? "Valid" : $"Invalid: {context.Message.Violations.FriendlyMessage()}",
                             ServiceId = Service.Validation.Id,
                         });
                         await dbContext.SaveChangesAsync();
