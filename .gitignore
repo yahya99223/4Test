@@ -323,3 +323,6 @@ ASALocalRun/
 /src/Saga.Service/SagaDbContextFactoryProvider.cs
 /src/OrderManagement/App.config
 /src/Message.Contracts/MessagingConstants.cs
+/src/Message.Contracts/MessagingConstants.cs
+/src/Saga.Service/SagaDbContextFactoryProvider.cs
+/src/OrderManagement/App.config
