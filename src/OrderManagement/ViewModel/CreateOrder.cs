@@ -120,7 +120,7 @@ namespace OrderManagement.ViewModel
                     OrderServices = new ObservableCollection<Service>(dbContext.Services.Where(s => servicesIds.Contains(s.Id))),
                     CreateDate = DateTime.UtcNow,
                     LastUpdateDate = DateTime.UtcNow,
-                    OriginalText = "asd",
+                    OriginalText = TextToProcess,
                     Status = "Created"
                 };
                 var dataModelOrder = toDataModel(order);
