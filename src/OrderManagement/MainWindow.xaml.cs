@@ -28,5 +28,7 @@ namespace OrderManagement
             InitializeComponent();
             //Closing += CreateOrder.OnWindowClosing;
         }
+
+
     }
 }

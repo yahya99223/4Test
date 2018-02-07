@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -34,16 +35,36 @@ namespace OrderManagement.ViewModel
                     Name = s.Name,
                     IsSelected = true
                 }));
-
-                orders = new ObservableCollection<OrderViewModel>(dataToRow(dbContext));
+                var ordersList = dbContext
+                    .Orders
+                    .Include(o => o.ProcessResults)
+                    .Include(o => o.ProcessResults.Select(r => r.Service))
+                    .AsEnumerable()
+                    .Select(order => new OrderViewModel
+                    {
+                        Notifications = new ObservableCollection<string>((order.Notifications ?? "").Split(',')),
+                        Id = order.Id,
+                        Status = order.Status,
+                        CreateDate = order.CreateDate,
+                        LastUpdateDate = order.LastUpdateDate,
+                        OriginalText = order.OriginalText,
+                        ProcessResults = new ObservableCollection<ProcessResultViewModel>(order.ProcessResults.Select(
+                            result => new ProcessResultViewModel
+                            {
+                                IsValid = result.IsValid,
+                                Result = result.Result,
+                                ServiceName = result.Service.Name
+                            }))
+                    });
+                orders = new ObservableCollection<OrderViewModel>(ordersList);
             }
 
             bus = BusConfigurator.ConfigureBus(MessagingConstants.MqUri, MessagingConstants.UserName, MessagingConstants.Password, (cfg, host) =>
             {
                 cfg.ReceiveEndpoint(host, MessagingConstants.OrderManagementQueue, e =>
                 {
-                    e.Consumer<UpdateOrderConsumer>();
-                    e.Consumer(() => new NotificationConsumer(Orders));
+                    e.Consumer( () => new UpdateOrderConsumer(Orders) );
+                    
                 });
             });
 
@@ -83,43 +104,22 @@ namespace OrderManagement.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private OrderViewModel toOrder(Order order)
-        {
-            return new OrderViewModel
-            {
-                Notifications = new ObservableCollection<string>((order.Notifications ?? "").Split('&')),
-                Id = order.Id,
-                Status = order.Status,
-                CreateDate = order.CreateDate,
-                LastUpdateDate = order.LastUpdateDate,
-                OriginalText = order.OriginalText,
-                ProcessResults = new ObservableCollection<ProcessResult>(order.ProcessResults),
-                OrderServices = new ObservableCollection<Service>(order.Services)
-            };
-        }
 
-        private Order toDataModel(OrderViewModel order)
+
+        private Order ordertoDataModelOrder(OrderViewModel order)
         {
             return new Order
             {
-                Notifications = string.Join(",", order.Notifications.ToArray()),
+                Notifications = string.Join(",", order.Notifications),
                 Id = order.Id,
                 Status = order.Status,
                 CreateDate = order.CreateDate,
                 LastUpdateDate = order.LastUpdateDate,
                 OriginalText = order.OriginalText,
-                ProcessResults = order.ProcessResults,
                 Services = order.OrderServices
             };
         }
 
-        private List<OrderViewModel> dataToRow(OrderManagementDbContext context)
-        {
-            var orders = new List<OrderViewModel>();
-            foreach (var order in context.Orders) orders.Add(toOrder(order));
-
-            return orders;
-        }
 
         private async Task processCommand(object arg)
         {
@@ -135,12 +135,12 @@ namespace OrderManagement.ViewModel
                     OriginalText = TextToProcess,
                     Status = "Created"
                 };
-                var dataModelOrder = toDataModel(order);
+                var dataModelOrder = ordertoDataModelOrder(order);
                 dbContext.Orders.Add(dataModelOrder);
                 TextToProcess = null;
                 await dbContext.SaveChangesAsync();
 
-                Orders.Add(order);
+                Orders.Insert(0,order);
                 var address = new Uri(MessagingConstants.MqUri + MessagingConstants.SagaQueue);
                 var sagaEndpoint = await bus.GetSendEndpoint(address);                
                 await sagaEndpoint.Send<IOrderCreatedEvent>(new OrderCreated

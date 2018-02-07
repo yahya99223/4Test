@@ -14,9 +14,9 @@
 
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid >
             <Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBox  Margin="10,5" Text="{Binding Path=TextToProcess}" TextWrapping="Wrap"/>
-            <Button  Command="{Binding ProcessCommand}" Margin="10,5" Grid.Column="2"   >Process</Button>
+            <Button  Command="{Binding ProcessCommand}" Margin="10,5" Grid.Column="2"   Style="{StaticResource MetroButton}">Process</Button>
             <ItemsControl  ItemsSource="{Binding Path=Services}" Margin="10,5"  Grid.Column="1" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -34,7 +34,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Orders}" Margin="5,10" Name="dgOrders" Grid.Row="1" ColumnWidth="*">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Orders}" Margin="5,10" Name="dgOrders" Grid.Row="1" ColumnWidth="*" CanUserAddRows="false">
             <DataGrid.Columns>
               <DataGridTextColumn Binding="{Binding Id}" Header="Id"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding CreateDate}" Header="Create Date"></DataGridTextColumn>
@@ -59,7 +59,7 @@
                 <DataGridTemplateColumn Header="Results">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding ProcessResults}"></ListBox>
+                            <DataGrid ItemsSource="{Binding ProcessResults}" CanUserAddRows="false" ColumnWidth="*"></DataGrid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -70,8 +70,8 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Name="btnDeleteAllFinished"  Margin="10,5" >Delete All Finished</Button>
-            <Button Name="btnDeleteSelected" Grid.Column="1"  Margin="10,5">Delete Selected</Button>
+            <Button Name="btnDeleteAllFinished"  Margin="10,5" Style="{StaticResource MetroButton}"  >Delete All Finished</Button>
+            <Button Name="btnDeleteSelected" Grid.Column="1"  Margin="10,5" Style="{StaticResource MetroButton}" >Delete Selected</Button>
         </Grid>
     </Grid>
 </Window>

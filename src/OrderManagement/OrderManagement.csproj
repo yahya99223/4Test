@@ -120,8 +120,8 @@
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\CreateOrder.cs" />
-    <Compile Include="Consumers\NotificationConsumer.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
+    <Compile Include="ViewModel\ProcessResultViewModel.cs" />
     <Compile Include="ViewModel\ServiceItem.cs" />
     <Compile Include="Consumers\UpdateOrderConsumer.cs" />
     <Page Include="MainWindow.xaml">
