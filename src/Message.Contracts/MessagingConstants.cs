@@ -3,9 +3,9 @@ namespace Message.Contracts
 {
     public static class MessagingConstants
     {
-        public const string MqUri = "rabbitmq://onboarding-db/IDScanSaaSYahya/";
-        public const string UserName = "yahya";
-        public const string Password = "123123";
+        public const string MqUri = "rabbitmq://onboarding-db/IDScanSaaSWahid/";
+        public const string UserName = "wahid";
+        public const string Password = "W@123123";
 
 
         public const string OrderManagementQueue = "OrderManagement";

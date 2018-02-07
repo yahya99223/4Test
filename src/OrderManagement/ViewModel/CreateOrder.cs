@@ -4,28 +4,27 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Helpers.Core;
 using MassTransit;
 using Message.Contracts;
+using OrderManagement.Annotations;
 using OrderManagement.DbModel;
 
 namespace OrderManagement.ViewModel
 {
     public class CreateOrder : INotifyPropertyChanged
     {
+        private ObservableCollection<OrderViewModel> orders;
         private ObservableCollection<ServiceItem> services;
-        private ObservableCollection<Order> orders;
-        private string textToProcess;
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private static IBusControl bus;
 
         public CreateOrder()
         {
             ProcessCommand = new AsyncRelayCommand(processCommand);
-            orders = new ObservableCollection<Order>();
+            orders = new ObservableCollection<OrderViewModel>();
 
             using (var dbContext = new OrderManagementDbContext())
             {
@@ -33,22 +32,53 @@ namespace OrderManagement.ViewModel
                 {
                     Id = s.Id,
                     Name = s.Name,
-                    IsSelected = true,
+                    IsSelected = true
                 }));
 
-                orders = new ObservableCollection<Order>(dataToRow(dbContext));
+                orders = new ObservableCollection<OrderViewModel>(dataToRow(dbContext));
             }
+
+            bus = BusConfigurator.ConfigureBus(MessagingConstants.MqUri, MessagingConstants.UserName, MessagingConstants.Password, (cfg, host) =>
+            {
+                cfg.ReceiveEndpoint(host, MessagingConstants.OrderManagementQueue, e =>
+                {
+                    //e.Consumer<UpdateOrderConsumer>();
+                    e.Consumer(() => new NotificationConsumer(Orders));
+                });
+            });
+
+            bus.Start();
+
+            Application.Current.MainWindow.Closing += onWindowClosing;
+        }
+        
+
+        public ObservableCollection<ServiceItem> Services
+        {
+            get => services;
+            set => services = new ObservableCollection<ServiceItem>(value);
         }
 
-        Order toOrder(DbModel.Order order)
+        public ICommand ProcessCommand { get; }
+
+        public string TextToProcess { get; set; }
+
+        public ObservableCollection<OrderViewModel> Orders
         {
-            return new Order()
+            get => orders;
+            set => orders = new ObservableCollection<OrderViewModel>(value);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private OrderViewModel toOrder(Order order)
+        {
+            return new OrderViewModel
             {
                 Notifications = new ObservableCollection<string>((order.Notifications ?? "").Split('&')),
                 Id = order.Id,
                 Status = order.Status,
                 CreateDate = order.CreateDate,
-                FinalResult = order.FinalResult,
                 LastUpdateDate = order.LastUpdateDate,
                 OriginalText = order.OriginalText,
                 ProcessResults = new ObservableCollection<ProcessResult>(order.ProcessResults),
@@ -56,60 +86,27 @@ namespace OrderManagement.ViewModel
             };
         }
 
-        DbModel.Order toDB(Order order)
+        private Order toDataModel(OrderViewModel order)
         {
-            return new DbModel.Order()
+            return new Order
             {
                 Notifications = string.Join(",", order.Notifications.ToArray()),
                 Id = order.Id,
                 Status = order.Status,
                 CreateDate = order.CreateDate,
-                FinalResult = order.FinalResult,
                 LastUpdateDate = order.LastUpdateDate,
                 OriginalText = order.OriginalText,
                 ProcessResults = order.ProcessResults,
                 Services = order.OrderServices
             };
         }
-        public List<Order> dataToRow(OrderManagementDbContext context)
+
+        private List<OrderViewModel> dataToRow(OrderManagementDbContext context)
         {
-            List<Order> orders = new List<Order>();
-            foreach (var order in context.Orders)
-            {
-                orders.Add(toOrder(order));
-            }
+            var orders = new List<OrderViewModel>();
+            foreach (var order in context.Orders) orders.Add(toOrder(order));
+
             return orders;
-        }
-        public ObservableCollection<ServiceItem> Services
-        {
-            get { return services; }
-            set
-            {
-                services = new ObservableCollection<ServiceItem>(value);
-                
-            }
-        }
-
-        public ICommand ProcessCommand { get; }
-
-        public string TextToProcess
-        {
-            get { return textToProcess; }
-            set
-            {
-                textToProcess = value;
-                
-            }
-        }
-
-        public ObservableCollection<Order> Orders
-        {
-            get { return orders; }
-            set
-            {
-                orders = new ObservableCollection<Order>(value);
-                
-            }
         }
 
         private async Task processCommand(object arg)
@@ -117,24 +114,22 @@ namespace OrderManagement.ViewModel
             var servicesIds = Services.Where(s => s.IsSelected).Select(s => s.Id).ToHashSet();
             using (var dbContext = new OrderManagementDbContext())
             {
-                var order = new Order
+                var order = new OrderViewModel
                 {
                     Id = Guid.NewGuid(),
                     OrderServices = new ObservableCollection<Service>(dbContext.Services.Where(s => servicesIds.Contains(s.Id))),
                     CreateDate = DateTime.UtcNow,
                     LastUpdateDate = DateTime.UtcNow,
                     OriginalText = TextToProcess,
-                    Status = "Created",
+                    Status = "Created"
                 };
-                dbContext.Orders.Add(toDB(order));
+                var dataModelOrder = toDataModel(order);
+                dbContext.Orders.Add(dataModelOrder);
                 TextToProcess = null;
                 await dbContext.SaveChangesAsync();
-                Orders.Add(new Order()
-                {
-                    Id = order.Id,
-                });
 
-                await MainWindow.BusControl.Publish<IOrderCreatedEvent>(new OrderCreated
+                Orders.Add(order);
+                await bus.Publish<IOrderCreatedEvent>(new OrderCreated
                 {
                     OrderId = order.Id,
                     CreateDate = order.CreateDate,
@@ -143,24 +138,16 @@ namespace OrderManagement.ViewModel
                 });
             }
         }
-    }
-    public class Order
-    {
-        public Order()
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            OrderServices = new ObservableCollection<Service>();
-            ProcessResults = new ObservableCollection<ProcessResult>();
-            Notifications = new ObservableCollection<string>();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public Guid Id { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime LastUpdateDate { get; set; }
-        public string OriginalText { get; set; }
-        public string FinalResult { get; set; }
-        public string Status { get; set; }
-        public ObservableCollection<string> Notifications { get; set; }
-        public ObservableCollection<Service> OrderServices { get; set; }
-        public ObservableCollection<ProcessResult> ProcessResults { get; set; }
+        private void onWindowClosing(object sender, CancelEventArgs e)
+        {
+            bus?.Stop();
+        }
     }
 }

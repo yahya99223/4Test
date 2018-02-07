@@ -114,9 +114,16 @@
     <Compile Include="Migrations\201801221243316_AddedNotificationToOrder.Designer.cs">
       <DependentUpon>201801221243316_AddedNotificationToOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802061328006_RemovedFinalResult.cs" />
+    <Compile Include="Migrations\201802061328006_RemovedFinalResult.Designer.cs">
+      <DependentUpon>201802061328006_RemovedFinalResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\CreateOrder.cs" />
-    <Compile Include="ViewModel\ProcessRequest.cs" />
+    <Compile Include="Consumers\NotificationConsumer.cs" />
+    <Compile Include="ViewModel\OrderViewModel.cs" />
     <Compile Include="ViewModel\ServiceItem.cs" />
+    <Compile Include="Consumers\UpdateOrderConsumer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -165,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801221243316_AddedNotificationToOrder.resx">
       <DependentUpon>201801221243316_AddedNotificationToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802061328006_RemovedFinalResult.resx">
+      <DependentUpon>201802061328006_RemovedFinalResult.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
