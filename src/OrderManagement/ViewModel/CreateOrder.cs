@@ -125,7 +125,7 @@ namespace OrderManagement.ViewModel
                 };
                 var dataModelOrder = toDataModel(order);
                 dbContext.Orders.Add(dataModelOrder);
-                TextToProcess = null;
+                //TextToProcess = null;
                 await dbContext.SaveChangesAsync();
 
                 Orders.Add(order);

@@ -35,7 +35,7 @@ namespace Saga.Service
         /// </summary>
         private static readonly string[] _possibleLocalDbConnectionStrings =
         {
-            @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=OrderManagementSaga;Integrated Security=True",
+            @"Data Source=YAHYA-PC\SQLEXPRESS01;Initial Catalog=OrderManagementSaga; User Id=id; Password=P@ssw0rd;",
             /*@"Data Source=(LocalDb)\MSSQLLocalDB;Integrated Security=True;Initial Catalog=MassTransitUnitTests_v12_2015;",
             // the localdb installed with VS 2015
             @"Data Source=(LocalDb)\ProjectsV12;Integrated Security=True;Initial Catalog=MassTransitUnitTests_v12;",
